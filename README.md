@@ -1,2 +1,7 @@
-# adventofcode
-AdventOfCode.com Solutions
+# Advent of Code
+
+My [Advent of Code](http://adventofcode.com) solutions.
+
+## License
+
+Released under the [MIT License](http://rnelson.mit-license.org).
