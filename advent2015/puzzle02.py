@@ -19,7 +19,7 @@ from __future__ import print_function, unicode_literals
 import os
 import sys
 
-INFILE = 'inputs/input2.txt'
+INFILE = 'inputs/input02.txt'
 
 
 def print_and_exit(message, return_code=0):
