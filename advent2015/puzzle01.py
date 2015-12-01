@@ -28,7 +28,7 @@ from __future__ import print_function, unicode_literals
 import os
 import sys
 
-INFILE = 'inputs/input1.txt'
+INFILE = 'inputs/input01.txt'
 
 
 def main():
