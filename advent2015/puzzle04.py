@@ -25,6 +25,7 @@ How many total feet of ribbon should they order?
 """
 
 from __future__ import print_function, unicode_literals
+from copy import deepcopy
 from operator import mul
 import os
 import sys
@@ -38,7 +39,7 @@ def main():
     with open(INFILE) as f:
         for line in f:
             dim = map(int, line.split('x'))
-            small = dim[:]
+            small = deepcopy(dim)
             small.remove(max(small))
 
             total = total + 2 * sum(small) + reduce(mul, dim)
