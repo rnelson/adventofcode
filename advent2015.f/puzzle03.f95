@@ -1,10 +1,3 @@
-! Tokenize a string:
-!    http://rosettacode.org/wiki/Tokenize_a_string#Fortran
-! Integer-to-string conversion
-!    https://www.solver.io/wp/2012/03/31/fortran-integer-to-string-and-string-to-integer-conversion/
-
-
-
 ! http://adventofcode.com/day/2
 ! 
 ! The elves are also running low on ribbon. Ribbon is all the same width, so
@@ -37,7 +30,7 @@ program puzzle03
     integer :: total, length, width, height, ios
     integer :: area1, area2, area3, smallarea, s1, s2
 
-    open(unit=infile, file='inputs/input03.txt')
+    open(unit=infile, file='../advent2015/inputs/input03.txt')
     total = 0
 
     do
