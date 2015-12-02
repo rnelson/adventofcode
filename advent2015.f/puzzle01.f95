@@ -31,7 +31,7 @@ program puzzle01
     integer :: fl, i
 
     ! Open the text file and read all 7,000 characters
-    open(unit=infile, file='inputs/input01.txt')
+    open(unit=infile, file='../advent2015/inputs/input01.txt')
     read(infile, '(a7000)') text
 
     fl = 0
