@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 from __future__ import print_function, unicode_literals
 from os import chdir, getcwd, getenv
 from subprocess import call
