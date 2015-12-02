@@ -108,3 +108,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Binaries
+advent*.f/a.out
