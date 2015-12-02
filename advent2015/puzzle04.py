@@ -37,8 +37,8 @@ def main():
 
     with open(INFILE) as f:
         for line in f:
-            dim = [int(i) for i in line.split('x')]
-            small = [int(i) for i in line.split('x')]
+            dim = map(int, line.split('x'))
+            small = dim[:]
             small.remove(max(small))
 
             total = total + 2 * sum(small) + reduce(mul, dim)
