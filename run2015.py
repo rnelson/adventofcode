@@ -7,7 +7,7 @@ PYTHON = getenv('PYTHON', 'python')
 FC = getenv('FC', 'gfortran')
 DIR = getenv('DIR', './advent2015')
 
-puzzles = ['01', '02']
+puzzles = ['01', '02', '03', '04']
 
 print('---------------------------------------------------')
 print('Advent of Code')
