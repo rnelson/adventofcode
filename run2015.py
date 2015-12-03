@@ -4,18 +4,10 @@ from os import chdir, getcwd, getenv
 from subprocess import call
 
 PYTHON = getenv('PYTHON', 'python')
-FC = getenv('FC', 'gfortran')
+FC = getenv('FC', 'f95')
 DIR = getenv('DIR', './advent2015')
 
-puzzles = ['01', '02', '03', '04']
-
-print('---------------------------------------------------')
-print('Advent of Code')
-print()
-print('Each puzzle contains two output values, the first')
-print('from the Python script, the second from the Fortran')
-print('program.')
-print('---------------------------------------------------\n')
+puzzles = ['01', '02', '03']
 
 for puzzle in puzzles:
     print('Puzzle {}'.format(puzzle))
@@ -34,3 +26,4 @@ for puzzle in puzzles:
     call(f95_cmd_1)
     call(f95_cmd_2)
     chdir('..')
+    print('')
