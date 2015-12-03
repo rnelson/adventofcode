@@ -1,29 +1,53 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
-http://adventofcode.com/day/2
+http://adventofcode.com/day/3
 
-The elves are running low on wrapping paper, and so they need to submit an
-order for more. They have a list of the dimensions (length l, width w, and
-height h) of each present, and only want to order exactly as much as they
-need.
+Part 1
+------
+Santa is delivering presents to an infinite two-dimensional grid of
+houses.
 
-Fortunately, every present is a box (a perfect right rectangular prism),
-which makes calculating the required wrapping paper for each gift a little
-easier: find the surface area of the box, which is 2*l*w + 2*w*h + 2*h*l.
-The elves also need a little extra paper for each present: the area of the
-smallest side.
+He begins by delivering a present to the house at his starting
+location, and then an elf at the North Pole calls him via radio and
+tells him where to move next. Moves are always exactly one house to
+the north (^), south (v), east (>), or west (<). After each move, he
+delivers another present to the house at his new location.
+
+However, the elf back at the north pole has had a little too much
+eggnog, and so his directions are a little off, and Santa ends up
+visiting some houses more than once. How many houses receive at least
+one present?
 
 For example:
 
-  - A present with dimensions 2x3x4 requires 2*6 + 2*12 + 2*8 = 52 square
-       feet of wrapping paper plus 6 square feet of slack, for a total of
-       58 square feet.
-  - A present with dimensions 1x1x10 requires 2*1 + 2*10 + 2*10 = 42 square
-       feet of wrapping paper plus 1 square foot of slack, for a total of
-       43 square feet.
+  - > delivers presents to 2 houses: one at the starting location,
+     and one to the east.
+  - ^>v< delivers presents to 4 houses in a square, including twice
+     to the house at his starting/ending location.
+  - ^v^v^v^v^v delivers a bunch of presents to some very lucky children
+     at only 2 houses.
 
-All numbers in the elves' list are in feet. How many total square feet of
-wrapping paper should they order?
+
+Part 2
+------
+The next year, to speed up the process, Santa creates a robot version
+of himself, Robo-Santa, to deliver presents with him.
+
+Santa and Robo-Santa start at the same location (delivering two presents
+to the same starting house), then take turns moving based on instructions
+from the elf, who is eggnoggedly reading from the same script as the previous
+year.
+
+This year, how many houses receive at least one present?
+
+For example:
+
+  - ^v delivers presents to 3 houses, because Santa goes north, and then
+     Robo-Santa goes south.
+  - ^>v< now delivers presents to 3 houses, and Santa and Robo-Santa end
+     up back where they started.
+  - ^v^v^v^v^v now delivers presents to 11 houses, with Santa going one
+     direction and Robo-Santa going the other.
 """
 
 from __future__ import print_function, unicode_literals
@@ -33,18 +57,45 @@ import sys
 INFILE = 'inputs/input03.txt'
 
 
+def follow_route(route):
+    prev = (0, 0)
+    houses = [prev]
+
+    for direction in route:
+        if direction == '<':
+            current = (prev[0] - 1, prev[1])
+        elif direction == '^':
+            current = (prev[0], prev[1] + 1)
+        elif direction == '>':
+            current = (prev[0] + 1, prev[1])
+        elif direction == 'v':
+            current = (prev[0], prev[1] - 1)
+
+        houses.append(current)
+        prev = current
+
+    return houses
+
+
 def main():
-    total = 0
-
     with open(INFILE) as f:
-        for line in f:
-            dim = [int(i) for i in line.split('x')]
-            areas = [2*dim[0]*dim[1], 2*dim[1]*dim[2], 2*dim[2]*dim[0]]
-            smallest = min(areas) / 2
+        route = f.read()
 
-            total = total + sum(areas) + smallest
+        # Part 1
+        houses = follow_route(route)
+        count = len(set(houses))
 
-        print(total)
+        print('[Python]  Puzzle 3-1: {}'.format(count))
+
+        # Part 2
+        santa_route = route[::2]
+        robo_santa_route = route[1::2]
+        santa_houses = follow_route(santa_route)
+        robo_santa_houses = follow_route(robo_santa_route)
+        combined_count = len(set(santa_houses + robo_santa_houses))
+
+        print('[Python]  Puzzle 3-2: {}'.format(combined_count))
+
 
 if __name__ == '__main__':
     main()

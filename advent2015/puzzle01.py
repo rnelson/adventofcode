@@ -2,6 +2,8 @@
 """
 http://adventofcode.com/day/1
 
+Part 1
+------
 Santa is trying to deliver presents in a large apartment building, but he
 can't find the right floor - the directions he got are a little confusing.
 He starts on the ground floor (floor 0) and then follows the instructions
@@ -22,6 +24,21 @@ For example:
   - ))) and )())()) both result in floor -3.
 
 To what floor do the instructions take Santa?
+
+
+Part 2
+------
+Now, given the same instructions, find the position of the first character
+that causes him to enter the basement (floor -1). The first character in the
+instructions has position 1, the second character has position 2, and so on.
+
+For example:
+
+  - ) causes him to enter the basement at character position 1.
+  - ()()) causes him to enter the basement at character position 5.
+
+What is the position of the character that causes Santa to first enter the
+basement?
 """
 
 from __future__ import print_function, unicode_literals
@@ -36,6 +53,9 @@ def main():
         data = f.read()
 
         floor = 0
+        position = 0
+        found_basement = False
+
         for character in data:
             if '(' == character:
                 floor = floor + 1
@@ -45,7 +65,14 @@ def main():
                 print('error: invalid input: {}'.format(character))
                 sys.exit(1)
 
-        print('{}'.format(floor))
+            if not found_basement:
+                position += 1
+
+                if floor < 0:
+                    found_basement = True
+
+        print('[Python]  Puzzle 1-1: {}'.format(floor))
+        print('[Python]  Puzzle 1-2: {}'.format(position))
 
 if __name__ == '__main__':
     main()
