@@ -7,7 +7,7 @@ PYTHON = getenv('PYTHON', 'python')
 FC = getenv('FC', 'f95')
 DIR = getenv('DIR', './advent2015')
 
-puzzles = ['01', '02', '03']
+puzzles = ['01', '02', '03', '04']
 
 for puzzle in puzzles:
     print('Puzzle {}'.format(puzzle))
