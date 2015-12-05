@@ -110,3 +110,5 @@ Temporary Items
 
 # Binaries
 advent*.f/a.out
+advent*.f/*.mod
+advent*.f/*.o
