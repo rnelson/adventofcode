@@ -75,13 +75,6 @@ INFILE = 'inputs/input06.txt'
 # Part 1 parameters
 P1REGEX = r'(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)'
 
-# Part 2 parameters
-P2REGEX = r''
-
-
-def check(input):
-    return False
-
 
 def main():
     with open(INFILE) as f:
