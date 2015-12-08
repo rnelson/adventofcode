@@ -111,7 +111,6 @@ def main():
         msg = '[Python]  Puzzle 5-1: {} naughty, {} nice'
         print(msg.format(len(naughty), len(nice)))
 
-
         # Part 2
         f.seek(0)
         naughty, nice = [], []
