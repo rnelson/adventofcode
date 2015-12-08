@@ -100,13 +100,13 @@ def main():
                     elif command == 'toggle':
                         lights[i][j] = 0 if lights[i][j] == 1 else 1
                     else:
-                        print('error: unknown command {}: {}'.format(command, input))
+                        msg = 'error: unknown command {}: {}'
+                        print(msg.format(command, input))
 
         on_count = sum(row.count(1) for row in lights)
         off_count = sum(row.count(0) for row in lights)
         msg = '[Python]  Puzzle 6-1: {} lights on, {} lights off'
         print(msg.format(on_count, off_count))
-
 
         # Part 2
         f.seek(0)
@@ -134,7 +134,8 @@ def main():
                     elif command == 'toggle':
                         lights[i][j] += 2
                     else:
-                        print('error: unknown command {}: {}'.format(command, input))
+                        msg = 'error: unknown command {}: {}'
+                        print(msg.format(command, input))
 
         brightness = sum(sum(row) for row in lights)
         msg = '[Python]  Puzzle 6-2: brightness is {}'
