@@ -63,7 +63,6 @@ def main():
 
     with open(INFILE) as f:
         # Part 1
-        line = 1
         for line in f:
             input = line.strip()
 
