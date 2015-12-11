@@ -60,6 +60,8 @@ import sys
 
 INFILE = 'inputs/input11.txt'
 
+MINLENGTH = 8
+MAXLENGTH = MINLENGTH
 VALIDCHARS = 'abcdefghijklmnopqrstuvwxyz'
 VALID = re.compile('^[a-z]+$')
 BAD = re.compile(r'[ilo]')
@@ -72,7 +74,8 @@ STRAIGHTS = re.compile('|'.join(straights))
 def check(password):
     valid = True
 
-    valid = valid and len(password) == 8
+    valid = valid and len(password) >= MINLENGTH
+    valid = valid and len(password) <= MAXLENGTH
     valid = valid and VALID.match(password)
     valid = valid and len(STRAIGHTS.findall(password)) == 1
     valid = valid and not BAD.match(password)
