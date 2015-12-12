@@ -49,7 +49,7 @@ import re
 import sys
 
 INFILE = 'inputs/input12.txt'
-P1REGEX = r'-?\d+\.?\d*'
+P1REGEX = r'-?\d+'
 
 
 def do_sum(o):
