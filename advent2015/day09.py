@@ -27,7 +27,7 @@ The possible routes are therefore:
   - Dublin -> Belfast -> London = 659
   - Belfast -> Dublin -> London = 605
   - Belfast -> London -> Dublin = 982
- 
+
 The shortest of these is London -> Dublin -> Belfast = 605, and
 so the answer is 605 in this example.
 
@@ -65,7 +65,8 @@ def find_all_paths(graph, start, end, path=[]):
     path = path + [start]
     if start == end:
         return [path]
-    if not graph.has_key(start):
+#    if not graph.has_key(start):
+    if start not in graph:
         return []
     paths = []
     for node, dist in graph[start]:

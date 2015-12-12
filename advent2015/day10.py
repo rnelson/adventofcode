@@ -61,7 +61,8 @@ def work2(input, iterations):
     output = input
 
     for i in xrange(iterations):
-        output = ''.join([str(len(list(g))) + str(k) for k, g in groupby(output)])
+        o = [str(len(list(g))) + str(k) for k, g in groupby(output)]
+        output = ''.join(o)
     return output
 
 
