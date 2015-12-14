@@ -78,7 +78,7 @@ import re
 import sys
 
 INFILE = 'inputs/input13.txt'
-EXPR = r'(\w+) would (lose|gain) (\d+) happiness units by sitting next to (\w+).'
+EXPR = r'(\w+) would (\w+) (\d+) happiness units by sitting next to (\w+).'
 
 
 def find(people, values):
