@@ -90,7 +90,7 @@ import re
 import sys
 
 INFILE = 'inputs/input21.txt'
-VERBOSE = True
+VERBOSE = False
 
 Item = namedtuple('Item', 'type, name, cost, damage, armor')
 
