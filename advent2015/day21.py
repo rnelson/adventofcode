@@ -94,6 +94,7 @@ VERBOSE = False
 
 Item = namedtuple('Item', 'type, name, cost, damage, armor')
 
+
 class Character:
     def __init__(self, name, hp, damage, armor, items):
         self.name = name
@@ -135,7 +136,8 @@ def build_shop():
 
 def build_character(player, opponent):
     # Default to the player's stats
-    c = Character(player.name, player.hp, player.damage, player.armor, player.items)
+    c = Character(player.name, player.hp, player.damage,
+                  player.armor, player.items)
     armor = c.armor
     damage = c.damage
 
@@ -162,7 +164,6 @@ def build_character(player, opponent):
     return c
 
 
-
 def battle(player, boss):
     p1 = build_character(player, boss)
     p2 = build_character(boss, player)
@@ -172,7 +173,8 @@ def battle(player, boss):
         p2.hp -= p1.damage
 
         if VERBOSE:
-            print('> {} hits {} for {} damage, down to {} HP'.format(p1.name, p2.name, p1.damage, p2.hp))
+            print('> {} hits {} for {} damage, down to '
+                  '{} HP'.format(p1.name, p2.name, p1.damage, p2.hp))
 
             if p2.hp <= 0:
                 print('> {} is slain'.format(p2.name))
@@ -214,10 +216,15 @@ def main():
 
                 if VERBOSE:
                     for p in [player, boss]:
-                        print('Player "{}": HP={}, Damage={}, Armor={}'.format(p.name, p.hp, p.damage, p.armor))
-                    print('For {} gold, player bought:'.format(sum([i.cost for i in player.items])))
+                        print('Player "{}": HP={}, Damage={}, '
+                              'Armor={}'.format(p.name, p.hp, p.damage,
+                                                p.armor))
+                    print('For {} gold, player bought:'.format(
+                        sum([i.cost for i in player.items])))
                     for i in player.items:
-                        print('  - {}, {} (d:{}, a:{}, c:{})'.format(i.type, i.name, i.damage, i.armor, i.cost))
+                        print('  - {}, {} (d:{}, a:{}, '
+                              'c:{})'.format(i.type, i.name, i.damage,
+                                             i.armor, i.cost))
 
                 p1, p2 = battle(player, boss)
                 if p1.name == 'Player':
@@ -226,7 +233,8 @@ def main():
 
                 if VERBOSE:
                     print('Winner: {}'.format(p1.name))
-                    print('HP: {}: {}, {}: {}'.format(p1.name, p1.hp, p2.name, p2.hp))
+                    print('HP: {}: {}, {}: {}'.format(p1.name, p1.hp,
+                                                      p2.name, p2.hp))
                     print()
 
     # Part 2
