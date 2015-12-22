@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-http://adventofcode.com/day/20
+http://adventofcode.com/day/21
 
 Part 1
 ------
