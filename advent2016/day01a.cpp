@@ -2,6 +2,7 @@
  * Advent of Code 2016
  * Day 1 (part 1)
  *
+ * Command: clang++ --std=c++14 day01a.cpp
  * Sources:
  *		http://stackoverflow.com/a/236803 (split())
  *		http://stackoverflow.com/a/5891643 (removing spaces)
