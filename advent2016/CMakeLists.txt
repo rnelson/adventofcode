@@ -1,0 +1,5 @@
+cmake_minimum_required (VERSION 2.6)
+project (AdventOfCode)
+set(CMAKE_CXX_FLAGS "--std=c++14")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+add_executable(day01a day01a.cpp)
