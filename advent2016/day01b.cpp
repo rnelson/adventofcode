@@ -61,9 +61,9 @@ void markVisited(std::vector<std::string> &vec, int x, int y) {
 
 int main(void) {
 	// Open the input file
-	std::ifstream fin("day01a.in");
+	std::ifstream fin("input01.txt");
 	if (!fin) {
-		std::cerr << "Error reading input file day01a.in" << std::endl;
+		std::cerr << "Error reading input file input01.txt" << std::endl;
 		return -1;
 	}
 
