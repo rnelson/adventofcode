@@ -97,18 +97,6 @@ int main(void) {
 			Triangle t2(partsB.at(0), partsB.at(1), partsB.at(2));
 			Triangle t3(partsC.at(0), partsC.at(1), partsC.at(2));
 
-			/*
-			vector<vector<string>> theParts;
-			theParts.push_back(partsA); theParts.push_back(partsB); theParts.push_back(partsC);
-			for (auto v : theParts) {
-				cout << "{ ";
-				for (auto p : v) {
-					cout << p << " ";
-				}
-				cout << "}" << endl;
-			}
-			*/
-
 			partsA.clear();
 			partsB.clear();
 			partsC.clear();
