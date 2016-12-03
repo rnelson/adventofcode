@@ -8,12 +8,15 @@ add_executable(day01a day01a.cpp)
 add_executable(day01b day01b.cpp)
 add_executable(day02a day02a.cpp)
 add_executable(day02b day02b.cpp)
-#add_executable(day03b day03b.cpp)
 
 set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost)
 if(Boost_FOUND)
 	include_directories(${Boost_INCLUDE_DIRS})
+
 	add_executable(day03a day03a.cpp)
+	add_executable(day03b day03b.cpp)
+
 	target_link_libraries(day03a ${Boost_LIBRARIES})
+	target_link_libraries(day03b ${Boost_LIBRARIES})
 endif()
