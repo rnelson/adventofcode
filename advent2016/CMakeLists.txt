@@ -9,6 +9,7 @@ add_executable(day01b day01b.cpp)
 add_executable(day02a day02a.cpp)
 add_executable(day02b day02b.cpp)
 add_executable(day04a day04a.cpp)
+add_executable(day04b day04b.cpp)
 
 set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost)
