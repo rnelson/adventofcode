@@ -11,8 +11,6 @@ add_executable(day02a day02a.cpp)
 add_executable(day02b day02b.cpp)
 add_executable(day04a day04a.cpp)
 add_executable(day04b day04b.cpp)
-add_executable(day05a day05a.cpp)
-add_executable(day05b day05b.cpp)
 add_executable(day06a day06a.cpp)
 add_executable(day06b day06b.cpp)
 
@@ -28,12 +26,14 @@ if(Boost_FOUND)
 	target_link_libraries(day03b ${Boost_LIBRARIES})
 endif()
 
-#find_package(OpenSSL)
-#if(OPENSSL_FOUND)
-#	include_directories(${OPENSSL_INCLUDE_DIRS})
-#
-#	add_executable(day05a day05a.cpp)
-#
-#	link_libraries(crypto)
-#	target_link_libraries(day05a ${OPENSSL_LIBRARIES})
-#endif()
+find_package(OpenSSL)
+if(OPENSSL_FOUND)
+	include_directories(${OPENSSL_INCLUDE_DIRS})
+
+	add_executable(day05a day05a.cpp)
+	add_executable(day05b day05b.cpp)
+
+	link_libraries(crypto)
+	target_link_libraries(day05a ${OPENSSL_LIBRARIES})
+	target_link_libraries(day05b ${OPENSSL_LIBRARIES})
+endif()
