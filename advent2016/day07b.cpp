@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -37,68 +38,64 @@ int main(void) {
 	int count = 0;
 
 	for (auto line : input) {
-		cout << "LINE:" << line << endl;
-
-		vector<string> aba;
-		vector<string> bab;
+		set<string> aba;
+		set<string> bab;
 
 		int end = line.length() - 2;
 		bool inside = false;
 
 		for (int i = 0; i < end; i++) {
+			char first = line.at(i);
+			char second = line.at(i + 1);
+			char third = line.at(i + 2);
+
 			// Check to see if we've entered/ended a hypernet sequence
-			if (line.at(i) == '[') {
+			if (first == '[') {
 				inside = true;
 				continue;
-			} else if (line.at(i) == ']') {
+			} else if (first == ']') {
 				inside = false;
 				continue;
 			}
 
+			// If there's a bracket in the middle, move on
+			if (second == '[' || second == ']') {
+				continue;
+			}
+
 			// Look for ABAs/BABs
-			if (line.at(i) == line.at(i + 2)) {
-				if (line.at(i) != line.at(i + 1)) {
-					if (line.at(i) != '[' && line.at(i) != ']' && line.at(i + 1) != '[' && line.at(i + 1) != ']') {
-						if (!inside) {
-							string candidate = line.substr(i, 3);
+			if (first == third && first != second) {
+				if (!inside) {
+					string candidate = line.substr(i, 3);
 
-							cout << "ABA:" << candidate << endl;
+					aba.emplace(candidate);
+				} else {
+					string candidate;
+					candidate += second;
+					candidate += first;
+					candidate += second;
 
-							aba.push_back(candidate);
-						} else {
-							string candidate;
-							candidate += line.at(i + 1);
-							candidate += line.at(i);
-							candidate += line.at(i + 1);
-
-							cout << "BAB:" << candidate << endl;
-
-							bab.push_back(candidate);
-						}
-					}
+					bab.emplace(candidate);
 				}
 			}
 		}
 
 		// Check for a match
+		bool add = false;
 		for (auto a : aba) {
-			bool add = false;
 
 			for (auto b : bab) {
 				if (a == b) {
-					cout << "MATCH:" << a << "/" << b << endl;
-
 					add = true;
 					break;
 				}
 			}
 
-			if (add) {
-				count++;
-			}
 		}
-		
-		cout << endl;
+
+		if (add) {
+			count++;
+		}
 	}
 
 	cout << "Count: " << count << endl;
