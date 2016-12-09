@@ -3,6 +3,8 @@
  * Day 9 (part 2)
  *
  * Command: clang++ --std=c++14 day09b.cpp
+ * Sources:
+ *		https://github.com/westappdev/aoc2016/blob/master/c%23/kmurrayDay9.cs (algorithm)
  *
  */
 
@@ -32,36 +34,40 @@ std::vector<std::string> split(const std::string &s, char delim) {
 	return elems;
 }
 
-string doOneDecrypt(string input) {
-	string decrypted = input;
-	size_t open = decrypted.find("(");
-	size_t close = decrypted.find(")");
+unsigned long long decompress(string input) {
+	unsigned long long length = 0L;
 
-	if (open != string::npos && close != string::npos) {
-		string left = decrypted.substr(0, open);
-		string instruction = decrypted.substr(open + 1, close - open - 1);
-		string right = decrypted.substr(close + 1);
+	for (size_t start = 0; start < input.length(); start++) {
+		if (input.at(start) != '(') {
+			length++;
+		} else {
+			// Find the "(AxB)"
+			auto open = input.find("(", start);
+			auto close = input.find(")", start);
 
-		string newDecrypted = left;
+			// Parse the "(AxB)"
+			auto instruction = input.substr(open + 1, close - open - 1);
+			auto instrBits = split(instruction, 'x');
+			auto characters = stoi(instrBits.at(0));
+			auto count = stoi(instrBits.at(1));
 
-		vector<string> instrBits = split(instruction, 'x');
-		int characters = stoi(instrBits.at(0));
-		int count = stoi(instrBits.at(1));
+			// Grab the next `A` characters and see if there's an ( in it
+			auto nextSegment = input.substr(close + 1, characters);
+			auto internalOpen = nextSegment.find("(");
 
-		string repeated = right.substr(0, characters);
-		string untouched = right.substr(characters);
+			if (internalOpen != string::npos) {
+				auto substring = input.substr(close + 1, characters);
+				length += count * decompress(substring);
+			} else {
+				length += count * characters;
+			}
 
-		for (int i = 0; i < count; i++) {
-			newDecrypted += repeated;
+			start = close + characters;
 		}
-
-		newDecrypted += untouched;
-		decrypted = newDecrypted;
 	}
 
-	return decrypted;
+	return length;
 }
-
 
 int main(void) {
 	// Open the input file
@@ -77,19 +83,8 @@ int main(void) {
 	fin.close();
 
 	// Solve the problem
-	string decrypted = input;
-	size_t leftmost = 0;
-	size_t open = decrypted.find("(", leftmost);
-	size_t close = decrypted.find(")", leftmost);
-
-	while (open != string::npos && close != string::npos) {
-		decrypted = doOneDecrypt(decrypted);
-
-		open = decrypted.find("(");
-		close = decrypted.find(")");
-	}
-
-	cout << "Length: " << decrypted.length() << endl;
+	auto length = decompress(input);
+	cout << "Length: " << length << endl;
 
 	return 0;
 }
