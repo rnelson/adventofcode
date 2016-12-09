@@ -47,17 +47,17 @@ int main(void) {
 	fin.close();
 
 	// Solve the problem
-	string decrypted = input;
+	string decompressed = input;
 	size_t leftmost = 0;
-	size_t open = decrypted.find("(", leftmost);
-	size_t close = decrypted.find(")", leftmost);
+	size_t open = decompressed.find("(", leftmost);
+	size_t close = decompressed.find(")", leftmost);
 
-	while (open != string::npos && close != string::npos && open != decrypted.length()) {
-		string left = decrypted.substr(0, open);
-		string instruction = decrypted.substr(open + 1, close - open - 1);
-		string right = decrypted.substr(close + 1);
+	while (open != string::npos && close != string::npos && open != decompressed.length()) {
+		string left = decompressed.substr(0, open);
+		string instruction = decompressed.substr(open + 1, close - open - 1);
+		string right = decompressed.substr(close + 1);
 
-		string newDecrypted = left;
+		string newDecompressed = left;
 
 		vector<string> instrBits = split(instruction, 'x');
 		int characters = stoi(instrBits.at(0));
@@ -67,18 +67,18 @@ int main(void) {
 		string untouched = right.substr(characters);
 
 		for (int i = 0; i < count; i++) {
-			newDecrypted += repeated;
+			newDecompressed += repeated;
 		}
 
-		leftmost = newDecrypted.size();
-		newDecrypted += untouched;
-		decrypted = newDecrypted;
+		leftmost = newDecompressed.size();
+		newDecompressed += untouched;
+		decompressed = newDecompressed;
 
-		open = decrypted.find("(", leftmost);
-		close = decrypted.find(")", leftmost);
+		open = decompressed.find("(", leftmost);
+		close = decompressed.find(")", leftmost);
 	}
 
-	cout << "Length: " << decrypted.length() << endl;
+	cout << "Length: " << decompressed.length() << endl;
 
 	return 0;
 }
