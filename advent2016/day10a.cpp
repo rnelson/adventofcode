@@ -33,7 +33,7 @@ struct Transfer {
 
 class Bot {
 public:
-	Bot(); // TODO: remove; VS needed it
+	Bot();
 	Bot(int number);
 	void addChip(int value);
 	int getChip(magnitude_t mag);
