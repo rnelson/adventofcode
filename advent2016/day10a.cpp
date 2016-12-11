@@ -1,10 +1,10 @@
 /*
- * Advent of Code 2016
- * Day 10 (part 1)
- *
- * Command: clang++ --std=c++14 day10a.cpp
- *
- */
+* Advent of Code 2016
+* Day 10 (part 1)
+*
+* Command: clang++ --std=c++14 day10a.cpp
+*
+*/
 
 #include <fstream>
 #include <iostream>
@@ -21,14 +21,64 @@ const int CHIP_B = 17;
 
 const string INPUT_FILE = "input10.txt";
 const int MAX_LINE_LENGTH = 2000;
+
 enum magnitude_t { LOW, HIGH };
 enum destination_t { OUTPUT, BOT };
 
-struct Bot {
-	int number;
-	int chip1;
-	int chip2;
+struct Transfer {
+	magnitude_t mag;
+	destination_t dest;
+	int destNumber;
 };
+
+class Bot {
+public:
+	Bot(); // TODO: remove; VS needed it
+	Bot(int number);
+	void addChip(int value);
+	int getChip(magnitude_t mag);
+	bool isFull();
+private:
+	int number;
+	int values[2] = { -1, -1 };
+};
+
+Bot::Bot() { }
+
+Bot::Bot(int number) {
+	this->number = number;
+}
+
+void Bot::addChip(int value) {
+	if (this->values[0] == -1) {
+		this->values[0] = value;
+	} else {
+		this->values[1] = value;
+	}
+}
+
+bool Bot::isFull() {
+	return (this->values[0] > -1 && this->values[1] > -1);
+}
+
+int Bot::getChip(magnitude_t mag) {
+	auto lowIndex = (this->values[0] < this->values[1] ? 0 : 1);
+	auto highIndex = (this->values[0] > this->values[1] ? 0 : 1);
+	auto ret = -1;
+
+	switch (mag) {
+		case LOW:
+			ret = this->values[lowIndex];
+			this->values[lowIndex] = -1;
+			break;
+		case HIGH:
+			ret = this->values[highIndex];
+			this->values[highIndex] = -1;
+			break;
+	}
+
+	return ret;
+}
 
 struct Instruction {
 	magnitude_t chipType;
@@ -36,7 +86,7 @@ struct Instruction {
 	int destinationNumber;
 };
 
-struct InstructionPair {
+struct Instructions {
 	int sourceBotNumber;
 	vector<Instruction> instructions;
 };
@@ -56,31 +106,21 @@ std::vector<std::string> split(const std::string &s, char delim) {
 	return elems;
 }
 
-void processQueue(vector<InstructionPair> &q, map<int, Bot> &bots, map<int, int> &output) {
-	int i = 0;
+void processQueue(vector<Instructions> &q, map<int, Bot> &bots, map<int, int> &output) {
+	unsigned int i = 0;
 
 	for (; i < q.size(); i++) {
 		auto pair = q.at(i);
 
 		// See if this bot has both chips and can do work
 		auto bot = bots[pair.sourceBotNumber];
-		if (bot.chip1 < 0 || bot.chip2 < 0) {
+		if (!bot.isFull()) {
 			continue;
 		}
 
 		// Find the min/max chip
-		auto minChip = (bot.chip1 < bot.chip2 ? bot.chip1 : bot.chip2);
-		auto maxChip = (bot.chip1 > bot.chip2 ? bot.chip1 : bot.chip2);
-
-		//if (minChip == CHIP_A || maxChip == CHIP_A || minChip == CHIP_B || maxChip == CHIP_B) {
-		if (true) {
-			cout << "Bot " << pair.sourceBotNumber << endl;
-			cout << "  C1:  " << bot.chip1 << endl;
-			cout << "  C2:  " << bot.chip2 << endl;
-			cout << "  Min: " << minChip << endl;
-			cout << "  Max: " << maxChip << endl;
-			cout << endl;
-		}
+		auto minChip = bot.getChip(LOW);
+		auto maxChip = bot.getChip(HIGH);
 
 		// Part A answer
 		if (minChip == CHIP_B && maxChip == CHIP_A) {
@@ -98,22 +138,12 @@ void processQueue(vector<InstructionPair> &q, map<int, Bot> &bots, map<int, int>
 					break;
 				case BOT:
 					auto destBot = bots[key];
-
-					if (destBot.chip1 < 0) {
-						destBot.chip1 = value;
-					} else {
-						destBot.chip2 = value;
-					}
+					destBot.addChip(value);
 
 					bots[key] = destBot;
 					break;
 			}
 		}
-
-		// Reset this bot
-		bot.chip1 = numeric_limits<int>::min();
-		bot.chip2 = numeric_limits<int>::min();
-		bots[pair.sourceBotNumber] = bot;
 
 		// Remove this instruction from the queue and start over
 		q.erase(q.begin() + i);
@@ -140,7 +170,7 @@ int main(void) {
 	// Solve the problem
 	map<int, Bot> bots;
 	map<int, int> output;
-	vector<InstructionPair> q;
+	vector<Instructions> q;
 
 	for (auto line : input) {
 		// Determine the instruction type
@@ -150,24 +180,23 @@ int main(void) {
 			auto bot = stoi(bits[5]);
 			auto value = stoi(bits[1]);
 
-			Bot b;
 			auto it = bots.find(bot);
 
 			if (it != bots.end()) {
-				b = bots[bot];
+				// Get the bot from the list and remove it
+				Bot b = bots[bot];
 				bots.erase(bot);
 
-				if (b.chip1 < 0) {
-					b.chip1 = value;
-				} else if (b.chip2 < 0) {
-					b.chip2 = value;
-				}
+				// Add the chip
+				b.addChip(value);
 
+				// Put the bot back into the list
 				bots[bot] = b;
 			} else {
-				b.number = bot;
-				b.chip1 = value;
-				b.chip2 = numeric_limits<int>::min();
+				Bot b(bot);
+				b.addChip(value);
+
+				bots[bot] = b;
 			}
 		} else {
 			// Otherwise, sort it out and add it to our queue
@@ -189,7 +218,7 @@ int main(void) {
 			i2.destinationType = (highDestinationType == "bot" ? BOT : OUTPUT);
 			i2.destinationNumber = highDestinationNum;
 
-			InstructionPair p;
+			Instructions p;
 			p.sourceBotNumber = givingBot;
 			p.instructions.push_back(i1);
 			p.instructions.push_back(i2);
@@ -208,4 +237,3 @@ int main(void) {
 
 	return 0;
 }
-
