@@ -102,8 +102,6 @@ int main(void) {
 
 	// Solve the problem
 	vector<unsigned long long> otpIndexes;
-	vector<char> otpCharacters;
-	vector<string> keys;
 	unsigned long long index = 0;
 
 	while (otpIndexes.size() < 64) {
@@ -113,21 +111,12 @@ int main(void) {
 		auto triplet = findTriplet(hash);
 
 		if (triplet != '\0') {
-			//cout << "> Found triplet '" << triplet << "' at index " << index << endl;
-
 			for (unsigned long long index2 = index + 1; index2 <= index + 1000; index2++) {
 				string newStr = input + to_string(index2);
 				string newHash = MD5(newStr);
 
 				if (containsRepeatedCharacter(newHash, triplet, 5)) {
-					//cout << "> Hash \"" << newHash << "\" (" << index2 << ") contains 5 x '" << triplet << "'!" << endl;
-
 					otpIndexes.push_back(index);
-					otpCharacters.push_back(triplet);
-					keys.push_back(hash);
-
-					//cout << "Indexes: " << otpIndexes.size() << endl;
-
 					break;
 				}
 			}
