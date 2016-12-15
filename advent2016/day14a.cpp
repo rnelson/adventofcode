@@ -2,7 +2,7 @@
  * Advent of Code 2016
  * Day 14 (part 1)
  *
- * Command: clang++ --std=c++14 -I/usr/local/include -L/usr/local/lib day14a.cpp
+ * Command: clang++ --std=c++14 -lcrypto -I/usr/local/include -L/usr/local/lib day14a.cpp
  *
  */
 
