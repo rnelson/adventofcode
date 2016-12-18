@@ -89,28 +89,11 @@ char findTriplet(string input) {
 map<int, string> generateHashes(string salt) {
 	map<int, string> hashes;
 
-	/*
-	ifstream fin("hashes.txt");
-	string line;
-
-	while (fin >> line) {
-		auto bits = split(line, ',');
-		auto index = stoi(bits[0]);
-		auto hash = bits[1];
-
-		hashes.emplace(index, hash);
-	}
-	*/
-
 	for (auto i = 0; i < 50000; i++) {
 		auto hash = MD5(salt + to_string(i), 2017);
 		if (findTriplet(hash) != '\0') {
 			hashes[i] = hash;
 		}
-	}
-
-	for (auto &pair : hashes) {
-		cout << pair.first << "," << pair.second << endl;
 	}
 
 	return hashes;
@@ -157,9 +140,7 @@ int main(void) {
 	fin.close();
 
 	// Generate a bunch of hashes
-	//auto hashes = generateHashes("abc");
 	auto hashes = generateHashes(input);
-	//return 3;
 
 	// Solve the problem
 	int index = 0;
@@ -171,8 +152,6 @@ int main(void) {
 		if (triplet != '\0') {
 			for (auto i = index + 1; i < index + 1001; i++) {
 				if (containsRepeatedCharacter(hashes[i], triplet, 5)) {
-					cout << "Found key " << keyCount << " at index " << index << " (match at index " << i << ")" << endl;
-
 					otpIndexes.push_back(index);
 					keyCount++;
 					break;
@@ -183,7 +162,6 @@ int main(void) {
 		index++;
 	}
 
-	cout << endl;
 	cout << "The 64th key was found at index " << --index << "." << endl;
 
 	return 0;
