@@ -22,8 +22,6 @@ Given the actual salt in your puzzle input, what index produces your 64th one-ti
 
 Your puzzle answer was 25427.
 
-The first half of this puzzle is complete! It provides one gold star: *
-
 --- Part Two ---
 
 Of course, in order to make this process even more secure, you've also implemented key stretching.
@@ -48,4 +46,6 @@ The second triple (eee, at index 10) hash a matching eeeee at index 89, and so i
 Eventually, index 22551 produces the 64th key (triple fff with matching fffff at index 22859.
 Given the actual salt in your puzzle input and using 2016 extra MD5 calls of key stretching, what index now produces your 64th one-time pad key?
 
-Your puzzle input is still yjdafjpo.
+Your puzzle answer was 22045.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
