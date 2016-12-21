@@ -2,7 +2,7 @@
  * Advent of Code 2016
  * Day 20 (part 1)
  *
- * Command: clang++ --std=c++14 day20a.cpp
+ * Command: clang++ -std=c++14 day20a.cpp
  *
  */
 
