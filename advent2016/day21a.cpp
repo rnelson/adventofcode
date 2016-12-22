@@ -19,8 +19,7 @@ using namespace std;
 
 const string INPUT_FILE = "input21.txt";
 const int MAX_LINE_LENGTH = 2000;
-//const string START_TEXT = "abcdefgh";
-const string START_TEXT = "abcde";
+const string START_TEXT = "abcdefgh";
 
 void split(const string &s, char delim, vector<string> &elems) {
 	stringstream ss;
@@ -69,8 +68,6 @@ string _move(string input, int posX, int posY) {
 	auto result = input;
 	auto temp = string(1, input.at(posX));
 
-	cout << "Moving pos " << posX << " (" << input.at(posX) << ") to pos " << posY << " (" << input.at(posY) << ")" << endl;
-
 	result.erase(posX, 1);
 	result.insert(posY, temp);
 
@@ -97,9 +94,6 @@ int main(void) {
 	auto answer = START_TEXT;
 	for (auto line : input) {
 		auto bits = split(line, ' ');
-
-		cout << "INSTRUCTION:" << line << endl;
-		cout << "STARTANS:" << answer << endl;
 
 		if (bits[0] == "swap") {
 			auto posX = 0;
@@ -144,11 +138,9 @@ int main(void) {
 			cerr << "error: cannot understand instruction \"" << line << "\"" << endl;
 			return 1;
 		}
-
-		cout << "ENDANS:" << answer << endl << endl;
 	}
 
-	cout << "Answer: " << answer << endl;
+	cout << "Password: " << answer << endl;
 
 	return 0;
 }
