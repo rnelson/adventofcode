@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (AdventOfCode)
 
-set(CMAKE_CXX_FLAGS "--std=c++14 -g")
+set(CMAKE_CXX_FLAGS "--std=c++14 -O3")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/contrib/cmake")
 
@@ -39,6 +39,8 @@ add_executable(day20a day20a.cpp)
 add_executable(day20b day20b.cpp)
 add_executable(day21a day21a.cpp)
 add_executable(day21b day21b.cpp)
+add_executable(day22a day22a.cpp)
+#add_executable(day22b day22b.cpp)
 
 set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost)
