@@ -1,7 +1,9 @@
-<Query Kind="FSharpExpression" />
+open System
+open System.IO
+open System.Linq
 
 // When running from LINQPad, we need to change the working directory to where our file is saved
-Directory.SetCurrentDirectory (Path.GetDirectoryName (Util.CurrentQueryPath));
+//Directory.SetCurrentDirectory (Path.GetDirectoryName (Util.CurrentQueryPath));
 
 // Read the input file
 let input = File.ReadAllText("../inputs/day01.txt")
