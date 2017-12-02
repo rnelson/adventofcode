@@ -1,4 +1,3 @@
-open System
 open System.IO
 open System.Linq
 
@@ -31,4 +30,4 @@ let part2 =
     |> Seq.sum
 
 printfn "Part 1: %i\nPart 2: %i" part1 part2
-0
+0 |> ignore
