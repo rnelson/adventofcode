@@ -3,6 +3,9 @@ open System.IO
 open System.Linq
 open System.Text.RegularExpressions
 
+// See https://gist.github.com/rnelson/e7a93d28c6bbd56653ea2e8de4d98164 for attempts at
+// part b in F#
+
 let readInput(filename:string) =
     let lines = File.ReadAllLines filename
     [|
