@@ -18,8 +18,6 @@ What is the checksum for the spreadsheet in your puzzle input?
 
 Your puzzle answer was 30994.
 
-The first half of this puzzle is complete! It provides one gold star: *
-
 --- Part Two ---
 
 "Great work; looks like we're on the right track after all. Here's a star for your effort." However, the program seems a little worried. Can programs be worried?
@@ -39,3 +37,7 @@ In the third row, the result is 2.
 In this example, the sum of the results would be 4 + 3 + 2 = 9.
 
 What is the sum of each row's result in your puzzle input?
+
+Your puzzle answer was 233.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
