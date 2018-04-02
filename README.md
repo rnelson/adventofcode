@@ -8,6 +8,10 @@ Released under the [MIT License](http://rnelson.mit-license.org).
 
 ## Others
 
+### 2017
+
++ [West AppDev](https://github.com/westappdev/aoc2017)
+
 ### 2016
 
 + [West AppDev](https://github.com/westappdev/aoc2016)
