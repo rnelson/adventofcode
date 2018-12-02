@@ -12,6 +12,6 @@ fun main(args: Array<String>) {
     val day = Class.forName(className).kotlin.createInstance() as Day
 
     day.setup(args[0])
-    println(day.solveA())
-    println(day.solveB())
+    println("Part A: ${day.solveA()}")
+    println("Part B: ${day.solveB()}")
 }
