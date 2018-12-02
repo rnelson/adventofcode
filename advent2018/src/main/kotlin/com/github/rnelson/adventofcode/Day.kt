@@ -3,9 +3,10 @@ package com.github.rnelson.adventofcode
 import java.io.File
 
 abstract class Day {
-    protected val input: ArrayList<String> = ArrayList()
+    protected var input: ArrayList<String> = ArrayList()
 
     fun setup(dayNumber: String) {
+        input = ArrayList()
         File("input/day$dayNumber.txt").forEachLine { input.add(it) }
     }
 
