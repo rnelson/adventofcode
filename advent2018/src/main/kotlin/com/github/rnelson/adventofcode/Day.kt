@@ -1,16 +1,12 @@
 package com.github.rnelson.adventofcode
 
-import java.nio.file.Files
-import java.nio.file.Paths
+import java.io.File
 
 abstract class Day {
     protected val input: ArrayList<String> = ArrayList()
 
     fun setup(dayNumber: String) {
-        val stream = Files.newInputStream(Paths.get("input/day${dayNumber}.txt"))
-        stream.buffered().reader().use { reader ->
-            input.add(reader.readText())
-        }
+        File("input/day$dayNumber.txt").forEachLine { input.add(it) }
     }
 
     abstract fun solveA(): String
