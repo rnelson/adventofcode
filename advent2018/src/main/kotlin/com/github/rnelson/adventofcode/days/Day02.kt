@@ -12,8 +12,9 @@ class Day02: Day() {
         var three = 0
 
         input.forEach { i ->
-            if (i.groupingBy { it }.eachCount().filterValues { v -> v == 2 }.count() > 0) { two++ }
-            if (i.groupingBy { it }.eachCount().filterValues { v -> v == 3 }.count() > 0) { three++ }
+            val map = i.groupingBy { it }.eachCount()
+            if (map.containsValue(2)) { two++ }
+            if (map.containsValue(3)) { three++ }
         }
 
         val result = two * three
