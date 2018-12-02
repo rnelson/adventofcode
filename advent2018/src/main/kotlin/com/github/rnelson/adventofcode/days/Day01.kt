@@ -8,13 +8,7 @@ class Day01: Day() {
     }
 
     override fun solveA(): String {
-        val sb = StringBuffer()
-        input.forEach {
-            sb.append(it)
-            sb.append('\n')
-        }
-
-        return sb.toString()
+        return input.map { it.toInt() }.sum().toString()
     }
 
     override fun solveB(): String {
