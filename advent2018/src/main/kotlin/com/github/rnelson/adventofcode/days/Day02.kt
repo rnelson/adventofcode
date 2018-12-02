@@ -8,7 +8,29 @@ class Day02: Day() {
     }
 
     override fun solveA(): String {
-        return ""
+        var two = 0
+        var three = 0
+
+        input.forEach {
+            var isTwo = false
+            var isThree = false
+
+            var counts = it.groupingBy { it2 -> it2 }.eachCount()
+            counts.forEach { _, u ->
+                if (u == 2) {
+                    isTwo = true
+                }
+                if (u == 3) {
+                    isThree = true
+                }
+            }
+
+            if (isTwo) { two++ }
+            if (isThree) { three++ }
+        }
+
+        val result = two * three
+        return result.toString()
     }
 
     override fun solveB(): String {
