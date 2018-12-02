@@ -8,10 +8,16 @@ class Day01: Day() {
     }
 
     override fun solveA(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val sb = StringBuffer()
+        input.forEach {
+            sb.append(it)
+            sb.append('\n')
+        }
+
+        return sb.toString()
     }
 
     override fun solveB(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return ""
     }
 }
