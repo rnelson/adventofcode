@@ -13,6 +13,6 @@ abstract class Day {
         }
     }
 
-    abstract fun solveA()
-    abstract fun solveB()
+    abstract fun solveA(): String
+    abstract fun solveB(): String
 }
