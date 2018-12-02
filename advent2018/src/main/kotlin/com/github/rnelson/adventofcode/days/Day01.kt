@@ -12,6 +12,19 @@ class Day01: Day() {
     }
 
     override fun solveB(): String {
-        return ""
+        val set: MutableSet<Int> = mutableSetOf(0)
+        var sum = 0
+
+        input.map { it.toInt() }.asSequence().repeat().forEach {
+            sum += it
+
+            if (!set.add(sum)) {
+                return sum.toString()
+            }
+        }
+
+        return "<unknown>"
     }
 }
+
+fun <T> Sequence<T>.repeat() = sequence { while (true) yieldAll(this@repeat) }
