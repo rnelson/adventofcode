@@ -22,6 +22,23 @@ class Day02: Day() {
     }
 
     override fun solveB(): String {
-        return ""
+        input.mapIndexed { index, s ->
+            val futureInputs = input.drop(index + 1)
+            futureInputs.forEach { f ->
+                val pairs = s.zip(f)
+                val same = pairs.filter { p -> p.first == p.second }
+                val count = same.count()
+
+                if (count == s.length - 1) {
+                    val sb = StringBuilder()
+                    same.forEach {p ->
+                        sb.append(p.first)
+                    }
+                    return sb.toString()
+                }
+            }
+        }
+
+        return "<unknown>"
     }
 }
