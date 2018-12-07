@@ -45,30 +45,3 @@ class Day05: Day() {
         return ""
     }
 }
-
-//from string import ascii_lowercase
-//
-//new_input = INPUT
-//
-//letter_found = True
-//while letter_found:
-//letter_found = False
-//for c in ascii_lowercase:
-//one_mix = c.upper() + c
-//two_mix = c + c.upper()
-//
-//found = True
-//while found:
-//f_one_mix = new_input.find(one_mix)
-//f_two_mix = new_input.find(two_mix)
-//
-//if f_one_mix != -1:
-//new_input = new_input.replace(one_mix, '')
-//letter_found = True
-//elif f_two_mix != -1:
-//new_input = new_input.replace(two_mix, '')
-//letter_found = True
-//else:
-//found = False
-//
-//print(len(new_input))
