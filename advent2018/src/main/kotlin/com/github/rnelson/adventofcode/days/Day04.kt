@@ -3,7 +3,6 @@ package com.github.rnelson.adventofcode.days
 import com.github.rnelson.adventofcode.Day
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 
 class Day04: Day() {
     init {
@@ -11,110 +10,64 @@ class Day04: Day() {
     }
 
     override fun solveA(): String {
-        val entries = mutableListOf<LogEntry>()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val sleeps = mutableMapOf<Int, MutableList<Pair<Int, Int>>>()
+        val sleepsExpanded = mutableMapOf<Int, MutableList<Int>>()
+        val sums = mutableMapOf<Int, Int>()
 
-        val ts1 = LocalDateTime.parse("1518-11-01 00:05", formatter)
-        val ts2 = LocalDateTime.parse("1518-11-01 00:25", formatter).minusMinutes(1)
-        val span = ChronoUnit.MINUTES.between(ts1, ts2)
-        return span.toString()
+        var guard = -1
+        var zonk = -1
 
-        // Get everything into objects that are a bit easier to work with
-        input.forEach {
-            entries.add(LogEntry.parse(it, formatter))
-        }
+        input.sorted().forEach {
+            val timestamp = LocalDateTime.parse(it.substring(1, 17), formatter)
+            val action = it.substring(19)
 
-        // Sort everything
-        val sortedEntries = entries.sortedBy { it.timestamp }
+            when {
+                action.startsWith("Guard") -> {
+                    val idStart = action.indexOf('#') + 1
+                    val idEnd = action.indexOf(' ', idStart)
 
-        // Fill in missing guard numbers
-        var currentGuard = sortedEntries[0].guard
-        sortedEntries.forEach {
-            if (it.guard > -1) { currentGuard = it.guard }
-            else { it.guard = currentGuard }
-        }
+                    guard = action.substring(idStart, idEnd).toInt()
 
-        // Sum awake/asleep time for each shift
-        val guards = hashMapOf<Int, Guard>()
-        currentGuard = sortedEntries[0].guard
-        var currentWake = 0
-        var currentSleep = 0
-        sortedEntries.forEach {
-            when (it.action) {
-                LogAction.BEGIN -> {
-
-
-                    currentGuard = it.guard
+                    if (!sleeps.containsKey(guard)) {
+                        sleeps[guard] = mutableListOf()
+                    }
+                    if (!sleepsExpanded.containsKey(guard)) {
+                        sleepsExpanded[guard] = mutableListOf()
+                    }
+                    if (!sums.containsKey(guard)) {
+                        sums[guard] = 0
+                    }
                 }
-                LogAction.SLEEP -> {
-                    //
+                action.startsWith("falls") -> {
+                    zonk = timestamp.minute
                 }
-                LogAction.WAKE -> {
-                    //
+                action.startsWith("wakes") -> {
+                    val alarm = timestamp.minute - 1
+                    val span = alarm - zonk
+
+                    sleeps[guard]!!.add(Pair(zonk, alarm))
+                    sums[guard] = sums[guard]!!.plus(span)
+
+                    for (minute in zonk..alarm) {
+                        sleepsExpanded[guard]!!.add(minute)
+                    }
+
+//                    println("Guard $guard slept for $span minutes ($zonk to $alarm)")
+                }
+                else -> {
+                    println("ERROR: Unexpected action \"$action\"")
                 }
             }
         }
 
-        // Group the entries by guard
-        val groupedEntries = entries.groupBy { it.guard }
+        val sleepDeprived = sums.maxBy { it.value }!!.key
+        val commonMinute = sleepsExpanded[sleepDeprived]!!.groupingBy { it }.eachCount().maxBy { it.value }!!.key
 
-        groupedEntries.forEach {
-            println(it)
-        }
-
-        return ""
+        return (sleepDeprived * commonMinute).toString()
     }
 
     override fun solveB(): String {
         return ""
-    }
-
-    enum class LogAction {
-        UNKNOWN, BEGIN, SLEEP, WAKE
-    }
-
-    class LogEntry {
-        var timestamp: LocalDateTime? = null
-        var action: LogAction = LogAction.UNKNOWN
-        var guard: Int = -1
-
-        companion object {
-            fun parse(line: String, formatter: DateTimeFormatter): LogEntry {
-                val entry = LogEntry()
-                entry.timestamp = LocalDateTime.parse(line.substring(1, 17), formatter)
-
-                val action = line.substring(19)
-                entry.action = when {
-                    action.startsWith("Guard") -> LogAction.BEGIN
-                    action.startsWith("falls") -> LogAction.SLEEP
-                    action.startsWith("wakes") -> LogAction.WAKE
-                    else -> LogAction.UNKNOWN
-                }
-
-                if (entry.action == LogAction.UNKNOWN) {
-                    println("ERROR: Unknown action: $action")
-                }
-
-                if (entry.action == LogAction.BEGIN) {
-                    val idStart = action.indexOf('#') + 1
-                    val idEnd = action.indexOf(' ', idStart)
-
-                    entry.guard = action.substring(idStart, idEnd).toInt()
-                }
-
-                return entry
-            }
-        }
-
-        override fun toString(): String {
-            return "LogEntry(timestamp=$timestamp, action=$action, guard=$guard)"
-        }
-    }
-
-    class Guard {
-        var number: Int = -1
-        val entries = mutableListOf<LogEntry>()
-        var sleep: Int = 0
-        var awake: Int = 0
     }
 }
