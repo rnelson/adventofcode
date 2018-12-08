@@ -14,49 +14,16 @@ class Day03: Day() {
     }
 
     override fun solveA(): String {
-        val maxX = lines.maxBy { it.startX + it.spanX }
-        val maxY = lines.maxBy { it.startY + it.spanY }
-
-        val width = maxX!!.startX + maxX.spanX + 10
-        val height = maxY!!.startY + maxY.spanY + 10
-
-        var matrix = arrayOf<Array<Int>>()
-        for (i in 0..width) {
-            var array = arrayOf<Int>()
-            for (j in 0..height) {
-                array += 0
-            }
-            matrix += array
-        }
-
-        for (line in lines) {
-            val startX = line.startX + 1
-            val startY = line.startY + 1
-            val endX = startX + line.spanX
-            val endY = startY + line.spanY
-
-            for (i in startX..endX) {
-                for (j in startY..endY) {
-                    matrix[i][j]++
+        val m = Matrix(1000)
+        lines.forEach {
+            for (x in it.startX..(it.startX + it.spanX - 1)) {
+                for (y in it.startY..(it.startY + it.spanY - 1)) {
+                    m.inc(x, y)
                 }
             }
         }
 
-        var count = 0
-        for (i in 0..width) {
-            for (j in 0..height) {
-                if (matrix[i][j] > 1) {
-                    count++
-                }
-            }
-        }
-
-        count = 0
-        for (row in matrix) {
-            count += matrix[row].asSequence().filter { it > 1 }.count()
-        }
-
-        return count.toString()
+        return m.filter { it > 1 }.count().toString()
     }
 
     override fun solveB(): String {
@@ -92,14 +59,42 @@ class Day03: Day() {
         }
     }
 
-    // https://stackoverflow.com/a/28548648
-//    class Matrix<T> private(width: Int, height: Int, arrayFactory: (Int) -> Array<T>) {
-//
-//        class object {
-//            inline fun <reified T>invoke(width: Int, height: Int)
-//                    = Matrix(width, height, { size -> arrayOfNulls<T>(size) })
-//        }
-//
-//        val data: Array<Array<T>> = Array(width, { size -> arrayFactory(size) })
-//    }
+    class Matrix(dim: Int) {
+        var size: Int? = null
+        var data: IntArray? = null
+        init {
+            size = dim
+            data = IntArray(dim * dim) { 0 }
+        }
+
+        fun get(x: Int, y: Int): Int {
+            val location = xyToIndex(x, y)
+            return data!![location]
+        }
+
+        fun set(x: Int, y: Int, value: Int) {
+            val location = xyToIndex(x, y)
+            data!![location] = value
+        }
+
+        fun inc(x: Int, y: Int) {
+            val location = xyToIndex(x, y)
+            data!![location]++
+        }
+
+        fun filter(predicate: (Int) -> Boolean): List<Int> {
+            return data!!.filter(predicate)
+        }
+
+        private fun xyToIndex(x: Int, y: Int): Int {
+            val yOffset = (x * size!!) + y //((y - 1) % size!!)
+            return x + yOffset
+        }
+
+        private fun print() {
+            for (row in 0..size!!) {
+                println(data.toString().substring(row, size!!))
+            }
+        }
+    }
 }
