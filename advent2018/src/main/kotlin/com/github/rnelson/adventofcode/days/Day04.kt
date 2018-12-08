@@ -52,8 +52,6 @@ class Day04: Day() {
                     for (minute in zonk..alarm) {
                         sleepsExpanded[guard]!!.add(minute)
                     }
-
-//                    println("Guard $guard slept for $span minutes ($zonk to $alarm)")
                 }
                 else -> {
                     println("ERROR: Unexpected action \"$action\"")
