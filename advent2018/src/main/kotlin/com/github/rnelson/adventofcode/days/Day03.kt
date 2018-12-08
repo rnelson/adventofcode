@@ -27,6 +27,28 @@ class Day03: Day() {
     }
 
     override fun solveB(): String {
+        val m = Matrix(1000)
+        lines.forEach {
+            for (x in it.startX..(it.startX + it.spanX - 1)) {
+                for (y in it.startY..(it.startY + it.spanY - 1)) {
+                    m.inc(x, y)
+                }
+            }
+        }
+
+        lines.forEach {
+            var solo = true
+            for (x in it.startX..(it.startX + it.spanX - 1)) {
+                for (y in it.startY..(it.startY + it.spanY - 1)) {
+                    solo = solo && (m.get(x, y) == 1)
+                }
+            }
+
+            if (solo) {
+                return it.id.toString()
+            }
+        }
+
         return "<unknown>"
     }
 
