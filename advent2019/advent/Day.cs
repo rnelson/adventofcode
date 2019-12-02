@@ -84,6 +84,14 @@ namespace advent
             Data = File.ReadAllLines(filename).ToList();
         }
 
+        protected void LoadCommaSeparatedInput()
+        {
+            LoadInput();
+            var s = Data.First();
+
+            Data = s.Split(new[] { ',' });
+        }
+
         protected abstract ICollection<string> DoPart1();
         protected abstract ICollection<string> DoPart2();
         #endregion Protected Methods
