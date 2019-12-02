@@ -26,13 +26,15 @@ namespace advent
                     throw new ArgumentOutOfRangeException(nameof(value), resources.GetString("Help.InvalidDay", culture));
 
                 day = value;
-                LoadInput();
             }
         }
+
+        protected readonly CultureInfo Culture = CultureInfo.GetCultureInfo("en-US");
 
         protected ICollection<string> Data { get; set; } = new List<string>();
 
         protected IList<int> DataAsInts => Data.Select(int.Parse).ToList();
+        protected IList<int> CommaSeparatedDataAsInts => Data.Select(int.Parse).ToList();
         #endregion Properties
 
         #region Public Methods

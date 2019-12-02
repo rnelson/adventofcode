@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using JetBrains.Annotations;
 
@@ -9,21 +8,25 @@ namespace advent.Solutions
     [UsedImplicitly]
     internal class Day1 : Day
     {
-        private readonly CultureInfo culture = CultureInfo.GetCultureInfo("en-US");
+        public Day1()
+        {
+            DayNumber = 1;
+            LoadInput();
+        }
 
         #region IDay Members
         protected override ICollection<string> DoPart1()
         {
             var total = DataAsInts.Sum(DetermineFuel);
 
-            return new List<string>() { $"Total fuel: {total}" };
+            return new List<string> { $"Total fuel: {total}" };
         }
 
         protected override ICollection<string> DoPart2()
         {
             var total = DataAsInts.Sum(DetermineFuelRecursive);
 
-            return new List<string>() {$"Total fuel: {total}"};
+            return new List<string> {$"Total fuel: {total}"};
         }
         #endregion IDay Members
 
@@ -32,10 +35,10 @@ namespace advent.Solutions
         {
             var a = mass / 3.0;
             var b = Math.Floor(a);
-            var c = int.Parse(b.ToString(CultureInfo.CurrentCulture), culture.NumberFormat);
+            var c = int.Parse(b.ToString(Culture), Culture.NumberFormat);
             var d = c - 2;
 
-            return int.Parse(d.ToString(culture), culture.NumberFormat);
+            return int.Parse(d.ToString(Culture), Culture.NumberFormat);
         }
 
         private int DetermineFuelRecursive(int mass)
