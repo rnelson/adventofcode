@@ -16,15 +16,6 @@ namespace advent.Solutions
         }
         #endregion Opcodes
 
-        #region Special Positions
-        private enum Position
-        {
-            Noun = 1,
-            Verb = 2
-        }
-        #endregion Special Positions
-
-        private int[] Intcode;
         private const int Output = 19690720;
 
         public Day2()
@@ -36,65 +27,34 @@ namespace advent.Solutions
         #region IDay Members
         protected override ICollection<string> DoPart1()
         {
-            Intcode = Data.Select(int.Parse).ToArray();
-            Intcode[(int)Position.Noun] = 12;
-            Intcode[(int)Position.Verb] = 2;
+            var code = Data.Select(int.Parse).ToArray();
+            code[1] = 12;
+            code[2] = 2;
 
-            var ip = 0;
+            Interpret(ref code);
 
-            while (Intcode[ip] != (int)Opcode.Halt)
-            {
-                switch (Intcode[ip])
-                {
-                    case (int)Opcode.Add:
-                        Add(ref ip);
-                        break;
-                    case (int)Opcode.Multiply:
-                        Multiply(ref ip);
-                        break;
-                    case (int)Opcode.Halt:
-                        break;
-                }
-            }
-
-            return new List<string> {Intcode[0].ToString(Culture.NumberFormat)};
+            return new List<string> {code[0].ToString(Culture.NumberFormat)};
         }
 
         protected override ICollection<string> DoPart2()
         {
-            var nouns = Enumerable.Range(0, 100);
-            var verbs = Enumerable.Range(0, 100);
+            var nouns = Enumerable.Range(0, 100).ToArray();
+            var verbs = Enumerable.Range(0, 100).ToArray();
 
             foreach (var noun in nouns)
             {
                 foreach (var verb in verbs)
                 {
-                    Intcode = Data.Select(int.Parse).ToArray();
-                    Intcode[(int)Position.Noun] = noun;
-                    Intcode[(int)Position.Verb] = verb;
+                    var code = Data.Select(int.Parse).ToArray();
+                    code[1] = noun;
+                    code[2] = verb;
 
-                    var ip = 0;
+                    Interpret(ref code);
+                    if (code[0] != Output)
+                        continue;
 
-                    while (Intcode[ip] != (int)Opcode.Halt)
-                    {
-                        switch (Intcode[ip])
-                        {
-                            case (int)Opcode.Add:
-                                Add(ref ip);
-                                break;
-                            case (int)Opcode.Multiply:
-                                Multiply(ref ip);
-                                break;
-                            case (int)Opcode.Halt:
-                                break;
-                        }
-                    }
-
-                    if (Intcode[0] == Output)
-                    {
-                        var answer = 100 * Intcode[(int)Position.Noun] + Intcode[(int)Position.Verb];
-                        return new List<string> { answer.ToString(Culture.NumberFormat) };
-                    }
+                    var answer = 100 * code[1] + code[2];
+                    return new List<string> { answer.ToString(Culture.NumberFormat) };
                 }
             }
 
@@ -103,16 +63,28 @@ namespace advent.Solutions
         #endregion IDay Members
 
         #region Private Methods
-        private void Add(ref int ip)
+        private static void Interpret(ref int[] code)
         {
-            Intcode[Intcode[ip + 3]] = Intcode[Intcode[ip + 1]] + Intcode[Intcode[ip + 2]];
-            ip += 4;
-        }
+            var ip = 0;
 
-        private void Multiply(ref int ip)
-        {
-            Intcode[Intcode[ip + 3]] = Intcode[Intcode[ip + 1]] * Intcode[Intcode[ip + 2]];
-            ip += 4;
+            while (code[ip] != (int)Opcode.Halt)
+            {
+                switch (code[ip])
+                {
+                    case (int)Opcode.Add:
+                        code[code[ip + 3]] = code[code[ip + 1]] + code[code[ip + 2]];
+                        ip += 4;
+
+                        break;
+                    case (int)Opcode.Multiply:
+                        code[code[ip + 3]] = code[code[ip + 1]] * code[code[ip + 2]];
+                        ip += 4;
+
+                        break;
+                    case (int)Opcode.Halt:
+                        break;
+                }
+            }
         }
         #endregion Private Methods
     }
