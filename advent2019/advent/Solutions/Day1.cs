@@ -14,16 +14,14 @@ namespace advent.Solutions
         #region IDay Members
         protected override ICollection<string> DoPart1()
         {
-            var modules = Data.Select(int.Parse).ToList();
-            var total = modules.Sum(DetermineFuel);
+            var total = DataAsInts.Sum(DetermineFuel);
 
             return new List<string>() { $"Total fuel: {total}" };
         }
 
         protected override ICollection<string> DoPart2()
         {
-            var modules = Data.Select(int.Parse).ToList();
-            var total = modules.Sum(DetermineFuelRecursive);
+            var total = DataAsInts.Sum(DetermineFuelRecursive);
 
             return new List<string>() {$"Total fuel: {total}"};
         }
