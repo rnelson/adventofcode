@@ -31,6 +31,8 @@ namespace advent
         }
 
         protected ICollection<string> Data { get; set; } = new List<string>();
+
+        protected IList<int> DataAsInts => Data.Select(int.Parse).ToList();
         #endregion Properties
 
         #region Public Methods
