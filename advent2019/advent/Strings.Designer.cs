@@ -61,7 +61,7 @@ namespace advent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advent of Code 2019 - C#/.NET Core 3\n====================================\n.
+        ///   Looks up a localized string similar to Advent of Code 2019 - C#/.NET Core 3.1\n======================================\n.
         /// </summary>
         internal static string Day_Header {
             get {
