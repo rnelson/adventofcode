@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
@@ -23,13 +22,8 @@ namespace advent.Solutions
             var lower = range[0];
             var upper = range[1];
             var values = Enumerable.Range(lower, (upper - lower) + 1).ToArray();
-            var good = 0;
 
-            foreach (var n in values)
-            {
-                if (IsValid(n.ToString(Culture), lower, upper))
-                    good++;
-            }
+            var good = values.Count(n => IsValid(n.ToString(Culture), lower, upper));
 
             return new List<string> { $"{good}" };
         }
@@ -41,13 +35,8 @@ namespace advent.Solutions
             var lower = range[0];
             var upper = range[1];
             var values = Enumerable.Range(lower, (upper - lower) + 1).ToArray();
-            var good = 0;
 
-            foreach (var n in values)
-            {
-                if (IsValid(n.ToString(Culture), lower, upper, true))
-                    good++;
-            }
+            var good = values.Count(n => IsValid(n.ToString(Culture), lower, upper, true));
 
             return new List<string> { $"{good}" };
         }
