@@ -36,9 +36,6 @@ namespace advent.Solutions
 
         protected override ICollection<string> DoPart2()
         {
-            //var tests = new[] { 111111, 223450, 123789, 122345, 111123, 135679 };
-            //return tests.Select(test => $"{test}: {IsValid(test.ToString(Culture))}").ToList();
-
             LoadInput();
             var range = Data.First().Split('-').Select(int.Parse).ToArray();
             var lower = range[0];
