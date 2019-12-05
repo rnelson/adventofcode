@@ -88,6 +88,15 @@ namespace advent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input: .
+        /// </summary>
+        internal static string Day5_Input {
+            get {
+                return ResourceManager.GetString("Day5.Input", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to value must be between 1 and 31.
         /// </summary>
         internal static string Help_InvalidDay {
