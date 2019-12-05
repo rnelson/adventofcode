@@ -126,6 +126,9 @@
   <data name="Day.Part.Line" xml:space="preserve">
     <value>  {0}</value>
   </data>
+  <data name="Day5.Input" xml:space="preserve">
+    <value>Input: </value>
+  </data>
   <data name="Help.InvalidDay" xml:space="preserve">
     <value>value must be between 1 and 31</value>
   </data>
