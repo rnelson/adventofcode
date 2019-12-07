@@ -15,6 +15,10 @@ namespace advent.Solutions
             Multiply = 2,
             ReadLine = 3,
             WriteLine = 4,
+            JumpIfTrue = 5,
+            JumpIfFalse = 6,
+            LessThan = 7,
+            Equals = 8,
             Halt = 99
         }
 
@@ -45,18 +49,22 @@ namespace advent.Solutions
         protected override ICollection<string> DoPart2()
         {
             LoadCommaSeparatedInput();
-            return new List<string> { "Not yet completed" };
+            var code = Data.Select(int.Parse).ToArray();
+
+            Interpret(ref code, true);
+
+            return new List<string> { "" };
         }
         #endregion IDay Members
 
         #region Private Methods
-        private void Interpret(ref int[] code)
+        private void Interpret(ref int[] code, bool thermalRadiators = false)
         {
             var ip = 0;
 
             while (code[ip] != (int)Opcode.Halt)
             {
-                var instruction = Instruction.Parse(code, ip, Culture);
+                var instruction = Instruction.Parse(code, ip, Culture, thermalRadiators);
 
                 int destination, argument1, argument2;
 
@@ -98,6 +106,52 @@ namespace advent.Solutions
                         var output = code[GetLocation(instruction.Argument1Mode, code, ip, 1)].ToString(Culture);
                         Console.WriteLine(output);
                         ip += 2;
+
+                        break;
+                    case Opcode.JumpIfTrue:
+                        argument1 = GetValue(instruction.Argument1Mode, code, ip, 1);
+                        argument2 = GetValue(instruction.Argument2Mode, code, ip, 2);
+
+                        if (argument1 != 0)
+                            ip = argument2;
+                        else
+                            ip += 3;
+
+                        break;
+                    case Opcode.JumpIfFalse:
+                        argument1 = GetValue(instruction.Argument1Mode, code, ip, 1);
+                        argument2 = GetValue(instruction.Argument2Mode, code, ip, 2);
+
+                        if (argument1 == 0)
+                            ip = argument2;
+                        else
+                            ip += 3;
+
+                        break;
+                    case Opcode.LessThan:
+                        argument1 = GetValue(instruction.Argument1Mode, code, ip, 1);
+                        argument2 = GetValue(instruction.Argument2Mode, code, ip, 2);
+                        destination = GetLocation(instruction.Argument3Mode, code, ip, 3);
+
+                        if (argument1 < argument2)
+                            code[destination] = 1;
+                        else
+                            code[destination] = 0;
+
+                        ip += 4;
+
+                        break;
+                    case Opcode.Equals:
+                        argument1 = GetValue(instruction.Argument1Mode, code, ip, 1);
+                        argument2 = GetValue(instruction.Argument2Mode, code, ip, 2);
+                        destination = GetLocation(instruction.Argument3Mode, code, ip, 3);
+
+                        if (argument1 == argument2)
+                            code[destination] = 1;
+                        else
+                            code[destination] = 0;
+
+                        ip += 4;
 
                         break;
                     case Opcode.Halt:
@@ -159,40 +213,86 @@ namespace advent.Solutions
             #endregion Properties
 
             #region Public Methods
-            internal static Instruction Parse(int[] code, int ip, IFormatProvider culture = null)
+            internal static Instruction Parse(int[] code, int ip, IFormatProvider culture = null, bool thermalRadiators = false)
             {
                 var instruction = new Instruction();
                 var input = code[ip];
                 var s = input.ToString("D5", culture);
 
-                switch (s.Substring(s.Length - 2))
+                var hasArg1 = false;
+                var hasArg2 = false;
+                var hasArg3 = false;
+
+                if (thermalRadiators)
                 {
-                    case "01":
-                        instruction.Opcode = Opcode.Add;
-                        (instruction.Argument1, instruction.Argument1Mode) = DetermineArgument(code, ip, 1);
-                        (instruction.Argument2, instruction.Argument2Mode) = DetermineArgument(code, ip, 2);
-                        (instruction.Argument3, instruction.Argument3Mode) = DetermineArgument(code, ip, 3);
-                        break;
-                    case "02":
-                        instruction.Opcode = Opcode.Multiply;
-                        (instruction.Argument1, instruction.Argument1Mode) = DetermineArgument(code, ip, 1);
-                        (instruction.Argument2, instruction.Argument2Mode) = DetermineArgument(code, ip, 2);
-                        (instruction.Argument3, instruction.Argument3Mode) = DetermineArgument(code, ip, 3);
-                        break;
-                    case "03":
-                        instruction.Opcode = Opcode.ReadLine;
-                        (instruction.Argument1, instruction.Argument1Mode) = DetermineArgument(code, ip, 1);
-                        break;
-                    case "04":
-                        instruction.Opcode = Opcode.WriteLine;
-                        (instruction.Argument1, instruction.Argument1Mode) = DetermineArgument(code, ip, 1);
-                        
-                        break;
-                    case "99":
-                        instruction.Opcode = Opcode.Halt;
-                        (instruction.Argument1, instruction.Argument1Mode) = DetermineArgument(code, ip, 1);
-                        break;
+                    switch (s.Substring(s.Length - 2))
+                    {
+                        case "01":
+                            instruction.Opcode = Opcode.Add;
+                            hasArg1 = hasArg2 = hasArg3 = true;
+                            break;
+                        case "02":
+                            instruction.Opcode = Opcode.Multiply;
+                            hasArg1 = hasArg2 = hasArg3 = true;
+                            break;
+                        case "03":
+                            instruction.Opcode = Opcode.ReadLine;
+                            hasArg1 = true;
+                            break;
+                        case "04":
+                            instruction.Opcode = Opcode.WriteLine;
+                            hasArg1 = true;
+                            break;
+                        case "05":
+                            instruction.Opcode = Opcode.JumpIfTrue;
+                            hasArg1 = hasArg2 = true;
+                            break;
+                        case "06":
+                            instruction.Opcode = Opcode.JumpIfFalse;
+                            hasArg1 = hasArg2 = true;
+                            break;
+                        case "07":
+                            instruction.Opcode = Opcode.LessThan;
+                            hasArg1 = hasArg2 = hasArg3 = true;
+                            break;
+                        case "08":
+                            instruction.Opcode = Opcode.Equals;
+                            hasArg1 = hasArg2 = hasArg3 = true;
+                            break;
+                        case "99":
+                            instruction.Opcode = Opcode.Halt;
+                            break;
+                    }
                 }
+                else
+                {
+                    switch (s.Substring(s.Length - 2))
+                    {
+                        case "01":
+                            instruction.Opcode = Opcode.Add;
+                            hasArg1 = hasArg2 = hasArg3 = true;
+                            break;
+                        case "02":
+                            instruction.Opcode = Opcode.Multiply;
+                            hasArg1 = hasArg2 = hasArg3 = true;
+                            break;
+                        case "03":
+                            instruction.Opcode = Opcode.ReadLine;
+                            hasArg1 = true;
+                            break;
+                        case "04":
+                            instruction.Opcode = Opcode.WriteLine;
+                            hasArg1 = true;
+                            break;
+                        case "99":
+                            instruction.Opcode = Opcode.Halt;
+                            break;
+                    }
+                }
+
+                if (hasArg1) (instruction.Argument1, instruction.Argument1Mode) = DetermineArgument(code, ip, 1);
+                if (hasArg2) (instruction.Argument2, instruction.Argument2Mode) = DetermineArgument(code, ip, 2);
+                if (hasArg3) (instruction.Argument3, instruction.Argument3Mode) = DetermineArgument(code, ip, 3);
 
                 return instruction;
             }
