@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using JetBrains.Annotations;
 
@@ -168,7 +169,6 @@ namespace advent.Solutions
             {
                 case Mode.Position:
                     return code[code[ip + offset]];
-                    break;
 
                 case Mode.Immediate:
                     value = code[ip + offset];
@@ -306,7 +306,7 @@ namespace advent.Solutions
 
                 // Get the instruction as a full five digit string
                 var input = code[ip];
-                var s = input.ToString("D5");
+                var s = input.ToString("D5", CultureInfo.GetCultureInfo("en-US").NumberFormat);
 
                 // Determine mode
                 var modeIndex = 3 - argNumber;
