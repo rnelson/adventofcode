@@ -138,4 +138,7 @@
   <data name="Help.Usage" xml:space="preserve">
     <value>usage: advent &lt;day&gt;</value>
   </data>
+  <data name="Helpers.Math.NeedTwoValues" xml:space="preserve">
+    <value>{0} must contain at least 2 values</value>
+  </data>
 </root>

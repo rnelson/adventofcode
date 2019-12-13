@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace advent.Helpers
@@ -36,7 +37,14 @@ namespace advent.Helpers
         public static int Lcm(int[] numbers)
         {
             if (numbers is null || numbers.Length < 2)
-                throw new ArgumentOutOfRangeException(nameof(numbers), $"{nameof(numbers)} must contain at least 2 values");
+            {
+                var culture = CultureInfo.CurrentUICulture;
+                var error = string.Format(
+                    culture,
+                    Strings.Helpers_Math_NeedTwoValues,
+                    nameof(numbers));
+                throw new ArgumentOutOfRangeException(nameof(numbers), error);
+            }
 
             return numbers.Aggregate(Lcm);
         }
@@ -44,7 +52,14 @@ namespace advent.Helpers
         public static long Lcm(long[] numbers)
         {
             if (numbers is null || numbers.Length < 2)
-                throw new ArgumentOutOfRangeException(nameof(numbers), $"{nameof(numbers)} must contain at least 2 values");
+            {
+                var culture = CultureInfo.CurrentUICulture;
+                var error = string.Format(
+                    culture,
+                    Strings.Helpers_Math_NeedTwoValues,
+                    nameof(numbers));
+                throw new ArgumentOutOfRangeException(nameof(numbers), error);
+            }
 
             return numbers.Aggregate(Lcm);
         }
