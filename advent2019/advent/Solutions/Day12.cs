@@ -34,20 +34,27 @@ namespace advent.Solutions
         protected override ICollection<string> DoPart2()
         {
             var moons = ParseInput(); 
-            var states = new List<string>();
 
-            var steps = 0;
-            var universe = GetUniverse(moons);
-            while (!states.Contains(universe))
+            long x = -1;
+            long y = -1;
+            long z = -1;
+            long steps = 0;
+
+            while (true)
             {
-                states.Add(universe);
                 moons = Step(moons);
-
                 steps++;
-                universe = GetUniverse(moons);
+
+                if (x < 0 && moons.All(m => m.VelX == 0)) x = steps;
+                if (y < 0 && moons.All(m => m.VelY == 0)) y = steps;
+                if (z < 0 && moons.All(m => m.VelZ == 0)) z = steps;
+
+                if (x > -1 && y > -1 && z > -1) break;
             }
 
-            return new List<string> { $"{steps}" };
+            var lcm = Helpers.Math.Lcm(new[] {x, y, z});
+            var repeat = lcm * 2;
+            return new List<string> { $"{repeat}" };
         }
         #endregion IDay Members
 
