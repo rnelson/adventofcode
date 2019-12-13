@@ -122,5 +122,14 @@ namespace advent {
                 return ResourceManager.GetString("Help.Usage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must contain at least 2 values.
+        /// </summary>
+        internal static string Helpers_Math_NeedTwoValues {
+            get {
+                return ResourceManager.GetString("Helpers.Math.NeedTwoValues", resourceCulture);
+            }
+        }
     }
 }

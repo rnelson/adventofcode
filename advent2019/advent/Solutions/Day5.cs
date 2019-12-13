@@ -161,7 +161,7 @@ namespace advent.Solutions
             }
         }
 
-        private int GetValue(Mode mode, int[] code, int ip, int offset)
+        private static int GetValue(Mode mode, int[] code, int ip, int offset)
         {
             var value = 0;
 
@@ -178,7 +178,7 @@ namespace advent.Solutions
             return value;
         }
 
-        private int GetLocation(Mode mode, int[] code, int ip, int offset)
+        private static int GetLocation(Mode mode, int[] code, int ip, int offset)
         {
             var location = -1;
 
