@@ -33,7 +33,21 @@ namespace advent.Solutions
 
         protected override ICollection<string> DoPart2()
         {
-            return new List<string> { "" };
+            var moons = ParseInput(); 
+            var states = new List<string>();
+
+            var steps = 0;
+            var universe = GetUniverse(moons);
+            while (!states.Contains(universe))
+            {
+                states.Add(universe);
+                moons = Step(moons);
+
+                steps++;
+                universe = GetUniverse(moons);
+            }
+
+            return new List<string> { $"{steps}" };
         }
         #endregion IDay Members
 
@@ -108,6 +122,11 @@ namespace advent.Solutions
         private int CalculateEnergy(IEnumerable<Moon> moons)
         {
             return moons.Sum(CalculateEnergy);
+        }
+
+        private string GetUniverse(IEnumerable<Moon> moons)
+        {
+            return moons.Aggregate(string.Empty, (current, moon) => current + moon);
         }
         #endregion Private Methods
 
