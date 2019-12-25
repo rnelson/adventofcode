@@ -20,6 +20,7 @@ namespace advent.Solutions
             JumpIfFalse = 6,
             LessThan = 7,
             Equals = 8,
+            AdjustRelativeBase = 9,
             Halt = 99
         }
 
@@ -27,9 +28,14 @@ namespace advent.Solutions
         {
             Position = 0,
             Immediate = 1,
+            Relative = 2,
             Unknown = 3000
         }
         #endregion Enums
+
+        #region Fields
+        private static int relativeBase = 0;
+        #endregion Fields
 
         public Day9()
         {
@@ -41,6 +47,7 @@ namespace advent.Solutions
         {
             LoadCommaSeparatedInput();
             var code = Data.Select(int.Parse).ToArray();
+            relativeBase = 0;
 
             Interpret(ref code);
 
@@ -51,6 +58,7 @@ namespace advent.Solutions
         {
             LoadCommaSeparatedInput();
             var code = Data.Select(int.Parse).ToArray();
+            relativeBase = 0;
 
             Interpret(ref code, true);
 
@@ -155,6 +163,8 @@ namespace advent.Solutions
                         ip += 4;
 
                         break;
+                    case Opcode.AdjustRelativeBase:
+                        break;
                     case Opcode.Halt:
                         break;
                 }
@@ -189,6 +199,9 @@ namespace advent.Solutions
                     break;
                 case Mode.Immediate:
                     location = offset;
+                    break;
+                case Mode.Relative:
+
                     break;
             }
 
@@ -259,6 +272,10 @@ namespace advent.Solutions
                             instruction.Opcode = Opcode.Equals;
                             hasArg1 = hasArg2 = hasArg3 = true;
                             break;
+                        case "09":
+                            instruction.Opcode = Opcode.AdjustRelativeBase;
+                            hasArg1 = true;
+                            break;
                         case "99":
                             instruction.Opcode = Opcode.Halt;
                             break;
@@ -284,6 +301,26 @@ namespace advent.Solutions
                             instruction.Opcode = Opcode.WriteLine;
                             hasArg1 = true;
                             break;
+                        case "05":
+                            instruction.Opcode = Opcode.JumpIfTrue;
+                            hasArg1 = hasArg2 = true;
+                            break;
+                        case "06":
+                            instruction.Opcode = Opcode.JumpIfFalse;
+                            hasArg1 = hasArg2 = true;
+                            break;
+                        case "07":
+                            instruction.Opcode = Opcode.LessThan;
+                            hasArg1 = hasArg2 = hasArg3 = true;
+                            break;
+                        case "08":
+                            instruction.Opcode = Opcode.Equals;
+                            hasArg1 = hasArg2 = hasArg3 = true;
+                            break;
+                        case "09":
+                            instruction.Opcode = Opcode.AdjustRelativeBase;
+                            hasArg1 = true;
+                            break;
                         case "99":
                             instruction.Opcode = Opcode.Halt;
                             break;
@@ -301,7 +338,6 @@ namespace advent.Solutions
             #region Private Methods
             private static (int, Mode) DetermineArgument(int[] code, int ip, int argNumber)
             {
-                var value = 0;
                 var mode = Mode.Position;
 
                 // Get the instruction as a full five digit string
@@ -312,9 +348,11 @@ namespace advent.Solutions
                 var modeIndex = 3 - argNumber;
                 if ('1'.Equals(s[modeIndex]))
                     mode = Mode.Immediate;
+                else if ('2'.Equals(s[modeIndex]))
+                    mode = Mode.Relative;
 
                 // Grab the value/location
-                value = code[ip + argNumber];
+                var value = code[ip + argNumber];
 
                 return (value, mode);
             }
