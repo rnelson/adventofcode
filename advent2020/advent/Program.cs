@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -27,6 +28,8 @@ namespace advent
             day!.Part2();
         }
 
+        [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
+        [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
         private static Day? CreateDay(int dayNumber)
         {
             var assembly = Assembly.GetExecutingAssembly();
