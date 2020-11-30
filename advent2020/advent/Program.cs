@@ -19,9 +19,12 @@ namespace advent
             var number = int.Parse(args[0], culture.NumberFormat);
             var day = CreateDay(number);
 
-            day?.Header();
-            day?.Part1();
-            day?.Part2();
+            if (day is null)
+                throw new InvalidOperationException($"unable to run day {number}");
+
+            day!.Header();
+            day!.Part1();
+            day!.Part2();
         }
 
         private static Day? CreateDay(int dayNumber)
