@@ -5,22 +5,44 @@ using System.Linq;
 namespace advent.Helpers
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     internal static class Math
     {
         internal static int Gcd(int a, int b)
         {
-            if (a == 0) return b;
-            if (b == 0) return a;
+            while (true)
+            {
+                if (a == 0) return b;
+                if (b == 0) return a;
 
-            return a > b ? Gcd(a % b, b) : Gcd(a, b % a);
+                if (a > b)
+                {
+                    a %= b;
+                    continue;
+                }
+
+                var a1 = a;
+                b %= a1;
+            }
         }
 
         internal static long Gcd(long a, long b)
         {
-            if (a == 0) return b;
-            if (b == 0) return a;
+            while (true)
+            {
+                if (a == 0) return b;
+                if (b == 0) return a;
 
-            return a > b ? Gcd(a % b, b) : Gcd(a, b % a);
+                if (a > b)
+                {
+                    a %= b;
+                    continue;
+                }
+
+                var a1 = a;
+                b %= a1;
+            }
         }
 
         internal static int Lcm(int a, int b)

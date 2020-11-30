@@ -4,9 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace advent
 {
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
     internal abstract class Day : IDay
     {
         #region Fields
@@ -29,11 +31,14 @@ namespace advent
         [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
         protected ICollection<string> Data { get; set; } = new List<string>();
 
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
         protected IEnumerable<int> DataAsInts => Data.Select(int.Parse).ToList();
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
         protected IList<int> CommaSeparatedDataAsInts => Data.Select(int.Parse).ToList();
         #endregion Properties
         
         #region Constructors
+        [UsedImplicitly]
         private Day() { }
 
         protected Day(int dayNumber)
@@ -50,7 +55,7 @@ namespace advent
 
         public void Part1()
         {
-            Console.WriteLine($"Part 1:");
+            Console.WriteLine("Part 1:");
             
             var output = DoPart1();
             foreach (var line in output)
@@ -61,7 +66,7 @@ namespace advent
 
         public void Part2()
         {
-            Console.WriteLine($"Part 2:");
+            Console.WriteLine("Part 2:");
 
             var output = DoPart2();
             foreach (var line in output)
@@ -72,6 +77,7 @@ namespace advent
         #endregion Public Methods
 
         #region Protected Methods
+        [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
         protected void LoadInput()
         {
             if (!day.HasValue)
@@ -88,6 +94,7 @@ namespace advent
             Data = File.ReadAllLines(filename).ToList();
         }
 
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
         protected void LoadCommaSeparatedInput()
         {
             LoadInput();

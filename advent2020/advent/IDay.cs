@@ -1,11 +1,17 @@
-﻿namespace advent
+﻿using JetBrains.Annotations;
+
+namespace advent
 {
     internal interface IDay
     {
-        int DayNumber { get; set; }
+        [UsedImplicitly]
+        public int DayNumber { get; set; }
 
-        void Header();
-        void Part1();
-        void Part2();
+        [UsedImplicitly]
+        public void Header();
+        [UsedImplicitly]
+        public void Part1();
+        [UsedImplicitly]
+        public void Part2();
     }
 }
