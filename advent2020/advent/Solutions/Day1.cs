@@ -6,21 +6,20 @@ namespace advent.Solutions
     [UsedImplicitly]
     internal class Day1 : Day
     {
-        public Day1()
+        public Day1() : base(1)
         {
-            DayNumber = 1;
             LoadInput();
         }
 
         #region IDay Members
         protected override IEnumerable<string> DoPart1()
         {
-            return new List<string> { $"Part 1" };
+            return new List<string> {"Part 1"};
         }
 
         protected override IEnumerable<string> DoPart2()
         {
-            return new List<string> {$"Part 2"};
+            return new List<string> {"Part 2"};
         }
         #endregion IDay Members
 

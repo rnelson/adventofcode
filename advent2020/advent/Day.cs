@@ -32,6 +32,15 @@ namespace advent
         protected IEnumerable<int> DataAsInts => Data.Select(int.Parse).ToList();
         protected IList<int> CommaSeparatedDataAsInts => Data.Select(int.Parse).ToList();
         #endregion Properties
+        
+        #region Constructors
+        private Day() { }
+
+        protected Day(int dayNumber)
+        {
+            DayNumber = dayNumber;
+        }
+        #endregion Constructors
 
         #region Public Methods
         public void Header()
