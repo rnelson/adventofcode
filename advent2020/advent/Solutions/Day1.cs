@@ -46,13 +46,13 @@ namespace advent.Solutions
 
         #region Private Methods
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
-        private static long Solve(IEnumerable<int> input, int count = 2)
+        private static long Solve(IEnumerable<int> input, int count = 2, long sum = 2020)
         {
             var combinations = new Combinations<int>(input.ToList(), count);
 
             foreach (var c in combinations)
             {
-                if (c.Sum() == 2020)
+                if (c.Sum() == sum)
                 {
                     return c.Aggregate(1, (x, y) => x * y);
                 }
