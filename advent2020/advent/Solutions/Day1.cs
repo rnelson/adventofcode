@@ -17,7 +17,7 @@ namespace advent.Solutions
 
         #region IDay Members
         [UsedImplicitly]
-        protected new bool Test()
+        public override bool Test()
         {
             const long answerA = 514579;
             const long answerB = 241861950;
