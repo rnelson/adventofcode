@@ -12,6 +12,11 @@ namespace advent.Solutions
         }
 
         #region IDay Members
+        protected new bool Test()
+        {
+            return true;
+        }
+        
         protected override IEnumerable<string> DoPart1()
         {
             return new List<string> {"Part 1"};

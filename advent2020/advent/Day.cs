@@ -52,11 +52,8 @@ namespace advent
         {
             Console.WriteLine("Advent of Code 2020 - C#\n======================================\n");
         }
-        
-        public bool Test()
-        {
-            return true;
-        }
+
+        public bool Test() => true;
 
         public void Part1()
         {
