@@ -1,5 +1,5 @@
 # Advent of Code 2020
 
 ## Day 1
-A: TBD
-B: TBD
+A: 633216
+B: 68348924
