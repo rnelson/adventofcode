@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using Spectre.Console;
 
 [assembly: NeutralResourcesLanguage("en")]
 namespace advent
@@ -27,7 +28,7 @@ namespace advent
             day!.Header();
             if (!day!.Test())
             {
-                Console.Error.WriteLine($"error: test(s) for day {number} failed");
+                AnsiConsole.MarkupLine($"[bold red]error[/]: test(s) for day {number} failed");
                 return;
             }
 
