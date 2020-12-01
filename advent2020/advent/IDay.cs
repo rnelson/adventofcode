@@ -10,6 +10,8 @@ namespace advent
         [UsedImplicitly]
         public void Header();
         [UsedImplicitly]
+        public bool Test();
+        [UsedImplicitly]
         public void Part1();
         [UsedImplicitly]
         public void Part2();

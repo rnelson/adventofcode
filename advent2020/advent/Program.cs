@@ -24,8 +24,11 @@ namespace advent
                 throw new InvalidOperationException($"unable to run day {number}");
 
             day!.Header();
-            day!.Part1();
-            day!.Part2();
+            if (day!.Test())
+            {
+                day!.Part1();
+                day!.Part2();
+            }
         }
 
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
