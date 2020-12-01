@@ -18,27 +18,33 @@ namespace advent.Solutions
         protected new bool Test()
         {
             const long answerA = 514579;
-            var inputA = new[] {1721, 979, 366, 299, 675, 1456};
+            const long answerB = 241861950;
             
-            return SolveA(inputA) == answerA;
+            var input = new[] {1721, 979, 366, 299, 675, 1456};
+            
+            var a = Solve(input) == answerA;
+            var b = Solve(input, 3) == answerB;
+
+            return a && b;
         }
         
         protected override IEnumerable<string> DoPart1()
         {
-            var product = SolveA(DataAsInts);
+            var product = Solve(DataAsInts);
             return new List<string> {product.ToString()};
         }
 
         protected override IEnumerable<string> DoPart2()
         {
-            return new List<string> {"Part 2"};
+            var product = Solve(DataAsInts, 3);
+            return new List<string> {product.ToString()};
         }
         #endregion IDay Members
 
         #region Private Methods
-        private long SolveA(IEnumerable<int> input)
+        private long Solve(IEnumerable<int> input, int count = 2)
         {
-            var combinations = new Combinations<int>(input.ToList(), 2);
+            var combinations = new Combinations<int>(input.ToList(), count);
 
             foreach (var c in combinations)
             {
