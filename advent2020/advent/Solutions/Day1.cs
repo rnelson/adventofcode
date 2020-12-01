@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 namespace advent.Solutions
 {
     [UsedImplicitly]
+    [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     internal class Day1 : Day
     {
         public Day1() : base(1)
@@ -33,13 +34,13 @@ namespace advent.Solutions
         protected override IEnumerable<string> DoPart1()
         {
             var product = Solve(DataAsInts);
-            return new List<string> {product.ToString()};
+            return new List<string> {$"[bold yellow]{product}[/]"};
         }
 
         protected override IEnumerable<string> DoPart2()
         {
             var product = Solve(DataAsInts, 3);
-            return new List<string> {product.ToString()};
+            return new List<string> {$"[bold yellow]{product}[/]"};
         }
         #endregion IDay Members
 

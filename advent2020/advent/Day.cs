@@ -5,10 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Spectre.Console;
 
 namespace advent
 {
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+    [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     internal abstract class Day : IDay
     {
         #region Fields
@@ -50,30 +52,30 @@ namespace advent
         #region Public Methods
         public void Header()
         {
-            Console.WriteLine("Advent of Code 2020 - C#\n======================================\n");
+            AnsiConsole.MarkupLine($"[underline deepskyblue3]Advent of Code 2020[/] (Day {DayNumber})\n");
         }
 
         public abstract bool Test();
 
         public void Part1()
         {
-            Console.WriteLine("Part 1:");
+            AnsiConsole.MarkupLine("Part A:");
             
             var output = DoPart1();
             foreach (var line in output)
             {
-                Console.WriteLine($"  {line}");
+                AnsiConsole.MarkupLine($"  {line}");
             }
         }
 
         public void Part2()
         {
-            Console.WriteLine("Part 2:");
+            AnsiConsole.MarkupLine("Part B:");
 
             var output = DoPart2();
             foreach (var line in output)
             {
-                Console.WriteLine($"  {line}");
+                AnsiConsole.MarkupLine($"  {line}");
             }
         }
         #endregion Public Methods
