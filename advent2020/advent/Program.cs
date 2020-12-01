@@ -28,6 +28,7 @@ namespace advent
             if (!day!.Test())
             {
                 Console.Error.WriteLine($"error: test(s) for day {number} failed");
+                return;
             }
 
             day!.Part1();
