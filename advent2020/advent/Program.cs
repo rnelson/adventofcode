@@ -8,6 +8,7 @@ using System.Resources;
 [assembly: NeutralResourcesLanguage("en")]
 namespace advent
 {
+    [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     internal static class Program
     {
         private static void Main(string[] args)
@@ -24,11 +25,13 @@ namespace advent
                 throw new InvalidOperationException($"unable to run day {number}");
 
             day!.Header();
-            if (day!.Test())
+            if (!day!.Test())
             {
-                day!.Part1();
-                day!.Part2();
+                Console.Error.WriteLine($"error: test(s) for day {number} failed");
             }
+
+            day!.Part1();
+            day!.Part2();
         }
 
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]

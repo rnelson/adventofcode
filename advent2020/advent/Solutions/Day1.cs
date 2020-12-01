@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using advent.Exceptions;
 using Combinatorics.Collections;
@@ -15,6 +16,7 @@ namespace advent.Solutions
         }
 
         #region IDay Members
+        [UsedImplicitly]
         protected new bool Test()
         {
             const long answerA = 514579;
@@ -42,7 +44,8 @@ namespace advent.Solutions
         #endregion IDay Members
 
         #region Private Methods
-        private long Solve(IEnumerable<int> input, int count = 2)
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+        private static long Solve(IEnumerable<int> input, int count = 2)
         {
             var combinations = new Combinations<int>(input.ToList(), count);
 
