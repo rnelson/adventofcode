@@ -12,8 +12,8 @@ namespace advent
         [UsedImplicitly]
         public bool Test();
         [UsedImplicitly]
-        public void Part1();
+        public void PartA();
         [UsedImplicitly]
-        public void Part2();
+        public void PartB();
     }
 }

@@ -57,22 +57,22 @@ namespace advent
 
         public abstract bool Test();
 
-        public void Part1()
+        public void PartA()
         {
             AnsiConsole.MarkupLine("Part A:");
             
-            var output = DoPart1();
+            var output = DoPartA();
             foreach (var line in output)
             {
                 AnsiConsole.MarkupLine($"  {line}");
             }
         }
 
-        public void Part2()
+        public void PartB()
         {
             AnsiConsole.MarkupLine("Part B:");
 
-            var output = DoPart2();
+            var output = DoPartB();
             foreach (var line in output)
             {
                 AnsiConsole.MarkupLine($"  {line}");
@@ -107,8 +107,8 @@ namespace advent
             Data = s.Split(new[] { ',' });
         }
 
-        protected abstract IEnumerable<string> DoPart1();
-        protected abstract IEnumerable<string> DoPart2();
+        protected abstract IEnumerable<string> DoPartA();
+        protected abstract IEnumerable<string> DoPartB();
         #endregion Protected Methods
     }
 }

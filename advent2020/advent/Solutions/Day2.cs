@@ -21,13 +21,13 @@ namespace advent.Solutions
             return false;
         }
         
-        protected override IEnumerable<string> DoPart1()
+        protected override IEnumerable<string> DoPartA()
         {
             var answer = Solve(DataAsInts);
             return new List<string> {$"[bold yellow]{answer}[/]"};
         }
 
-        protected override IEnumerable<string> DoPart2()
+        protected override IEnumerable<string> DoPartB()
         {
             var answer = Solve(DataAsInts);
             return new List<string> {$"[bold yellow]{answer}[/]"};

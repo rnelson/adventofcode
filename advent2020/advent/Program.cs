@@ -32,8 +32,8 @@ namespace advent
                 return;
             }
 
-            day!.Part1();
-            day!.Part2();
+            day!.PartA();
+            day!.PartB();
         }
 
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
