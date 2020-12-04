@@ -88,17 +88,6 @@ namespace advent.Solutions
                 curX += x;
                 curY += y;
             }
-
-            /*
-            while (curY < map.Length && curX < map[0].Length)
-            {
-                if (map[curY][curX] == TREE_B)
-                    trees++;
-
-                curX += x;
-                curY += y;
-            }
-            */
             
             return trees;
         }
