@@ -11,6 +11,7 @@ namespace advent.Solutions
     [UsedImplicitly]
     [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
     internal class Day4 : Day
     {
         public Day4() : base(4)
@@ -110,7 +111,7 @@ namespace advent.Solutions
 
             foreach (var line in batchArray)
             {
-                if (line.Equals(lastLine))
+                if (line.Equals(lastLine, StringComparison.Ordinal))
                 {
                     currentBlock.Add(line);
                     passportBlocks.Add(currentBlock);
@@ -132,21 +133,24 @@ namespace advent.Solutions
         #endregion Private Methods
         
         #region Classes
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
         internal class Passport
         {
-            public string BirthYear { get; set; }
-            public string IssueYear { get; set; }
-            public string ExpirationYear { get; set; }
-            public string Height { get; set; }
-            public string HairColor { get; set; }
-            public string EyeColor { get; set; }
-            public string PassportId { get; set; }
-            public string CountryId { get; set; }
+            public string? BirthYear { get; set; }
+            public string? IssueYear { get; set; }
+            public string? ExpirationYear { get; set; }
+            public string? Height { get; set; }
+            public string? HairColor { get; set; }
+            public string? EyeColor { get; set; }
+            public string? PassportId { get; set; }
+            public string? CountryId { get; set; }
             public bool Valid => IsValid();
             public bool SuperValid => IsValid(true);
 
             private Passport() { }
 
+            [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
             public static Passport Parse(IEnumerable<string> data)
             {
                 if (data is null)
@@ -210,6 +214,7 @@ namespace advent.Solutions
                 return passport;
             }
 
+#pragma warning disable 8604
             [SuppressMessage("ReSharper", "CA2201")]
             private bool IsValid(bool strict = false)
             {
@@ -286,6 +291,7 @@ namespace advent.Solutions
                     return false;
                 }
             }
+#pragma warning restore 8604
         }
         #endregion Classes
     }
