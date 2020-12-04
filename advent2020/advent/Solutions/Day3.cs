@@ -42,7 +42,17 @@ namespace advent.Solutions
 
             var treesA = Solve(landscape, 3, 1);
             
-            return treesA == 7;
+            var slopesB = new List<int>
+            {
+                Solve(landscape, 1, 1),
+                Solve(landscape, 3, 1),
+                Solve(landscape, 5, 1),
+                Solve(landscape, 7, 1),
+                Solve(landscape, 1, 2)
+            };
+            var treesB = slopesB.Aggregate(1, (a, b) => a * b);
+            
+            return treesA == 7 && treesB == 336;
         }
         
         protected override IEnumerable<string> DoPartA()
