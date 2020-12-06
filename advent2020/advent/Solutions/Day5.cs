@@ -27,17 +27,15 @@ namespace advent.Solutions
                 {"FBFBBFFRLR", (44, 5, 357)},
                 {"BFFFBBFRRR", (70, 7, 567)},
                 {"FFFBBBFRRR", (14, 7, 119)},
-                {"BBFFBBFRLL", (102, 4, 820)},
+                {"BBFFBBFRLL", (102, 4, 820)}
             };
 
             var passesA = true;
-            foreach (var test in testCasesA)
+            foreach (var _ in from test in testCasesA let result = Locate(test.Key) where result.Item1 != test.Value.Item1 ||
+                result.Item2 != test.Value.Item2 ||
+                result.Item3 != test.Value.Item3 select test)
             {
-                var result = Locate(test.Key);
-                if (result.Item1 != test.Value.Item1 ||
-                    result.Item2 != test.Value.Item2 ||
-                    result.Item3 != test.Value.Item3)
-                    passesA = false;
+                passesA = false;
             }
             
             return passesA;
@@ -61,7 +59,7 @@ namespace advent.Solutions
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
         private static int Solve(IEnumerable<string> data)
         {
-            var results = data.Select(input => Locate(input)).ToList();
+            var results = data.Select(Locate).ToList();
             return results.Max(tuple => tuple.Item3);
         }
 
