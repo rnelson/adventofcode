@@ -66,6 +66,7 @@ namespace advent.Solutions
         
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
+        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
         private static int SolveB(IEnumerable<string> data)
         {
             var tuples = data.Select(Locate).ToList().OrderBy(t => t.Item3);
@@ -77,7 +78,7 @@ namespace advent.Solutions
             {
                 if (tuples.Any(t => t.Item3 == id - 1) &&
                     tuples.Any(t => t.Item3 == id + 1) &&
-                    !tuples.Any(t => t.Item3 == id))
+                    tuples.All(t => t.Item3 != id))
                     return id;
             }
 
