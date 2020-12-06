@@ -43,20 +43,21 @@ namespace advent.Solutions
             };
             #endregion Test data
             
-            var sumA = Solve(text);
+            var sumA = SolveA(text);
+            var sumB = SolveB(text);
 
-            return sumA == 11;
+            return sumA == 11 && sumB == 6;
         }
         
         protected override IEnumerable<string> DoPartA()
         {
-            var answer = Solve(Data);
+            var answer = SolveA(Data);
             return new List<string> {$"[bold yellow]{answer}[/]"};
         }
 
         protected override IEnumerable<string> DoPartB()
         {
-            var answer = 0; //Solve(Data).Count(p => p.SuperValid);
+            var answer = SolveB(Data);
             return new List<string> {$"[bold yellow]{answer}[/]"};
         }
         #endregion IDay Members
@@ -64,7 +65,7 @@ namespace advent.Solutions
         #region Private Methods
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
-        private static int Solve(IEnumerable<string> batch)
+        private static int SolveA(IEnumerable<string> batch)
         {
             var blocks = Text.Chunk(batch);
             
@@ -75,8 +76,20 @@ namespace advent.Solutions
             var lines = uglyLines.Select(line => new string(line.Distinct().ToArray())).ToList();
 
             // Combine all of those answers
-            var answers = lines.Aggregate(string.Empty, (s1, s2) => $"{s1}{s2}"); // lines.Select(line => line).ToList();
+            var answers = lines.Aggregate(string.Empty, (s1, s2) => $"{s1}{s2}");
             return answers.Length;
+        }
+        
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+        [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
+        private static int SolveB(IEnumerable<string> batch)
+        {
+            var blocks = Text.Chunk(batch);
+
+            var distinctByBlock = blocks
+                .Select(block => block.Aggregate((a, b) => new string(a.Intersect(b).ToArray()))).ToList();
+            var combined = distinctByBlock.Aggregate(string.Empty, (a, b) => $"{a}{b}");
+            return combined.Length;
         }
         #endregion Private Methods
     }
