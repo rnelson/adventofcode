@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using advent.Exceptions;
 using JetBrains.Annotations;
 
 namespace advent.Solutions
@@ -43,24 +44,44 @@ namespace advent.Solutions
         
         protected override IEnumerable<string> DoPartA()
         {
-            var answer = Solve(Data);
+            var answer = SolveA(Data);
             return new List<string> {$"the highest seat ID is [bold yellow]{answer}[/]"};
         }
 
         protected override IEnumerable<string> DoPartB()
         {
-            var answer = 0; //Solve(Data);
-            return new List<string> {$"[bold yellow]{answer}[/]"};
+            var answer = SolveB(Data);
+            return new List<string> {$"your seat is [bold yellow]{answer}[/]"};
         }
         #endregion IDay Members
 
         #region Private Methods
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
-        private static int Solve(IEnumerable<string> data)
+        private static int SolveA(IEnumerable<string> data)
         {
             var results = data.Select(Locate).ToList();
             return results.Max(tuple => tuple.Item3);
+        }
+        
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+        [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
+        private static int SolveB(IEnumerable<string> data)
+        {
+            var tuples = data.Select(Locate).ToList().OrderBy(t => t.Item3);
+            
+            var minSeat = tuples.First().Item3;
+            var maxSeat = tuples.Last().Item3;
+
+            for (var id = minSeat; id < maxSeat; id++)
+            {
+                if (tuples.Any(t => t.Item3 == id - 1) &&
+                    tuples.Any(t => t.Item3 == id + 1) &&
+                    !tuples.Any(t => t.Item3 == id))
+                    return id;
+            }
+
+            throw new AnswerNotFoundException();
         }
 
         private static (short, short, int) Locate(string input)
