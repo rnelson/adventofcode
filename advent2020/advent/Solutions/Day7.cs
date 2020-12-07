@@ -30,7 +30,7 @@ namespace advent.Solutions
         public override bool Test()
         {
             #region Test data
-            var text = new List<string>
+            var textA = new List<string>
             {
                 "light red bags contain 1 bright white bag, 2 muted yellow bags.",
                 "dark orange bags contain 3 bright white bags, 4 muted yellow bags.",
@@ -42,22 +42,34 @@ namespace advent.Solutions
                 "faded blue bags contain no other bags.",
                 "dotted black bags contain no other bags."
             };
+            var textB = new List<string>
+            {
+                "shiny gold bags contain 2 dark red bags.",
+                "dark red bags contain 2 dark orange bags.",
+                "dark orange bags contain 2 dark yellow bags.",
+                "dark yellow bags contain 2 dark green bags.",
+                "dark green bags contain 2 dark blue bags.",
+                "dark blue bags contain 2 dark violet bags.",
+                "dark violet bags contain no other bags."
+            };
             #endregion Test data
 
-            var countA = Solve(text);
+            var containingA = SolveA(textA);
+            var insideA = SolveB(textA);
+            var insideB = SolveB(textB);
 
-            return countA == 4;
+            return containingA == 4 && insideA == 32 && insideB == 126;
         }
         
         protected override IEnumerable<string> DoPartA()
         {
-            var answer = Solve(Data);
+            var answer = SolveA(Data);
             return new List<string> {$"[bold yellow]{answer}[/] bag colors contain ast least one [gold3_1]shiny gold[/] bag"};
         }
 
         protected override IEnumerable<string> DoPartB()
         {
-            var answer = 0; //Solve(Data);
+            var answer = SolveB(Data);
             return new List<string> {$"[bold yellow]{answer}[/]"};
         }
         #endregion IDay Members
@@ -65,7 +77,7 @@ namespace advent.Solutions
         #region Private Methods
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
-        private static int Solve(IEnumerable<string> data, string requestedChild = "shiny gold")
+        private static int SolveA(IEnumerable<string> data, string requestedChild = "shiny gold")
         {
             var entries = new Dictionary<string, IEnumerable<(int, string)>>();
 
@@ -77,6 +89,41 @@ namespace advent.Solutions
 
             var parents = FindChild(entries, requestedChild);
             return parents.Count();
+        }
+        
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+        [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
+        private static int SolveB(IEnumerable<string> data, string initialBag = "shiny gold")
+        {
+            var entries = new Dictionary<string, IEnumerable<(int, string)>>();
+
+            foreach (var line in data)
+            {
+                var (key, value) = Parse(line);
+                entries[key] = value;
+            }
+
+            var c = Count(entries, initialBag);
+            return c;
+        }
+
+        private static int Count(IDictionary<string, IEnumerable<(int, string)>> data, string bag, int multiplier = 1)
+        {
+            var contentsEnumerable = data[bag];
+            var contents = contentsEnumerable as (int, string)[] ?? contentsEnumerable.ToArray();
+            
+            if (!contents.Any())
+                return 0;
+
+            var sum = 0;
+
+            foreach (var (count, type) in contents)
+            {
+                var children = Count(data, type, count);
+                sum = sum + count + count * children;
+            }
+
+            return sum;
         }
 
         private static IEnumerable<string> FindChild(IDictionary<string, IEnumerable<(int, string)>> data, string search)
