@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using advent.Exceptions;
 using JetBrains.Annotations;
-using Spectre.Console;
 
 namespace advent.Solutions
 {
@@ -13,6 +12,8 @@ namespace advent.Solutions
     [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+    [SuppressMessage("ReSharper", "CA1307")]
+    [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
     internal class Day7 : Day
     {
         private const string bagExpression = @"(.+) bags contain (no other bags\.|((\d+) (.+) bags?, )*(\d+) (.+) bags?\.)";
@@ -74,46 +75,13 @@ namespace advent.Solutions
                 entries[key] = value;
             }
 
-            var parents = FindChild(entries, "shiny gold");
+            var parents = FindChild(entries, requestedChild);
             return parents.Count();
-
-            //return FindChild(entries, "shiny gold").Count();
-
-            /*
-            foreach (var (key, value) in entries)
-            {
-                AnsiConsole.MarkupLine($"[turquoise2 underline]{key}[/]");
-
-                if (!value.Any())
-                {
-                    AnsiConsole.WriteLine("\t0 bags");
-                }
-                else
-                {
-                    foreach (var (count, type) in value)
-                    {
-                        AnsiConsole.WriteLine($"\t{count} {type} bag(s)");
-                    }
-                }
-            }
-            */
         }
 
         private static IEnumerable<string> FindChild(IDictionary<string, IEnumerable<(int, string)>> data, string search)
         {
-
-            if (data.Count < 1)
-                return new List<string>();
-
-            var results = new List<string>();
-
-            foreach (var (dKey, dValue) in data)
-            {
-                if (ContainsChild(data, search, dKey))
-                    results.Add(dKey);
-            }
-
-            return results;
+            return data.Count < 1 ? new List<string>() : data.Keys.Where(dKey => ContainsChild(data, search, dKey)).ToList();
         }
 
         private static bool ContainsChild(IDictionary<string, IEnumerable<(int, string)>> data, string child,
@@ -121,7 +89,7 @@ namespace advent.Solutions
         {
             #region Validation
             if (data is null || data.Count < 1)
-                throw new BadDataException($"empty dictionary");
+                throw new BadDataException("empty dictionary");
             if (string.IsNullOrWhiteSpace(parent))
                 throw new ArgumentException("need a value", nameof(parent));
             if (string.IsNullOrWhiteSpace(child))
@@ -134,7 +102,7 @@ namespace advent.Solutions
             var result = false;
             var contents = data[parent];
 
-            foreach (var (count, type) in contents)
+            foreach (var (_, type) in contents)
             {
                 if (child.Equals(type, StringComparison.Ordinal))
                 {
@@ -161,7 +129,7 @@ namespace advent.Solutions
             var bagType = m.Groups[1].Value;
             var childTypes = new List<(int, string)>();
 
-            if ("no other bags.".Equals(m.Groups[2].Value))
+            if ("no other bags.".Equals(m.Groups[2].Value, StringComparison.Ordinal))
             {
                 // That's it
                 return (bagType, childTypes);
@@ -175,14 +143,7 @@ namespace advent.Solutions
             if (m.Groups[2].Value.Contains(","))
             {
                 var otherChildren = m.Groups[3].Value.Split(", ", StringSplitOptions.RemoveEmptyEntries);
-                foreach (var child in otherChildren)
-                {
-                    var childM = childR.Match(child);
-                    if (childM.Success)
-                    {
-                        childTypes.Add((int.Parse(childM.Groups[1].Value), childM.Groups[2].Value));
-                    }
-                }
+                childTypes.AddRange(from child in otherChildren select childR.Match(child) into childM where childM.Success select (int.Parse(childM.Groups[1].Value), childM.Groups[2].Value));
             }
 
             var result = (bagType, childTypes);
