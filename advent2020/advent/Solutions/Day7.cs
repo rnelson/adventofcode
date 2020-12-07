@@ -16,6 +16,7 @@ namespace advent.Solutions
     internal class Day7 : Day
     {
         private const string bagExpression = @"(.+) bags contain (no other bags\.|((\d+) (.+) bags?, )*(\d+) (.+) bags?\.)";
+        private const string miniExpression = @"(\d+) (.+) bags?";
         
         public Day7() : base(7)
         {
@@ -159,25 +160,29 @@ namespace advent.Solutions
 
             var bagType = m.Groups[1].Value;
             var childTypes = new List<(int, string)>();
-            var startIndex = 6;
 
             if ("no other bags.".Equals(m.Groups[2].Value))
             {
                 // That's it
                 return (bagType, childTypes);
             }
-            else if (m.Groups[2].Value.Contains(","))
+            
+            // 6 and 7 always contain the last numbered value
+            childTypes.Add((int.Parse(m.Groups[6].Value), m.Groups[7].Value));
+            
+            // But sometimes we have more than 1 numbered child.
+            var childR = new Regex(miniExpression);
+            if (m.Groups[2].Value.Contains(","))
             {
-                // Multiple child bag types
-                startIndex = 4;
-            }
-
-            for (var i = startIndex; i < m.Groups.Count; i += 2)
-            {
-                var count = int.Parse(m.Groups[i].Value);
-                var type = m.Groups[i + 1].Value;
-
-                childTypes.Add((count, type));
+                var otherChildren = m.Groups[3].Value.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+                foreach (var child in otherChildren)
+                {
+                    var childM = childR.Match(child);
+                    if (childM.Success)
+                    {
+                        childTypes.Add((int.Parse(childM.Groups[1].Value), childM.Groups[2].Value));
+                    }
+                }
             }
 
             var result = (bagType, childTypes);
