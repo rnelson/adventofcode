@@ -70,7 +70,7 @@ namespace advent.Solutions
         protected override IEnumerable<string> DoPartB()
         {
             var answer = SolveB(Data);
-            return new List<string> {$"[bold yellow]{answer}[/]"};
+            return new List<string> {$"the [gold3_1]shiny gold[/] bag holds [bold yellow]{answer}[/] other bags"};
         }
         #endregion IDay Members
 
@@ -103,11 +103,10 @@ namespace advent.Solutions
                 entries[key] = value;
             }
 
-            var c = Count(entries, initialBag);
-            return c;
+            return Count(entries, initialBag);
         }
 
-        private static int Count(IDictionary<string, IEnumerable<(int, string)>> data, string bag, int multiplier = 1)
+        private static int Count(IDictionary<string, IEnumerable<(int, string)>> data, string bag)
         {
             var contentsEnumerable = data[bag];
             var contents = contentsEnumerable as (int, string)[] ?? contentsEnumerable.ToArray();
@@ -119,8 +118,7 @@ namespace advent.Solutions
 
             foreach (var (count, type) in contents)
             {
-                var children = Count(data, type, count);
-                sum = sum + count + count * children;
+                sum += count + count * Count(data, type);
             }
 
             return sum;
