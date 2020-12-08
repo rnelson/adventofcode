@@ -3,7 +3,7 @@ using advent.Exceptions;
 
 namespace advent.ConsoleCode
 {
-    public class Instruction
+    public class Instruction : ICloneable
     {
         public int Line { get; set; }
         public InstructionType Type { get; set; }
@@ -43,6 +43,11 @@ namespace advent.ConsoleCode
         public override string ToString()
         {
             return $"{Type} {Argument}  ; line {Line}";
+        }
+
+        public object Clone()
+        {
+            return new Instruction {Type = Type, Argument = Argument, Line = Line};
         }
     }
 
