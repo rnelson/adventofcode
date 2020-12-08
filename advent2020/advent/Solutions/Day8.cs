@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using advent.ConsoleCode;
@@ -78,10 +77,8 @@ namespace advent.Solutions
             var instructions = GetInstructions(data).ToArray();
             
             #region Make copies of the program
-            var nops = instructions.Where(i => i.Type.ToString() == "nop").ToArray();
-            var nopCount = nops.Length;
-            var jumps = instructions.Where(i => i.Type.ToString() == "jmp").ToArray();
-            var jumpCount = jumps.Length;
+            var nopCount = instructions.Where(i => i.Type.ToString() == "nop").ToArray().Length;
+            var jumpCount = instructions.Where(i => i.Type.ToString() == "jmp").ToArray().Length;
 
             for (var n = 0; n < nopCount; n++)
             {
@@ -99,9 +96,8 @@ namespace advent.Solutions
             #endregion Make copies of the program
             
             #region Run each copy
-            foreach (var program in programs)
+            foreach (var console in programs.Select(program => new Console(program) {StopOnReexecute = true}))
             {
-                var console = new Console(program) {StopOnReexecute = true};
                 console.Run();
                 
                 if (!console.StoppedOnReexecute)
@@ -117,40 +113,6 @@ namespace advent.Solutions
             var lineNumber = 0;
             return data.Select(line => Instruction.Parse(line, ++lineNumber)).ToList();
         }
-
-        /*
-        private static IEnumerable<Instruction> ModifyNthInstruction(IEnumerable<Instruction> instructions,
-            InstructionType oldType, InstructionType newType, int n)
-        {
-            var clone = new List<Instruction>();
-            var program = instructions.ToArray();
-            
-            // Find the nth statement to change
-            var seen = 0;
-            var changed = false;
-            
-            for (var line = 0; line < program.Length; line++)
-            {
-                var original = program[line];
-                var statement = original.Clone() as Instruction;
-                
-                if (!changed && oldType.ToString().Equals(statement!.Type.ToString(), StringComparison.Ordinal))
-                {
-                    if (seen == n)
-                    {
-                        statement.Type = newType;
-                        changed = true;
-                    }
-                    
-                    seen++;
-                }
-                
-                clone.Add(statement!);
-            }
-
-            return clone;
-        }
-        */
         #endregion Private Methods
     }
 }

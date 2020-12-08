@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace advent.ConsoleCode
 {
-    public class Program
+    [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+    [SuppressMessage("ReSharper", "CA1307")]
+    [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
+    internal class Program
     {
-        private Instruction[] Instructions { get; set; }
+        private Instruction[] Instructions { get; }
         public IEnumerable<Instruction>? Lines => new List<Instruction>(Instructions).ToArray().Clone() as Instruction[];
 
         public Program(IEnumerable<Instruction> instructions)
@@ -23,7 +29,7 @@ namespace advent.ConsoleCode
             {
                 var statement = Instructions[line].Clone() as Instruction;
                 
-                if (oldType.ToString().Equals(statement.Type.ToString(), StringComparison.Ordinal))
+                if (oldType.ToString().Equals(statement!.Type.ToString(), StringComparison.Ordinal))
                 {
                     if (!changed && seen == n)
                     {

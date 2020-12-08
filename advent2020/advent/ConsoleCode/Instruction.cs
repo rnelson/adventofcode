@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using advent.Exceptions;
 
 namespace advent.ConsoleCode
 {
-    public class Instruction : ICloneable
+    [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+    [SuppressMessage("ReSharper", "CA1307")]
+    [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
+    internal class Instruction : ICloneable
     {
-        public int Line { get; set; }
-        public InstructionType Type { get; set; }
-        public int Argument { get; set; }
+        public int Line { get; private set; }
+        public InstructionType Type { get; set; } = InstructionType.Unknown;
+        public int Argument { get; private set; }
 
         private Instruction() { }
 
@@ -19,20 +25,13 @@ namespace advent.ConsoleCode
             var instruction = new Instruction();
             var bits = input.Split(" ");
 
-            switch (bits[0])
+            instruction.Type = bits[0] switch
             {
-                case "acc":
-                    instruction.Type = InstructionType.Accumulator;
-                    break;
-                case "jmp":
-                    instruction.Type = InstructionType.Jump;
-                    break;
-                case "nop":
-                    instruction.Type = InstructionType.NoOp;
-                    break;
-                default:
-                    throw new BadDataException($"unexpected instruction: \"{bits[0]}\"");
-            }
+                "acc" => InstructionType.Accumulator,
+                "jmp" => InstructionType.Jump,
+                "nop" => InstructionType.NoOp,
+                _ => throw new BadDataException($"unexpected instruction: \"{bits[0]}\"")
+            };
 
             instruction.Argument = int.Parse(bits[1]);
             instruction.Line = line;
@@ -51,14 +50,16 @@ namespace advent.ConsoleCode
         }
     }
 
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     public class InstructionType
     {
+        public static readonly InstructionType Unknown = new InstructionType(string.Empty, "<UNKNOWN>");
         public static readonly InstructionType Accumulator = new InstructionType("acc", "Accumulator");
         public static readonly InstructionType Jump = new InstructionType("jmp", "Jump");
         public static readonly InstructionType NoOp = new InstructionType("nop", "No Operation");
         
-        private string Operation { get; set; }
-        private string Description { get; set; }
+        private string Operation { get; }
+        private string Description { get; }
         
         private InstructionType(string operation, string description)
         {
