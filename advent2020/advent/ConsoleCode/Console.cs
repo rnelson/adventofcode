@@ -1,21 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace advent.ConsoleCode
 {
-    public class Console
+    [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+    [SuppressMessage("ReSharper", "CA1307")]
+    [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    internal class Console
     {
         public bool StopOnReexecute { get; set; }
         public bool StoppedOnReexecute { get; set; }
         
-        public int Accumulator { get; private set; } = 0;
-        public int Pointer { get; private set; } = 0;
-        public int LastAccumulator { get; private set; } = 0;
-        public int LastPointer { get; private set; } = 0;
-        private int Lines { get; set; } = 0;
+        public int Accumulator { get; private set; }
+        public int Pointer { get; private set; }
+        public int LastAccumulator { get; private set; }
+        public int LastPointer { get; private set; }
+        private int Lines { get; }
 
-        private IDictionary<int, (Instruction, bool)> Program { get; set; }
+        private IDictionary<int, (Instruction, bool)> Program { get; }
 
         public Console(IEnumerable<Instruction> program)
         {
@@ -32,7 +42,7 @@ namespace advent.ConsoleCode
 
         public Console(Program program)
         {
-            if (program?.Lines is null)
+            if (program.Lines is null)
                 throw new ArgumentException("missing program");
 
             var instructions = program.Lines.ToList();
@@ -84,7 +94,7 @@ namespace advent.ConsoleCode
             }
         }
 
-        private IDictionary<int, (Instruction, bool)> LoadProgram(IEnumerable<Instruction> program)
+        private static IDictionary<int, (Instruction, bool)> LoadProgram(IEnumerable<Instruction> program)
         {
             var result = new Dictionary<int, (Instruction, bool)>();
 
