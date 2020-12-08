@@ -6,7 +6,8 @@ namespace advent.ConsoleCode
 {
     public class Console
     {
-        public bool StopOnReexecute { get; set; } = false;
+        public bool StopOnReexecute { get; set; }
+        public bool StoppedOnReexecute { get; set; }
         
         public int Accumulator { get; private set; } = 0;
         public int Pointer { get; private set; } = 0;
@@ -18,10 +19,27 @@ namespace advent.ConsoleCode
 
         public Console(IEnumerable<Instruction> program)
         {
-            if (program is null || !program.Any())
+            if (program is null)
+                throw new ArgumentException("missing program");
+
+            var instructions = program.ToArray();
+            if (instructions is null || !instructions.Any())
                 throw new ArgumentException("missing program");
             
-            Program = LoadProgram(program);
+            Program = LoadProgram(instructions);
+            Lines = Program.Keys.Count;
+        }
+
+        public Console(Program program)
+        {
+            if (program?.Lines is null)
+                throw new ArgumentException("missing program");
+
+            var instructions = program.Lines.ToList();
+            if (instructions is null || !instructions.Any())
+                throw new ArgumentException("missing program");
+            
+            Program = LoadProgram(instructions);
             Lines = Program.Keys.Count;
         }
 
@@ -43,8 +61,11 @@ namespace advent.ConsoleCode
                 var (instruction, visited) = steps[Pointer];
 
                 if (visited && StopOnReexecute)
+                {
+                    StoppedOnReexecute = true;
                     break;
-                
+                }
+
                 steps[Pointer].Item2 = true; // visited
                 
                 switch (instruction.Type.ToString())
