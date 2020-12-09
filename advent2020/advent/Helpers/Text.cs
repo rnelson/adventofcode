@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace advent.Helpers
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     internal static class Text
     {
         /// <summary>
