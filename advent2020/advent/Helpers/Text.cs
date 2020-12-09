@@ -41,5 +41,19 @@ namespace advent.Helpers
 
             return blocks;
         }
+        
+        /// <summary>
+        /// Converts all of the strings to integers.
+        /// </summary>
+        /// <param name="input">A list of strings, each containing an integer value.</param>
+        /// <returns>A list of integers.</returns>
+        public static IEnumerable<int> StringsToInts(IEnumerable<string> input) => input.Select(int.Parse).ToList();
+        
+        /// <summary>
+        /// Converts all of the strings to long integers.
+        /// </summary>
+        /// <param name="input">A list of strings, each containing an integer value.</param>
+        /// <returns>A list of long integers.</returns>
+        public static IEnumerable<long> StringsToLongs(IEnumerable<string> input) => input.Select(long.Parse).ToList();
     }
 }
