@@ -1,9 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace advent.Collections
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global")]
+    [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
     internal class Deque<T> : ICollection<T>
     {
         private readonly LinkedList<T> list;
