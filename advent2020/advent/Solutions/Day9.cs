@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using advent.Collections;
 using advent.Exceptions;
 using advent.Helpers;
 using Combinatorics.Collections;
@@ -51,18 +52,18 @@ namespace advent.Solutions
             };
             #endregion Test data
 
-            return Solve(text, 5) == 127;
+            return SolveA(text, 5) == 127 && SolveB(text, 5) == 62;
         }
         
         protected override IEnumerable<string> DoPartA()
         {
-            var answer = Solve(Data);
+            var answer = SolveA(Data);
             return new List<string> {$"[bold yellow]{answer}[/]"};
         }
 
         protected override IEnumerable<string> DoPartB()
         {
-            var answer = 0;
+            var answer = SolveB(Data);
             return new List<string> {$"[bold yellow]{answer}[/]"};
         }
         #endregion IDay Members
@@ -70,7 +71,7 @@ namespace advent.Solutions
         #region Private Methods
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
-        private static long Solve(IEnumerable<string> data, int preambleLength = 25, int combinationSize = 2)
+        private static long SolveA(IEnumerable<string> data, int preambleLength = 25, int combinationSize = 2)
         {
             var array = Text.StringsToLongs(data).ToArray();
             var numbers = new Span<long>(array);
@@ -87,6 +88,37 @@ namespace advent.Solutions
             }
             
             throw new AnswerNotFoundException();
+        }
+        
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+        [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
+        private static long SolveB(IEnumerable<string> data, int preambleLength = 25, int combinationSize = 2)
+        {
+            var dataStrings = data.ToArray();
+            var array = Text.StringsToLongs(dataStrings).ToArray();
+            var numbers = new Span<long>(array);
+            
+            var expectedSum = SolveA(dataStrings, preambleLength, combinationSize);
+            
+            var d = new Deque<long>();
+            var i = 0;
+
+            while (i < numbers.Length)
+            {
+                var sum = d.Sum();
+
+                if (sum < expectedSum)
+                {
+                    d.AddBack(numbers[i++]);
+                }
+                else if (sum > expectedSum)
+                {
+                    d.PopFront();
+                }
+                else break;
+            }
+            
+            return d.Min() + d.Max();
         }
         #endregion Private Methods
     }
