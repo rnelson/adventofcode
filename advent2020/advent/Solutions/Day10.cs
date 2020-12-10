@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using advent.Exceptions;
 using advent.Helpers;
-using Combinatorics.Collections;
 using JetBrains.Annotations;
 using Math = System.Math;
 
@@ -24,6 +22,7 @@ namespace advent.Solutions
         #region IDay Members
         [UsedImplicitly]
         [SuppressMessage("ReSharper", "StringLiteralTypo")]
+        [SuppressMessage("ReSharper", "UseDeconstruction")]
         public override bool Test()
         {
             #region Test data
@@ -89,8 +88,8 @@ namespace advent.Solutions
         
         protected override IEnumerable<string> DoPartA()
         {
-            var values = Solve(Data);
-            var answer = values.Item1 * values.Item2;
+            var (jolt1, jolt3, _) = Solve(Data);
+            var answer = jolt1 * jolt3;
             return new List<string> {$"[bold yellow]{answer}[/]"};
         }
 
@@ -111,7 +110,7 @@ namespace advent.Solutions
             var newData = data.ToList();
             newData.Add("0");
 
-            var largest = newData.Max(s => int.Parse(s));
+            var largest = newData.Max(int.Parse);
             newData.Add((largest + 3).ToString());
 
             var integers = Text.StringsToLongs(newData).ToArray();
@@ -121,10 +120,10 @@ namespace advent.Solutions
             var jolt1 = pairs.Count(jolts => Math.Abs(jolts[1] - jolts[0]) == 1);
             var jolt3 = pairs.Count(jolts => Math.Abs(jolts[1] - jolts[0]) == 3);
 
-            return (jolt1, jolt3, FindValidChainCount(sorted, largest + 3));
+            return (jolt1, jolt3, FindValidChainCount(sorted));
         }
         
-        private static long FindValidChainCount(long[] sortedAdapters, long deviceJolts)
+        private static long FindValidChainCount(long[] sortedAdapters)
         {
             var adapters = new Span<long>(sortedAdapters);
 
@@ -143,63 +142,6 @@ namespace advent.Solutions
             }
 
             return ways.Last();
-
-            /*
-            var data = new List<(long, List<long>)>();
-            
-            var options = new long[adapters.Length + 1];
-            options[0] = 1;
-            for (var i = 1; i < options.Length; i++) options[i] = 0;
-            */
-
-            /*
-            var options = new long[adapters.Length + 1];
-
-            options[0] = 1;
-            for (var i = 1; i < options.Length; i++) options[i] = 0;
-            
-            // Count the actual number of options from each position
-            for (var i = 0; i < adapters.Length; i++)
-            {
-                for (var j = i - 3; j < i; j++)
-                {
-                    if (j > 0)
-                    {
-                        if (adapters[j] - adapters[i] <= 3)
-                            options[j] += options[i];
-                    }
-                }
-            }
-
-            return options.Last();
-            */
-
-            /*
-            for (var i = 0; i < adapters.Length - 1; i++)
-            {
-                var jolts = adapters[i];
-                var remaining = Math.Min(3, adapters.Length - 1 - i);
-                var next = adapters.Slice(i + 1, remaining);
-
-                var options = new List<long>();
-                foreach (var possibility in next)
-                {
-                    if (possibility - jolts <= 3)
-                        options.Add(possibility);
-                }
-
-                data.Add((jolts, options));
-            }
-
-            var cnt = 1;
-            for (var i = data.Count - 1; i > 0; i--)
-            {
-                if (data.ElementAt(i).Item2.Count > 1)
-                    cnt += data.ElementAt(i).Item2.Count;
-            }
-
-            return cnt;
-            */
         }
         #endregion Private Methods
     }
