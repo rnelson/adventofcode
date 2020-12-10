@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using advent.Exceptions;
 using advent.Helpers;
+using Combinatorics.Collections;
 using JetBrains.Annotations;
 using Math = System.Math;
 
@@ -77,7 +78,11 @@ namespace advent.Solutions
 
             var answersA1 = Solve(textA);
             var answersA2 = Solve(textB);
-            return answersA1.Item1 == 7 && answersA1.Item2 == 5 && answersA2.Item1 == 22 && answersA2.Item2 == 10;
+            return answersA1.Item1 == 7 &&
+                   answersA1.Item2 == 5 &&
+                   answersA1.Item3.Count() == 8 &&
+                   answersA2.Item1 == 22 &&
+                   answersA2.Item2 == 10;
         }
         
         protected override IEnumerable<string> DoPartA()
@@ -95,9 +100,10 @@ namespace advent.Solutions
         #endregion IDay Members
 
         #region Private Methods
+
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
-        private static (long, long) Solve(IEnumerable<string> data)
+        private static (long, long, IEnumerable<IEnumerable<long>>) Solve(IEnumerable<string> data)
         {
             // Add the wall outlet
             var newData = data.ToList();
@@ -105,7 +111,7 @@ namespace advent.Solutions
 
             var largest = newData.Max(s => int.Parse(s));
             newData.Add((largest + 3).ToString());
-            
+
             var integers = Text.StringsToLongs(newData).ToArray();
             var sorted = integers.OrderBy(n => n).ToArray();
             var pairs = sorted.Skip(1).Zip(sorted, (y, x) => new[] {x, y}).ToArray();
@@ -113,7 +119,35 @@ namespace advent.Solutions
             var jolt1 = pairs.Count(jolts => Math.Abs(jolts[1] - jolts[0]) == 1);
             var jolt3 = pairs.Count(jolts => Math.Abs(jolts[1] - jolts[0]) == 3);
 
-            return (jolt1, jolt3);
+            return (jolt1, jolt3, FindValidChains(sorted, largest + 3));
+        }
+        
+        private static IEnumerable<IEnumerable<long>> FindValidChains(long[] sortedAdapters, long deviceJolts)
+        {
+            var chains = new List<IEnumerable<long>>();
+            var combinations = new List<long[]>();
+
+            // Find all combinations of possible adapters
+            for (var i = 0; i < sortedAdapters.Length; i++)
+            {
+                var c = new Combinations<long>(sortedAdapters.ToList(), i).ToArray();
+                combinations.AddRange(c.Select(chain => chain.OrderBy(n => n).ToArray()));
+            }
+
+            foreach (var chain in combinations)
+            {
+                var valid = true;
+                
+                for (var i = 1; i < chain.Length; i++)
+                {
+                    if (Math.Abs(chain[i] - chain[i - 1]) > 3)
+                        valid = false;
+                }
+                
+                if (valid) chains.Add(chain);
+            }
+            
+            return chains;
         }
         #endregion Private Methods
     }
