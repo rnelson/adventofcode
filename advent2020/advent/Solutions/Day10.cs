@@ -25,7 +25,21 @@ namespace advent.Solutions
         public override bool Test()
         {
             #region Test data
-            var text = new List<string>
+            var textA = new List<string>
+            {
+                "16",
+                "10",
+                "15",
+                "5",
+                "1",
+                "11",
+                "7",
+                "19",
+                "6",
+                "12",
+                "4"
+            };
+            var textB = new List<string>
             {
                 "28",
                 "33",
@@ -61,8 +75,9 @@ namespace advent.Solutions
             };
             #endregion Test data
 
-            var answersA = Solve(text);
-            return answersA.Item1 == 22 && answersA.Item2 == 10;
+            var answersA1 = Solve(textA);
+            var answersA2 = Solve(textB);
+            return answersA1.Item1 == 7 && answersA1.Item2 == 5 && answersA2.Item1 == 22 && answersA2.Item2 == 10;
         }
         
         protected override IEnumerable<string> DoPartA()
