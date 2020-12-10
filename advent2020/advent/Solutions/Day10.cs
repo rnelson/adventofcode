@@ -101,7 +101,6 @@ namespace advent.Solutions
         #endregion IDay Members
 
         #region Private Methods
-
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
         private static (long, long, long) Solve(IEnumerable<string> data)
