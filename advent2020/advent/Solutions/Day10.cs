@@ -96,8 +96,8 @@ namespace advent.Solutions
 
         protected override IEnumerable<string> DoPartB()
         {
-            var answer = 0;
-            return new List<string> {$"[bold yellow]{answer}[/]"};
+            var answer = Solve(Data);
+            return new List<string> {$"[bold yellow]{answer.Item3}[/] arrangements"};
         }
         #endregion IDay Members
 
@@ -127,8 +127,54 @@ namespace advent.Solutions
         private static long FindValidChainCount(long[] sortedAdapters, long deviceJolts)
         {
             var adapters = new Span<long>(sortedAdapters);
-            var data = new List<(long, List<long>)>();
 
+            var ways = new long[adapters.Length];
+            ways[0] = 1;
+            
+            foreach (var i in Enumerable.Range(1, ways.Length - 1))
+            {
+                ways[i] = 0;
+                
+                for (var j = i - 1; j >= 0; j--)
+                    if (adapters[i] - adapters[j] <= 3)
+                        ways[i] += ways[j];
+                    else
+                        break;
+            }
+
+            return ways.Last();
+
+            /*
+            var data = new List<(long, List<long>)>();
+            
+            var options = new long[adapters.Length + 1];
+            options[0] = 1;
+            for (var i = 1; i < options.Length; i++) options[i] = 0;
+            */
+
+            /*
+            var options = new long[adapters.Length + 1];
+
+            options[0] = 1;
+            for (var i = 1; i < options.Length; i++) options[i] = 0;
+            
+            // Count the actual number of options from each position
+            for (var i = 0; i < adapters.Length; i++)
+            {
+                for (var j = i - 3; j < i; j++)
+                {
+                    if (j > 0)
+                    {
+                        if (adapters[j] - adapters[i] <= 3)
+                            options[j] += options[i];
+                    }
+                }
+            }
+
+            return options.Last();
+            */
+
+            /*
             for (var i = 0; i < adapters.Length - 1; i++)
             {
                 var jolts = adapters[i];
@@ -153,15 +199,6 @@ namespace advent.Solutions
             }
 
             return cnt;
-
-            /*
-            var combinations = data.Last().Item2.Count;
-            for (var i = data.Count - 1; i > 0; i--)
-            {
-                combinations *= data.ElementAt(i).Item2.Count;
-            }
-
-            return combinations;
             */
         }
         #endregion Private Methods
