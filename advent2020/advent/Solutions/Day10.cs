@@ -82,7 +82,7 @@ namespace advent.Solutions
         #region Private Methods
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
-        private static (long, long, IEnumerable<long>) Solve(IEnumerable<string> data)
+        private static (long, long) Solve(IEnumerable<string> data)
         {
             // Add the wall outlet
             var newData = data.ToList();
@@ -95,40 +95,10 @@ namespace advent.Solutions
             var sorted = integers.OrderBy(n => n).ToArray();
             var pairs = sorted.Skip(1).Zip(sorted, (y, x) => new[] {x, y}).ToArray();
 
-            //*
             var jolt1 = pairs.Count(jolts => Math.Abs(jolts[1] - jolts[0]) == 1);
             var jolt3 = pairs.Count(jolts => Math.Abs(jolts[1] - jolts[0]) == 3);
 
-            return (jolt1, jolt3, new List<long>());
-            //*/
-
-            /*
-            var chain = new List<long>();
-            var lastAdapter = 0L;
-            var jolt1 = 0L;
-            var jolt3 = 0L;
-            
-            foreach (var adapter in sorted)
-            {
-                var difference = Math.Abs(adapter - lastAdapter);
-                lastAdapter = adapter;
-                
-                if (difference == 1)
-                {
-                    jolt1++;
-                    chain.Add(adapter);
-                }
-                else if (difference == 3)
-                {
-                    jolt3++;
-                    chain.Add(adapter);
-                }
-            }
-
-            return (jolt1, jolt3, chain);
-            */
-
-            //throw new AnswerNotFoundException();
+            return (jolt1, jolt3);
         }
         #endregion Private Methods
     }
