@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using advent.Exceptions;
@@ -80,9 +81,10 @@ namespace advent.Solutions
             var answersA2 = Solve(textB);
             return answersA1.Item1 == 7 &&
                    answersA1.Item2 == 5 &&
-                   answersA1.Item3.Count() == 8 &&
+                   answersA1.Item3 == 8 &&
                    answersA2.Item1 == 22 &&
-                   answersA2.Item2 == 10;
+                   answersA2.Item2 == 10 &&
+                   answersA2.Item3 == 19208;
         }
         
         protected override IEnumerable<string> DoPartA()
@@ -103,7 +105,7 @@ namespace advent.Solutions
 
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]
-        private static (long, long, IEnumerable<IEnumerable<long>>) Solve(IEnumerable<string> data)
+        private static (long, long, long) Solve(IEnumerable<string> data)
         {
             // Add the wall outlet
             var newData = data.ToList();
@@ -119,35 +121,48 @@ namespace advent.Solutions
             var jolt1 = pairs.Count(jolts => Math.Abs(jolts[1] - jolts[0]) == 1);
             var jolt3 = pairs.Count(jolts => Math.Abs(jolts[1] - jolts[0]) == 3);
 
-            return (jolt1, jolt3, FindValidChains(sorted, largest + 3));
+            return (jolt1, jolt3, FindValidChainCount(sorted, largest + 3));
         }
         
-        private static IEnumerable<IEnumerable<long>> FindValidChains(long[] sortedAdapters, long deviceJolts)
+        private static long FindValidChainCount(long[] sortedAdapters, long deviceJolts)
         {
-            var chains = new List<IEnumerable<long>>();
-            var combinations = new List<long[]>();
+            var adapters = new Span<long>(sortedAdapters);
+            var data = new List<(long, List<long>)>();
 
-            // Find all combinations of possible adapters
-            for (var i = 0; i < sortedAdapters.Length; i++)
+            for (var i = 0; i < adapters.Length - 1; i++)
             {
-                var c = new Combinations<long>(sortedAdapters.ToList(), i).ToArray();
-                combinations.AddRange(c.Select(chain => chain.OrderBy(n => n).ToArray()));
-            }
+                var jolts = adapters[i];
+                var remaining = Math.Min(3, adapters.Length - 1 - i);
+                var next = adapters.Slice(i + 1, remaining);
 
-            foreach (var chain in combinations)
-            {
-                var valid = true;
-                
-                for (var i = 1; i < chain.Length; i++)
+                var options = new List<long>();
+                foreach (var possibility in next)
                 {
-                    if (Math.Abs(chain[i] - chain[i - 1]) > 3)
-                        valid = false;
+                    if (possibility - jolts <= 3)
+                        options.Add(possibility);
                 }
-                
-                if (valid) chains.Add(chain);
+
+                data.Add((jolts, options));
             }
-            
-            return chains;
+
+            var cnt = 1;
+            for (var i = data.Count - 1; i > 0; i--)
+            {
+                if (data.ElementAt(i).Item2.Count > 1)
+                    cnt += data.ElementAt(i).Item2.Count;
+            }
+
+            return cnt;
+
+            /*
+            var combinations = data.Last().Item2.Count;
+            for (var i = data.Count - 1; i > 0; i--)
+            {
+                combinations *= data.ElementAt(i).Item2.Count;
+            }
+
+            return combinations;
+            */
         }
         #endregion Private Methods
     }
