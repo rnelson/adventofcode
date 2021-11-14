@@ -5,6 +5,8 @@ using Spectre.Console;
 
 namespace advent
 {
+    [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
+    [SuppressMessage("ReSharper", "PublicConstructorInAbstractClass")]
     public abstract class Day
     {
         #region Fields
@@ -18,7 +20,7 @@ namespace advent
             get => day ?? -1;
             set
             {
-                if (value < 1 || value > 31)
+                if (value is < 1 or > 31)
                     throw new ArgumentOutOfRangeException(nameof(value), "value must be between 1 and 31");
 
                 day = value;
@@ -44,12 +46,11 @@ namespace advent
         public Day()
         {
             var className = GetType().Name;
-            if (!string.IsNullOrWhiteSpace(className) && className != "Day" && className.StartsWith("Day"))
-            {
-                var number = className.Substring(3);
-                if (int.TryParse(number, out var dayNum))
-                    DayNumber = dayNum;
-            }
+            if (string.IsNullOrWhiteSpace(className) || className == "Day" || !className.StartsWith("Day"))
+                return;
+            
+            if (int.TryParse(className[3..], out var number))
+                DayNumber = number;
         }
 
         /// <summary>

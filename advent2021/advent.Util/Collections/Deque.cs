@@ -8,6 +8,7 @@ namespace advent.Util.Collections
     [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global")]
     [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     internal class Deque<T> : ICollection<T>
     {
         private readonly LinkedList<T> list;
@@ -21,7 +22,7 @@ namespace advent.Util.Collections
         public int Count => list.Count;
 
         /// <inheritdoc />
-        public bool IsReadOnly => false;
+        public bool IsReadOnly { get; set; } = false;
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator()

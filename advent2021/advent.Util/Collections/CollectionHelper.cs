@@ -2,10 +2,8 @@
 {
     public static class CollectionHelper
     {
-        public static ICollection<string> ToStringCollection(this int[] numbers)
+        public static IEnumerable<string> ToStringCollection(this int[] numbers)
         {
-            if (numbers == null) return new List<string>();
-
             var result = new List<string>();
             foreach (var item in numbers)
             {

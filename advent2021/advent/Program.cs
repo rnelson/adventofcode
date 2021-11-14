@@ -23,14 +23,14 @@ namespace advent
             if (day is null)
                 throw new InvalidOperationException($"unable to run day {number}");
 
-            day!.LoadInput();
-            day!.Header();
+            day.LoadInput();
+            day.Header();
 
             AnsiConsole.MarkupLine("Part A:");
-            AnsiConsole.MarkupLine($"\t[bold yellow]{day!.PartA()}[/]");
+            AnsiConsole.MarkupLine($"\t[bold yellow]{day.PartA()}[/]");
 
             AnsiConsole.MarkupLine("Part B:");
-            AnsiConsole.MarkupLine($"\t[bold yellow]{day!.PartB()}[/]");
+            AnsiConsole.MarkupLine($"\t[bold yellow]{day.PartB()}[/]");
         }
 
         [SuppressMessage("ReSharper", "HeapView.ClosureAllocation")]

@@ -3,6 +3,7 @@
 namespace advent.Util.Helpers
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     internal static class Text
     {
         /// <summary>
