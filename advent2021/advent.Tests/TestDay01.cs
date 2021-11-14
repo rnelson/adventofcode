@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using advent.Solutions;
 using advent.Util.Collections;
@@ -5,6 +6,7 @@ using advent.Util.Collections;
 namespace advent.Tests
 {
     [TestClass]
+    [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     public class TestDay01
     {
         [TestMethod]

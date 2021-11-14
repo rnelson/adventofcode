@@ -11,7 +11,7 @@ namespace advent.Solutions
     {
         #region Constructors
         /// <inheritdoc/>
-        public Day01() : base() { }
+        public Day01() { }
 
         /// <inheritdoc/>
         public Day01(IEnumerable<string> data) : base(data) { }

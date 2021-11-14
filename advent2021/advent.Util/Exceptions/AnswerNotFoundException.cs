@@ -12,13 +12,13 @@ namespace advent.Util.Exceptions
 
         /// <inheritdoc />
         [UsedImplicitly]
-        public AnswerNotFoundException([CanBeNull] string? message) : base(message)
+        public AnswerNotFoundException(string? message) : base(message)
         {
         }
 
         /// <inheritdoc />
         [UsedImplicitly]
-        public AnswerNotFoundException([CanBeNull] string? message, [CanBeNull] Exception? innerException) : base(message, innerException)
+        public AnswerNotFoundException(string? message, Exception? innerException) : base(message, innerException)
         {
         }
     }

@@ -12,13 +12,13 @@ namespace advent.Util.Exceptions
 
         /// <inheritdoc />
         [UsedImplicitly]
-        public BadDataException([CanBeNull] string? message) : base(message)
+        public BadDataException(string? message) : base(message)
         {
         }
 
         /// <inheritdoc />
         [UsedImplicitly]
-        public BadDataException([CanBeNull] string? message, [CanBeNull] Exception? innerException) : base(message, innerException)
+        public BadDataException(string? message, Exception? innerException) : base(message, innerException)
         {
         }
     }
