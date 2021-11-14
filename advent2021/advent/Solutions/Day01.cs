@@ -9,7 +9,6 @@ namespace advent.Solutions
     [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     public class Day01 : Day
     {
-
         #region Constructors
         /// <inheritdoc/>
         public Day01() : base() { }
