@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using advent.Util.Exceptions;
-using Combinatorics.Collections;
 using JetBrains.Annotations;
+using MoreLinq;
 
 namespace advent.Solutions
 {
@@ -21,32 +21,29 @@ namespace advent.Solutions
         /// <inheritdoc/>
         public override object PartA()
         {
-            var product = Solve(DataAsInts);
-            return product;
+            var list = DataAsInts.ToList();
+            var pairs = list.Zip(list.Skip(1), Tuple.Create);
+
+            return pairs.Count(p => p.Item1 < p.Item2);
         }
 
         /// <inheritdoc/>
         public override object PartB()
         {
-            var product = Solve(DataAsInts, 3);
-            return product;
+            const int windowSize = 3;
+
+            var list = DataAsInts.ToList();
+            var windows = list.Window(windowSize).Select(w => w.Sum());
+            var pairs = windows.Zip(windows.Skip(1), Tuple.Create);
+
+            return pairs.Count(p => p.Item1 < p.Item2);
         }
         #endregion Day Members
 
         #region Private Methods
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
-        private static long Solve(IEnumerable<int> input, int count = 2, long sum = 2020)
+        private static long Solve(IEnumerable<int> input, int windowSize = 1)
         {
-            var combinations = new Combinations<int>(input.ToList(), count);
-
-            foreach (var c in combinations)
-            {
-                if (c.Sum() == sum)
-                {
-                    return c.Aggregate(1, (x, y) => x * y);
-                }
-            }
-            
             throw new AnswerNotFoundException();
         }
         #endregion Private Methods
