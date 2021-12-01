@@ -12,11 +12,11 @@ namespace advent.Tests
         [TestMethod]
         public void TestPartA()
         {
-            var input = new[] { 1721, 979, 366, 299, 675, 1456 };
-            const long answerA = 514579;
+            var input = new[] { 199, 200, 208, 210, 200, 207, 240, 269, 260, 263 };
+            const long answerA = 7;
 
             var day = new Day01(input.ToStringCollection());
-            var a = day.PartA();
+            var a = (int)day.PartA();
 
             Assert.AreEqual(answerA, a);
         }
@@ -24,11 +24,11 @@ namespace advent.Tests
         [TestMethod]
         public void TestPartB()
         {
-            var input = new[] { 1721, 979, 366, 299, 675, 1456 };
-            const long answerB = 241861950;
+            var input = new[] { 199, 200, 208, 210, 200, 207, 240, 269, 260, 263 };
+            const long answerB = 5;
 
             var day = new Day01(input.ToStringCollection());
-            var b = day.PartB();
+            var b = (int)day.PartB();
 
             Assert.AreEqual(answerB, b);
         }
