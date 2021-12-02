@@ -25,12 +25,12 @@ namespace advent.Tests
         [TestMethod]
         public void TestPartB()
         {
-            //const long answerB = 5;
-            //
-            //var day = new Day02(input);
-            //var b = (long)day.PartB();
-            //
-            //Assert.AreEqual(answerB, b);
+            const long answerB = 900;
+            
+            var day = new Day02(input);
+            var b = (long)day.PartB();
+            
+            Assert.AreEqual(answerB, b);
         }
     }
 }
