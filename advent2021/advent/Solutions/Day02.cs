@@ -50,15 +50,31 @@ namespace advent.Solutions
         /// <inheritdoc/>
         public override object PartB()
         {
-            return string.Empty;
+            var list = Data.ToList();
+            long x = 0;
+            long d = 0;
+            long aim = 0;
 
-            //const int windowSize = 3;
-            //
-            //var list = DataAsInts.ToList();
-            //var windows = list.Window(windowSize).Select(w => w.Sum());
-            //var pairs = windows.Zip(windows.Skip(1), Tuple.Create);
-            //
-            //return pairs.Count(p => p.Item1 < p.Item2);
+            foreach (var i in list)
+            {
+                var t = Parse(i);
+
+                switch (t.Item1)
+                {
+                    case Direction.Down:
+                        aim += t.Item2;
+                        break;
+                    case Direction.Up:
+                        aim -= t.Item2;
+                        break;
+                    case Direction.Forward:
+                        x += t.Item2;
+                        d += (aim * t.Item2);
+                        break;
+                }
+            }
+
+            return d * x;
         }
         #endregion Day Members
 
