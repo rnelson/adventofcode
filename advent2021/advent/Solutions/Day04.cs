@@ -99,8 +99,7 @@ namespace advent.Solutions
         }
         #endregion Private Methods
 
-        private enum Direction { Up, Down, Forward }
-
+        #region Classes
         private class Board : IEquatable<Board>
         {
             private string id = string.Empty;
@@ -182,5 +181,6 @@ namespace advent.Solutions
                 return false;
             }
         }
+        #endregion Classes
     }
 }
