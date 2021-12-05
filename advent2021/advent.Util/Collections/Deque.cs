@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Diagnostics.CodeAnalysis;
 
 namespace advent.Util.Collections
 {
@@ -9,6 +8,7 @@ namespace advent.Util.Collections
     [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
     internal class Deque<T> : ICollection<T>
     {
         private readonly LinkedList<T> list;

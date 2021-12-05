@@ -7,14 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "advent", "advent\advent.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4F1FF9F-3C7E-4539-BEBE-F6EC54F8CF34}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		ANSWERS.md = ANSWERS.md
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "advent.Util", "advent.Util\advent.Util.csproj", "{84F60279-6EB3-4411-94D1-4CC053CC57C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "advent.Util", "advent.Util\advent.Util.csproj", "{84F60279-6EB3-4411-94D1-4CC053CC57C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "advent.Tests", "advent.Tests\advent.Tests.csproj", "{464CB77B-425E-4BE2-85BB-3323E15AF0C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "advent.Tests", "advent.Tests\advent.Tests.csproj", "{464CB77B-425E-4BE2-85BB-3323E15AF0C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,6 +2,9 @@
 {
     [UsedImplicitly]
     [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Local")]
+    [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class Day05 : Day
     {
         #region Constructors
@@ -16,7 +19,7 @@
         /// <inheritdoc/>
         public override object PartA()
         {
-            (var vents, _, var max) = ReadInput(Data);
+            var (vents, _, max) = ReadInput(Data);
             var lines = vents.Where(v => v.IsHorizontal || v.IsVertical).ToList();
             var floor = new int[max+1, max+1];
 
@@ -38,13 +41,13 @@
         /// <inheritdoc/>
         public override object PartB()
         {
-            (var vents, _, var max) = ReadInput(Data);
+            var (vents, _, max) = ReadInput(Data);
             var lines = vents.Select(s => new Line(s)).ToList();
             var floor = new int[max + 1, max + 1];
 
             foreach (var line in lines)
             {
-                foreach ((var x, var y) in line.GetPoints())
+                foreach (var (x, y) in line.GetPoints())
                     floor[x, y]++;
             }
 
@@ -53,7 +56,7 @@
         #endregion Day Members
 
         #region Private Methods
-        private Tuple<IEnumerable<Vent>, int, int> ReadInput(IEnumerable<string> inputs)
+        private static Tuple<IEnumerable<Vent>, int, int> ReadInput(IEnumerable<string> inputs)
         {
             const string rex = @"(-?\d+),(-?\d+) -> (-?\d+),(-?\d+)";
 
@@ -101,6 +104,7 @@
             public bool IsVertical => Y1 == Y2;
             public bool IsDiagonal => !IsHorizontal && !IsVertical;
 
+            [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
             private int Slope => Y1 < Y2 ? 1 : -1;
 
             public Line(Vent v)

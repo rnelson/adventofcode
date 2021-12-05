@@ -29,8 +29,7 @@ namespace advent.Solutions
         {
             const int windowSize = 3;
 
-            var list = DataAsInts.ToList();
-            var windows = list.Window(windowSize).Select(w => w.Sum());
+            var windows = DataAsInts.ToList().Window(windowSize).Select(w => w.Sum()).ToList();
             var pairs = windows.Zip(windows.Skip(1), Tuple.Create);
 
             return pairs.Count(p => p.Item1 < p.Item2);
@@ -38,11 +37,6 @@ namespace advent.Solutions
         #endregion Day Members
 
         #region Private Methods
-        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
-        private static long Solve(IEnumerable<int> input, int windowSize = 1)
-        {
-            throw new AnswerNotFoundException();
-        }
         #endregion Private Methods
     }
 }
