@@ -1,5 +1,7 @@
 ﻿namespace advent.Util.Extensions
 {
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class ListExtensions
     {
         public static IEnumerable<object> Duplicate(this IEnumerable<object> values) => values.Select(o => o).ToList();

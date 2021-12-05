@@ -2,6 +2,9 @@
 {
     [UsedImplicitly]
     [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
+    [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Local")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class Day04 : Day
     {
         #region Constructors
@@ -16,8 +19,9 @@
         /// <inheritdoc/>
         public override object PartA()
         {
-            (var input, var boards) = ReadInput();
-            var marks = input.Split(',').Select(s => int.Parse(s));
+            var (input, boardsEnumerable) = ReadInput();
+            var marks = input.Split(',').Select(int.Parse);
+            var boards = boardsEnumerable.ToList();
 
             foreach (var mark in marks)
             {
@@ -37,8 +41,9 @@
         /// <inheritdoc/>
         public override object PartB()
         {
-            (var input, var boards) = ReadInput();
-            var marks = input.Split(',').Select(s => int.Parse(s));
+            var (input, boardsEnumerable) = ReadInput();
+            var marks = input.Split(',').Select(int.Parse);
+            var boards = boardsEnumerable.ToList();
 
             var winners = new List<Board>();
             var lastMark = 0;
@@ -60,7 +65,7 @@
                 }
             }
 
-            return (long)(lastSum * lastMark);
+            return lastSum * lastMark;
         }
         #endregion Day Members
 
@@ -99,8 +104,8 @@
         private class Board : IEquatable<Board>
         {
             private string id = string.Empty;
-            private IList<Tuple<int, bool>> values;
-            private int n;
+            private readonly IList<Tuple<int, bool>> values;
+            private readonly int n;
 
             public bool Bingo => IsWinner();
 
@@ -110,11 +115,20 @@
                 values = new List<Tuple<int, bool>>(n * n);
             }
 
+            public override bool Equals(object? obj)
+            {
+                if (obj is Board board)
+                    return Equals(board);
+
+                return false;
+            }
+
             public bool Equals(Board? other)
             {
                 return GetHashCode() == other?.GetHashCode();
             }
 
+            [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode", Justification = "Who said I was good at this? I didn't!")]
             public override int GetHashCode()
             {
                 return HashCode.Combine(id);
@@ -131,7 +145,7 @@
 
             public void AddRow(IEnumerable<string> row)
             {
-                AddRow(row.Select(number => int.Parse(number)));
+                AddRow(row.Select(int.Parse));
             }
 
             public void AddRow(string row)

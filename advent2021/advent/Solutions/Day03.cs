@@ -100,32 +100,6 @@
         #endregion Day Members
 
         #region Private Methods
-        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
-        private static long Solve(IEnumerable<int> input)
-        {
-            throw new AnswerNotFoundException();
-        }
-
-        private static Tuple<Direction, int> Parse(string input)
-        {
-            const string rex = @"(\w+) (\d+)";
-
-            if (string.IsNullOrWhiteSpace(input))
-                throw new ArgumentException("invalid input", nameof(input));
-
-            var r = new Regex(rex);
-            var match = r.Match(input);
-
-            if (!match.Success)
-                throw new ArgumentException($"input \"{input}\" does not match expression \"{rex}\"");
-
-            if (!Enum.TryParse(typeof(Direction), match.Groups[1].Value.Capitalize(), out var d) || d is null)
-                throw new BadDataException($"unknown direction: {match.Groups[1].Value.Capitalize()}");
-
-            return new Tuple<Direction, int>((Direction)d, int.Parse(match.Groups[2].Value));
-        }
         #endregion Private Methods
-
-        private enum Direction { Up, Down, Forward }
     }
 }

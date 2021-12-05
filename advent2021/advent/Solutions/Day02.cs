@@ -73,12 +73,6 @@
         #endregion Day Members
 
         #region Private Methods
-        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation.Possible")]
-        private static long Solve(IEnumerable<int> input, int windowSize = 1)
-        {
-            throw new AnswerNotFoundException();
-        }
-
         private static Tuple<Direction, int> Parse(string input)
         {
             const string rex = @"(\w+) (\d+)";
