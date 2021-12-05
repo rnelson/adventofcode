@@ -1,10 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text.RegularExpressions;
-using advent.Util.Exceptions;
-using advent.Util.Extensions;
-using JetBrains.Annotations;
-
-namespace advent.Solutions
+﻿namespace advent.Solutions
 {
     [UsedImplicitly]
     [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
