@@ -1,7 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using advent.Util.Exceptions;
-using JetBrains.Annotations;
-using MoreLinq;
+﻿using MoreLinq;
 
 namespace advent.Solutions
 {

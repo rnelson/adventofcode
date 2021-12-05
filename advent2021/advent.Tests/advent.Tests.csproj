@@ -19,4 +19,15 @@
     <ProjectReference Include="..\advent\advent.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="System.Diagnostics.CodeAnalysis" />
+    <Using Include="System.Text.RegularExpressions" />
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
+    <Using Include="advent.Solutions" />
+    <Using Include="advent.Util.Collections" />
+    <Using Include="advent.Util.Extensions" />
+    <Using Include="advent.Util.Exceptions" />
+    <Using Include="advent.Util.Helpers" />
+  </ItemGroup>
+
 </Project>
