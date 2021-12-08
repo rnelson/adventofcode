@@ -4,12 +4,12 @@
     [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     public class TestDay07
     {
-        private readonly string[] input = { "" };
+        private readonly string[] input = { "16,1,2,0,4,2,7,1,2,14", "" };
 
         [TestMethod]
         public void TestPartA()
         {
-            const long answerA = 0;
+            const long answerA = 37;
 
             var day = new Day07(input);
             var a = (long)day.PartA();
@@ -20,7 +20,7 @@
         [TestMethod]
         public void TestPartB()
         {
-            const long answerB = 0;
+            const long answerB = 168;
 
             var day = new Day07(input);
             var b = (long)day.PartB();
