@@ -20,7 +20,7 @@
         [TestMethod]
         public void TestPartB()
         {
-            const long answerB = 0;
+            const long answerB = 61229;
 
             var day = new Day08(input);
             var b = (long)day.PartB();
