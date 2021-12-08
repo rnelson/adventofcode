@@ -16,20 +16,36 @@
         /// <inheritdoc/>
         public override object PartA()
         {
-            return string.Empty;
+            var positions = Data.First().Split(',').Select(int.Parse).ToList();
+            var options = positions.Distinct().ToArray();
+            var weights = new Dictionary<int, int>();
+
+            foreach (var option in options)
+            {
+                var weight = 0;
+                foreach (var position in positions)
+                    weight += Math.Abs(position - option);
+
+                weights.Add(option, weight);
+            }
+
+            return (long)weights.Min(kvp => kvp.Value);
         }
 
         /// <inheritdoc/>
         public override object PartB()
         {
-            return string.Empty;
+            var positions = Data.First().Split(',').Select(int.Parse).ToList();
+            var options = positions.Distinct().ToArray();
+            var min = options.Min();
+            var max = options.Max();
+            var range = Enumerable.Range(min, max - min + 1).ToArray();
+
+            int Diff(int a, int b) => Math.Abs(a - b);
+            long Sum(int n) => n * (n + 1) / 2L;
+
+            return range.Min(i => positions.Sum(j => Sum(Diff(i, j))));
         }
         #endregion Day Members
-
-        #region Private Methods
-        #endregion Private Methods
-
-        #region Classes
-        #endregion Classes
     }
 }
