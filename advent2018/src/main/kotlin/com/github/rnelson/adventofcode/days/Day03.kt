@@ -3,7 +3,7 @@ package com.github.rnelson.adventofcode.days
 import com.github.rnelson.adventofcode.Day
 
 class Day03: Day() {
-    var lines: MutableList<Line> = mutableListOf()
+    private var lines: MutableList<Line> = mutableListOf()
 
     init {
         super.setup("03")
@@ -16,8 +16,8 @@ class Day03: Day() {
     override fun solveA(): String {
         val m = Matrix(1000)
         lines.forEach {
-            for (x in it.startX..(it.startX + it.spanX - 1)) {
-                for (y in it.startY..(it.startY + it.spanY - 1)) {
+            for (x in it.startX until it.startX + it.spanX) {
+                for (y in it.startY until it.startY + it.spanY) {
                     m.inc(x, y)
                 }
             }
@@ -29,8 +29,8 @@ class Day03: Day() {
     override fun solveB(): String {
         val m = Matrix(1000)
         lines.forEach {
-            for (x in it.startX..(it.startX + it.spanX - 1)) {
-                for (y in it.startY..(it.startY + it.spanY - 1)) {
+            for (x in it.startX until it.startX + it.spanX) {
+                for (y in it.startY until it.startY + it.spanY) {
                     m.inc(x, y)
                 }
             }
@@ -38,8 +38,8 @@ class Day03: Day() {
 
         lines.forEach {
             var solo = true
-            for (x in it.startX..(it.startX + it.spanX - 1)) {
-                for (y in it.startY..(it.startY + it.spanY - 1)) {
+            for (x in it.startX until it.startX + it.spanX) {
+                for (y in it.startY until it.startY + it.spanY) {
                     solo = solo && (m.get(x, y) == 1)
                 }
             }
@@ -82,8 +82,9 @@ class Day03: Day() {
     }
 
     class Matrix(dim: Int) {
-        var size: Int? = null
-        var data: IntArray? = null
+        private var size: Int? = null
+        private var data: IntArray? = null
+
         init {
             size = dim
             data = IntArray(dim * dim) { 0 }

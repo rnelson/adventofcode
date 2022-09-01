@@ -1,11 +1,12 @@
 package com.github.rnelson.adventofcode
 
 import kotlin.reflect.full.createInstance
+import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
     if (args.count() != 1) {
         println("usage: advent2018 <day number>")
-        System.exit(1)
+        exitProcess(1)
     }
 
     val className = "com.github.rnelson.adventofcode.days.Day${args[0]}"

@@ -8,7 +8,7 @@ class Day01: Day() {
     }
 
     override fun solveA(): String {
-        return input.map { it.toInt() }.sum().toString()
+        return input.sumOf { it.toInt() }.toString()
     }
 
     override fun solveB(): String {

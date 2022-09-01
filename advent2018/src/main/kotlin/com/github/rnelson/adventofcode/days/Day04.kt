@@ -113,7 +113,7 @@ class Day04: Day() {
         val allMaxValues: MutableMap<Int, Pair<Int, Int>> = mutableMapOf()
         sums.keys.forEach {
             // Guard 2179 starts a shift but never falls asleep. Repeatedly. What a good employee!
-            if (sleepsExpanded[it] != null && sleepsExpanded[it]!!.count() > 0) {
+            if (sleepsExpanded[it] != null && sleepsExpanded[it]!!.isNotEmpty()) {
                 val mostCommon = sleepsExpanded[it]!!.groupingBy { it2 -> it2 }.eachCount().maxByOrNull { it3 -> it3.value }!!
                 allMaxValues[mostCommon.value] = Pair(it, mostCommon.key)
             }
