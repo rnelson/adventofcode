@@ -15,8 +15,8 @@ class Day05: Day() {
             letterFound = false
 
             for (c in 'a'..'z') {
-                val oneMix = "${c.toUpperCase()}$c"
-                val twoMix = "$c${c.toUpperCase()}"
+                val oneMix = "${c.uppercaseChar()}$c"
+                val twoMix = "$c${c.uppercaseChar()}"
 
                 var found = true
                 while (found) {
@@ -45,15 +45,15 @@ class Day05: Day() {
         val sizes = hashMapOf<Char, Int>()
 
         for (skip in 'a'..'z') {
-            var newInput = input[0].replace(skip.toString(), "").replace(skip.toString().toUpperCase(), "")
+            var newInput = input[0].replace(skip.toString(), "").replace(skip.toString().uppercase(), "")
 
             var letterFound = true
             while (letterFound) {
                 letterFound = false
 
                 for (c in 'a'..'z') {
-                    val oneMix = "${c.toUpperCase()}$c"
-                    val twoMix = "$c${c.toUpperCase()}"
+                    val oneMix = "${c.uppercaseChar()}$c"
+                    val twoMix = "$c${c.uppercaseChar()}"
 
                     var found = true
                     while (found) {
@@ -76,6 +76,6 @@ class Day05: Day() {
             sizes[skip] = newInput.length
         }
 
-        return sizes.minBy { it.value }?.value.toString()
+        return sizes.minByOrNull { it.value }?.value.toString()
     }
 }

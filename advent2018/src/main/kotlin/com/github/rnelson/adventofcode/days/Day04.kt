@@ -59,13 +59,14 @@ class Day04: Day() {
             }
         }
 
-        val sleepDeprived = sums.maxBy { it.value }!!.key
-        val commonMinute = sleepsExpanded[sleepDeprived]!!.groupingBy { it }.eachCount().maxBy { it.value }!!.key
+        val sleepDeprived = sums.maxByOrNull { it.value }!!.key
+        val commonMinute = sleepsExpanded[sleepDeprived]!!.groupingBy { it }.eachCount().maxByOrNull { it.value }!!.key
 
         return (sleepDeprived * commonMinute).toString()
     }
 
-    override fun solveB(): String {val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+    override fun solveB(): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val sleepsExpanded = mutableMapOf<Int, MutableList<Int>>()
         val sums = mutableMapOf<Int, Int>()
 
@@ -113,7 +114,7 @@ class Day04: Day() {
         sums.keys.forEach {
             // Guard 2179 starts a shift but never falls asleep. Repeatedly. What a good employee!
             if (sleepsExpanded[it] != null && sleepsExpanded[it]!!.count() > 0) {
-                val mostCommon = sleepsExpanded[it]!!.groupingBy { it2 -> it2 }.eachCount().maxBy { it3 -> it3.value }!!
+                val mostCommon = sleepsExpanded[it]!!.groupingBy { it2 -> it2 }.eachCount().maxByOrNull { it3 -> it3.value }!!
                 allMaxValues[mostCommon.value] = Pair(it, mostCommon.key)
             }
         }
