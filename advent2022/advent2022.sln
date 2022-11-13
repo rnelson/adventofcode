@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "advent2022", "advent2022\advent2022.csproj", "{01B70C58-3C50-43B2-A161-35FD9F4F73BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "advent2022.Test", "advent2022.Test\advent2022.Test.csproj", "{26391C71-A75B-48AE-80D7-47E7463F4F50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "advent2022.Share", "advent2022.Share\advent2022.Share.csproj", "{703BD84D-9235-43E9-8DBD-F70AF8F53DB8}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1880B08-B3B6-40BD-A112-46AF9C80DE54}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01B70C58-3C50-43B2-A161-35FD9F4F73BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01B70C58-3C50-43B2-A161-35FD9F4F73BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01B70C58-3C50-43B2-A161-35FD9F4F73BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01B70C58-3C50-43B2-A161-35FD9F4F73BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26391C71-A75B-48AE-80D7-47E7463F4F50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26391C71-A75B-48AE-80D7-47E7463F4F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26391C71-A75B-48AE-80D7-47E7463F4F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26391C71-A75B-48AE-80D7-47E7463F4F50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{703BD84D-9235-43E9-8DBD-F70AF8F53DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{703BD84D-9235-43E9-8DBD-F70AF8F53DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{703BD84D-9235-43E9-8DBD-F70AF8F53DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{703BD84D-9235-43E9-8DBD-F70AF8F53DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+EndGlobal
