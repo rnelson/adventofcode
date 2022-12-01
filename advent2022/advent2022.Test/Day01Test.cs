@@ -5,62 +5,71 @@ namespace advent2022.Test;
 [TestClass]
 public class Day01Test
 {
-    private string[] SampleInput =
+    private readonly Day01 sample = new Day01(); 
+    private readonly Day01 real = new Day01();
+    private object? sampleA;
+    private object? sampleB;
+    private object? realA;
+    private object? realB;
+
+    [TestInitialize]
+    public void Setup()
     {
-        "1000",
-        "2000",
-        "3000",
-        "",
-        "4000",
-        "",
-        "5000",
-        "6000",
-        "",
-        "7000",
-        "8000",
-        "9000", 
-        "",
-        "10000",
-        ""
-    };
+        #region Load sample and real input data
+        var sampleInput = new[]
+        {
+            "1000",
+            "2000",
+            "3000",
+            "",
+            "4000",
+            "",
+            "5000",
+            "6000",
+            "",
+            "7000",
+            "8000",
+            "9000",
+            "",
+            "10000",
+            ""
+        };
+        sample.Input = sampleInput;
+
+        var realInput = real.LoadInput();
+        real.Input = realInput;
+        #endregion Load sample and real input data
+
+        // Solve all four problems at once
+        (sampleA, sampleB) = sample.Solve();
+        (realA, realB) = real.Solve();
+    }
     
     [TestMethod]
     public void SampleA()
     {
         const int solution = 24000;
-
-        var day = new Day01();
-        Assert.AreEqual(solution, day.A(SampleInput));
+        Assert.AreEqual(solution, sampleA);
     }
     
     [TestMethod]
     public void SampleB()
     {
         const int solution = 45000;
-
-        var day = new Day01();
-        Assert.AreEqual(solution, day.B(SampleInput));
+        Assert.AreEqual(solution, sampleB);
     }
     
     [TestMethod]
     public void SolutionA()
     {
-        var day = new Day01();
-
-        var input = day.LoadInput();
         const int solution = 64929;
-
-        Assert.AreEqual(solution, day.A(input));
+        Assert.AreEqual(solution, realA);
     }
     
     [TestMethod]
     public void SolutionB()
     {
-        var day = new Day01();
-
-        var input = day.LoadInput();
         const int solution = 193697;
-
-        Assert.AreEqual(solution, day.B(input));
+        Assert.AreEqual(solution, realB);
     }
 }
