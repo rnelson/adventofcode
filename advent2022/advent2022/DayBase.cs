@@ -10,13 +10,7 @@ public abstract class DayBase : IDay
     public IEnumerable<string>? Input { get; set; } = null;
 
     /// <inheritdoc />
-    public virtual (object, object) Solve() => (A(Input!), B(Input!));
-    
-    /// <inheritdoc />
-    public abstract object A(IEnumerable<string> input);
-
-    /// <inheritdoc />
-    public abstract object B(IEnumerable<string> input);
+    public abstract (object, object) Solve();
 
     /// <summary>
     /// Gets the input as a list of <typeparamref name="T"/>s.
@@ -28,10 +22,7 @@ public abstract class DayBase : IDay
         where T: INumber<T> =>
         input.Select(s => T.Parse(s, CultureInfo.CurrentCulture)).ToList();
 
-    /// <summary>
-    /// Loads the input file and returns its values as a list of strings.
-    /// </summary>
-    /// <returns>The contents of the input file.</returns>
+    /// <inheritdoc />
     public IEnumerable<string> LoadInput()
     {
         var typeName = GetType().Name;

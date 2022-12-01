@@ -1,3 +1,4 @@
+using advent2022.Share;
 using advent2022.Solutions;
 
 namespace advent2022.Test;
@@ -5,8 +6,8 @@ namespace advent2022.Test;
 [TestClass]
 public class Day01Test
 {
-    private readonly Day01 sample = new Day01(); 
-    private readonly Day01 real = new Day01();
+    private readonly IDay sample = new Day01(); 
+    private readonly IDay real = new Day01();
     private object? sampleA;
     private object? sampleB;
     private object? realA;
