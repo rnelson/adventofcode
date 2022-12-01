@@ -11,4 +11,11 @@
     <ProjectReference Include="..\advent2022.Share\advent2022.Share.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Input\Day01.txt" />
+    <Content Include="Input\Day01.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
