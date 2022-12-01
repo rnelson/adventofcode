@@ -1,33 +1,19 @@
-using advent2022.Solutions;
+﻿using advent2022.Solutions;
 
 namespace advent2022.Test;
 
 [TestClass]
-public class Day01Test
+public class Day02Test
 {
     private string[] SampleInput =
     {
-        "1000",
-        "2000",
-        "3000",
-        "",
-        "4000",
-        "",
-        "5000",
-        "6000",
-        "",
-        "7000",
-        "8000",
-        "9000", 
-        "",
-        "10000",
         ""
     };
     
     [TestMethod]
     public void SampleA()
     {
-        const int solution = 24000;
+        const int solution = 0;
 
         var day = new Day01();
         Assert.AreEqual(solution, day.A(SampleInput));
@@ -36,7 +22,7 @@ public class Day01Test
     [TestMethod]
     public void SampleB()
     {
-        const int solution = 45000;
+        const int solution = 0;
 
         var day = new Day01();
         Assert.AreEqual(solution, day.B(SampleInput));
@@ -45,10 +31,10 @@ public class Day01Test
     [TestMethod]
     public void SolutionA()
     {
-        var day = new Day01();
+        var day = new Day02();
 
         var input = day.LoadInput();
-        const int solution = 64929;
+        const int solution = 0;
 
         Assert.AreEqual(solution, day.A(input));
     }
@@ -56,10 +42,10 @@ public class Day01Test
     [TestMethod]
     public void SolutionB()
     {
-        var day = new Day01();
+        var day = new Day02();
 
         var input = day.LoadInput();
-        const int solution = 193697;
+        const int solution = 0;
 
         Assert.AreEqual(solution, day.B(input));
     }

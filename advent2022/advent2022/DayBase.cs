@@ -18,7 +18,7 @@ public abstract class DayBase : IDay
     /// <param name="input">The puzzle input.</param>
     /// <typeparam name="T">The numeric type to parse input as.</typeparam>
     /// <returns>The parsed inputs.</returns>
-    protected IList<T> GetNumericInputs<T>(IEnumerable<string> input)
+    protected static IList<T> GetNumericInputs<T>(IEnumerable<string> input)
         where T: INumber<T> =>
         input.Select(s => T.Parse(s, CultureInfo.CurrentCulture)).ToList();
 
