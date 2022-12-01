@@ -7,6 +7,12 @@ namespace advent2022;
 public abstract class DayBase : IDay
 {
     /// <inheritdoc />
+    public IEnumerable<string>? Input { get; set; } = null;
+
+    /// <inheritdoc />
+    public virtual (object, object) Solve() => (A(Input!), B(Input!));
+    
+    /// <inheritdoc />
     public abstract object A(IEnumerable<string> input);
 
     /// <inheritdoc />
