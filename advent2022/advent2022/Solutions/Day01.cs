@@ -9,7 +9,7 @@ public class Day01 : DayBase
 	{
 		var sums = Input!
 			.GroupByDivider<string>(string.Empty)         // group by elf
-			.Select(GetNumbers<int>).ToList()             // str -> int
+			.Select(GetNumbers<int>)                      // str -> int
 			.OrderByDescending(n => n.Sum())              // sum each elf's pile
 			.ToArray();                                   // avoid multiple enumerations
 
