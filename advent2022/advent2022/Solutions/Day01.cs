@@ -7,9 +7,11 @@ public class Day01 : DayBase
     /// <inheritdoc />
     public override (object, object) Solve()
     {
-        var groups = Input!.GroupByDivider<string>(string.Empty);
-        var perElfCalorieCounts = groups.Select(GetNumericInputs<int>).ToList();
-        var sums = perElfCalorieCounts.OrderByDescending(n => n.Sum()).ToArray();
+        var sums =
+            Input!.GroupByDivider<string>(string.Empty)         // group by elf
+            .Select(GetNumericInputs<int>).ToList()             // str -> int
+            .OrderByDescending(n => n.Sum())            // sum each elf's pile
+            .ToArray();                                         // avoid multiple enumerations
 
         return (sums.First().Sum(), sums.Take(3).Sum(n => n.Sum()));
     }
