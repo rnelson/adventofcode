@@ -5,22 +5,12 @@ namespace advent2022.Solutions;
 public class Day01 : DayBase
 {
     /// <inheritdoc />
-    public override object A(IEnumerable<string> input)
+    public override (object, object) Solve()
     {
-        var groups = input.GroupByDivider<string>(string.Empty);
-        var elfCalorieCounts = groups.Select(GetNumericInputs<int>).ToList();
-        var descendingTotals = elfCalorieCounts.OrderByDescending(n => n.Sum()).Select(n => n.Sum());
+        var groups = Input!.GroupByDivider<string>(string.Empty);
+        var perElfCalorieCounts = groups.Select(GetNumericInputs<int>).ToList();
+        var sums = perElfCalorieCounts.OrderByDescending(n => n.Sum()).ToArray();
 
-        return descendingTotals.First();
-    }
-
-    /// <inheritdoc />
-    public override object B(IEnumerable<string> input)
-    {
-        var groups = input.GroupByDivider<string>(string.Empty);
-        var elfCalorieCounts = groups.Select(GetNumericInputs<int>).ToList();
-        var descendingTotals = elfCalorieCounts.OrderByDescending(n => n.Sum()).Select(n => n.Sum());
-
-        return descendingTotals.Take(3).Sum();
+        return (sums.First().Sum(), sums.Take(3).Sum(n => n.Sum()));
     }
 }

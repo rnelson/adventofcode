@@ -3,14 +3,8 @@
 public class Day02 : DayBase
 {
     /// <inheritdoc />
-    public override object A(IEnumerable<string> input)
+    public override (object, object) Solve()
     {
-        return 0;
-    }
-
-    /// <inheritdoc />
-    public override object B(IEnumerable<string> input)
-    {
-        return 0;
+        return (0, 0);
     }
 }

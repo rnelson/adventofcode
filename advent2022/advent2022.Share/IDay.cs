@@ -12,18 +12,10 @@ public interface IDay
     /// </summary>
     /// <returns>The solutions to parts A and B, respectively.</returns>
     public (object, object) Solve();
-    
+
     /// <summary>
-    /// Solves part A of the puzzle.
+    /// Loads the input file and returns its values as a list of strings.
     /// </summary>
-    /// <param name="input">Puzzle input.</param>
-    /// <returns>The answer to the puzzle.</returns>
-    public object A(IEnumerable<string> input);
-    
-    /// <summary>
-    /// Solves part B of the puzzle.
-    /// </summary>
-    /// <param name="input">Puzzle input.</param>
-    /// <returns>The answer to the puzzle.</returns>
-    public object B(IEnumerable<string> input);
+    /// <returns>The contents of the input file.</returns>
+    public IEnumerable<string> LoadInput();
 }
