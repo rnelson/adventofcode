@@ -26,7 +26,7 @@ public abstract class DayBase : IDay
     /// Loads the input file and returns its values as a list of strings.
     /// </summary>
     /// <returns>The contents of the input file.</returns>
-    protected IEnumerable<string> LoadInput()
+    public IEnumerable<string> LoadInput()
     {
         var typeName = GetType().Name;
         var inputFile = $"Input/{typeName}.txt";

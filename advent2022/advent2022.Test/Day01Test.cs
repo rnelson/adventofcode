@@ -5,54 +5,61 @@ namespace advent2022.Test;
 [TestClass]
 public class Day01Test
 {
+    private string[] SampleInput =
+    {
+        "1000",
+        "2000",
+        "3000",
+        "",
+        "4000",
+        "",
+        "5000",
+        "6000",
+        "",
+        "7000",
+        "8000",
+        "9000", 
+        "",
+        "10000",
+        ""
+    };
+    
     [TestMethod]
     public void SampleA()
     {
-        var input = new[]
-        {
-            string.Empty
-        };
-        var solution = string.Empty;
+        const int solution = 24000;
 
         var day = new Day01();
-        Assert.AreEqual(solution, day.A(input));
+        Assert.AreEqual(solution, day.A(SampleInput));
     }
     
     [TestMethod]
     public void SampleB()
     {
-        var input = new[]
-        {
-            string.Empty
-        };
-        var solution = string.Empty;
+        const int solution = 45000;
 
         var day = new Day01();
-        Assert.AreEqual(solution, day.B(input));
+        Assert.AreEqual(solution, day.B(SampleInput));
     }
     [TestMethod]
     public void SolutionA()
     {
-        var input = new[]
-        {
-            string.Empty
-        };
-        var solution = string.Empty;
-
         var day = new Day01();
+
+        var input = day.LoadInput();
+        const int solution = 64929;
+
         Assert.AreEqual(solution, day.A(input));
     }
     
     [TestMethod]
     public void SolutionB()
     {
-        var input = new[]
-        {
-            string.Empty
-        };
-        var solution = string.Empty;
-
         var day = new Day01();
+
+        var input = day.LoadInput();
+        const int solution = 193697;
+
         Assert.AreEqual(solution, day.B(input));
     }
 }
