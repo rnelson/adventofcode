@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using advent2022.Share;
+﻿using advent2022.Share;
 
 namespace advent2022.Solutions;
 
