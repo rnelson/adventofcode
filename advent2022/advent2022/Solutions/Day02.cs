@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using advent2022.Share;
 
 namespace advent2022.Solutions;
 
@@ -49,11 +49,11 @@ public class Day02 : DayBase
 		psInt = ps switch
 		{
 			PlayerShape.X => // lose
-				Dec(osInt, min, max),
+				osInt.Decrement(min, max),
 			PlayerShape.Y => // draw
 				osInt,
 			PlayerShape.Z => // win
-				Inc(osInt, min, max),
+				osInt.Increment(min, max),
 			_ => psInt
 		};
 
@@ -71,8 +71,4 @@ public class Day02 : DayBase
 	private enum OpponentShape { A = 1, B, C }
 	
 	private enum PlayerShape { X = 1, Y, Z }
-	
-	private static int Dec(int value, int min, int max) => value - 1 >= min ? value - 1 : max;
-
-	private static int Inc(int value, int min, int max) => value + 1 <= max ? value + 1 : min;
 }
