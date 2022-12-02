@@ -1,4 +1,6 @@
-﻿namespace advent2022.Solutions;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace advent2022.Solutions;
 
 public class Day02 : DayBase
 {
@@ -38,35 +40,24 @@ public class Day02 : DayBase
 
 	private static int PlayAndScore(OpponentShape os, PlayerShape ps)
 	{
-		var requiredShape = PlayerShape.X;
-
-		requiredShape = ps switch
-		{
-			PlayerShape.X => os switch
-			{
-				OpponentShape.A => PlayerShape.Z,
-				OpponentShape.B => PlayerShape.X,
-				OpponentShape.C => PlayerShape.Y,
-				_ => requiredShape
-			},
-			PlayerShape.Y => os switch
-			{
-				OpponentShape.A => PlayerShape.X,
-				OpponentShape.B => PlayerShape.Y,
-				OpponentShape.C => PlayerShape.Z,
-				_ => requiredShape
-			},
-			PlayerShape.Z => os switch
-			{
-				OpponentShape.A => PlayerShape.Y,
-				OpponentShape.B => PlayerShape.Z,
-				OpponentShape.C => PlayerShape.X,
-				_ => requiredShape
-			},
-			_ => requiredShape
-		};
+		var osInt = (int)os;
+		var psInt = -1;
 		
-		return Score(os, requiredShape);
+		var min = Enum.GetValues(typeof(PlayerShape)).Cast<int>().First();
+		var max = Enum.GetValues(typeof(PlayerShape)).Cast<int>().Last();
+
+		psInt = ps switch
+		{
+			PlayerShape.X => // lose
+				Dec(osInt, min, max),
+			PlayerShape.Y => // draw
+				osInt,
+			PlayerShape.Z => // win
+				Inc(osInt, min, max),
+			_ => psInt
+		};
+
+		return Score(os, (PlayerShape)Enum.ToObject(typeof(PlayerShape), psInt));
 	}
 
 	private static bool IsWinner(OpponentShape os, PlayerShape ps) => os switch
@@ -80,4 +71,8 @@ public class Day02 : DayBase
 	private enum OpponentShape { A = 1, B, C }
 	
 	private enum PlayerShape { X = 1, Y, Z }
+	
+	private static int Dec(int value, int min, int max) => value - 1 >= min ? value - 1 : max;
+
+	private static int Inc(int value, int min, int max) => value + 1 <= max ? value + 1 : min;
 }
