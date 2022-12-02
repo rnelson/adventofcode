@@ -57,7 +57,8 @@ public class Day02 : DayBase
 			_ => psInt
 		};
 
-		return Score(os, (PlayerShape)Enum.ToObject(typeof(PlayerShape), psInt));
+		var selectedPs = (PlayerShape)Enum.ToObject(typeof(PlayerShape), psInt);
+		return Score(os, selectedPs);
 	}
 
 	private static bool IsWinner(OpponentShape os, PlayerShape ps) => os switch
