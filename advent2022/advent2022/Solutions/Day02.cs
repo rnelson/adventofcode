@@ -40,13 +40,11 @@ public class Day02 : DayBase
 
 	private static int PlayAndScore(OpponentShape os, PlayerShape ps)
 	{
-		var osInt = (int)os;
-		var psInt = -1;
-		
 		var min = Enum.GetValues(typeof(PlayerShape)).Cast<int>().First();
 		var max = Enum.GetValues(typeof(PlayerShape)).Cast<int>().Last();
-
-		psInt = ps switch
+		var osInt = (int)os;
+		
+		var selectedPs = (PlayerShape)Enum.ToObject(typeof(PlayerShape), ps switch
 		{
 			PlayerShape.X => // lose
 				osInt.Decrement(min, max),
@@ -54,10 +52,9 @@ public class Day02 : DayBase
 				osInt,
 			PlayerShape.Z => // win
 				osInt.Increment(min, max),
-			_ => psInt
-		};
+			_ => -1 // error
+		});
 
-		var selectedPs = (PlayerShape)Enum.ToObject(typeof(PlayerShape), psInt);
 		return Score(os, selectedPs);
 	}
 
