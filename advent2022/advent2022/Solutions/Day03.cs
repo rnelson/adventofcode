@@ -6,9 +6,9 @@ public class Day03 : DayBase
 {
 	/// <inheritdoc />
 	public override (object, object) Solve() => (
-				Input!.Sum(line => line.Halve().ToTuple().IntersectStringTuple().ScorePriority()),
-				Input!.Chunk(3).Sum(lines => lines.IntersectStrings().ScorePriority())
-			);
+		Input!.Sum(line => line.Halve().ToTuple().IntersectStringTuple().ScorePriority()),
+		Input!.Chunk(3).Sum(lines => lines.IntersectStrings().ScorePriority())
+	);
 }
 
 internal static class Day3Extensions
