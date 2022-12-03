@@ -12,8 +12,7 @@ public class Day03 : DayBase
 		foreach (var line in Input!)
 		{
 			var (c1, c2) = line.Halve();
-			var intersection = c1.Intersection(c2);
-			partA += intersection.ScorePriority();
+			partA += c1.Intersection(c2).ScorePriority();
 		}
 
 		var partB = Input!.Chunk(3).Sum(lines => lines.IntersectStrings().ScorePriority());
