@@ -19,7 +19,12 @@ public class Day03Test
 		#region Load sample and real input data
 		var sampleInput = new[]
 		{
-			""
+			"vJrwpWtwJgWrhcsFMMfFFhFp",
+			"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+			"PmmdzqPrVvPwwTWBwg",
+			"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+			"ttgJtRGJQctTZtZT",
+			"CrZsJsPPZsGzwwsLwLmpwMDw"
 		};
 		sample.Input = sampleInput;
 
@@ -35,28 +40,28 @@ public class Day03Test
 	[TestMethod]
 	public void SampleA()
 	{
-		const int solution = 0;
+		const int solution = 157;
 		Assert.AreEqual(solution, sampleA);
 	}
     
 	[TestMethod]
 	public void SampleB()
 	{
-		const int solution = 0;
+		const int solution = 70;
 		Assert.AreEqual(solution, sampleB);
 	}
     
 	[TestMethod]
 	public void SolutionA()
 	{
-		const int solution = 0;
+		const int solution = 8252;
 		Assert.AreEqual(solution, realA);
 	}
     
 	[TestMethod]
 	public void SolutionB()
 	{
-		const int solution = 0;
+		const int solution = 2828;
 		Assert.AreEqual(solution, realB);
 	}
 }
