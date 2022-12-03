@@ -5,13 +5,10 @@ namespace advent2022.Solutions;
 public class Day03 : DayBase
 {
 	/// <inheritdoc />
-	public override (object, object) Solve()
-	{
-		var partA = Input!.Sum(line => line.Halve().ToTuple().IntersectStringTuple().ScorePriority());
-		var partB = Input!.Chunk(3).Sum(lines => lines.IntersectStrings().ScorePriority());
-
-		return (partA, partB);
-	}
+	public override (object, object) Solve() => (
+				Input!.Sum(line => line.Halve().ToTuple().IntersectStringTuple().ScorePriority()),
+				Input!.Chunk(3).Sum(lines => lines.IntersectStrings().ScorePriority())
+			);
 }
 
 internal static class Day3Extensions
