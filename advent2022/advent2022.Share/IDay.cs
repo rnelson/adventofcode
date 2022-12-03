@@ -1,10 +1,13 @@
-﻿namespace advent2022.Share;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace advent2022.Share;
 
 public interface IDay
 {
     /// <summary>
     /// Gets or sets the puzzle input.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
     public IEnumerable<string>? Input { get; set; }
     
     /// <summary>
