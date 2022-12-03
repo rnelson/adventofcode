@@ -7,14 +7,7 @@ public class Day03 : DayBase
 	/// <inheritdoc />
 	public override (object, object) Solve()
 	{
-		var partA = 0;
-
-		foreach (var line in Input!)
-		{
-			var (c1, c2) = line.Halve();
-			partA += c1.Intersection(c2).ScorePriority();
-		}
-
+		var partA = Input!.Sum(line => line.Halve().ToTuple().IntersectStringTuple().ScorePriority());
 		var partB = Input!.Chunk(3).Sum(lines => lines.IntersectStrings().ScorePriority());
 
 		return (partA, partB);
@@ -40,6 +33,8 @@ internal static class Day3Extensions
 				return intersection;
 		}
 	}
+
+	public static string IntersectStringTuple(this Tuple<string, string> t) => t.Item1.Intersection(t.Item2);
 	
 	public static int ScorePriority(this string s) => s.ToCharArray().Sum(c => c.ScorePriority());
 	
