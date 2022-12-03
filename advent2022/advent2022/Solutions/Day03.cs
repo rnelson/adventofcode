@@ -21,7 +21,7 @@ public class Day03 : DayBase
 	}
 }
 
-internal static class Day3ArrayExtensions
+internal static class Day3Extensions
 {
 	public static string IntersectStrings(this string[] arr)
 	{
@@ -40,14 +40,8 @@ internal static class Day3ArrayExtensions
 				return intersection;
 		}
 	}
-}
-
-internal static class Day3StringExtensions
-{
+	
 	public static int ScorePriority(this string s) => s.ToCharArray().Sum(c => c.ScorePriority());
-}
-
-internal static class Day3CharExtensions
-{
-	public static int ScorePriority(this char c) => c - (char.IsUpper(c) ? 38 : 96);
+	
+	private static int ScorePriority(this char c) => c - (char.IsUpper(c) ? 38 : 96);
 }
