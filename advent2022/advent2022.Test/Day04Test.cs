@@ -47,7 +47,7 @@ public class Day04Test
 	[TestMethod]
 	public void SampleB()
 	{
-		const int solution = 0;
+		const int solution = 4;
 		Assert.AreEqual(solution, sampleB);
 	}
     
@@ -61,7 +61,7 @@ public class Day04Test
 	[TestMethod]
 	public void SolutionB()
 	{
-		const int solution = 0;
+		const int solution = 792;
 		Assert.AreEqual(solution, realB);
 	}
 }
