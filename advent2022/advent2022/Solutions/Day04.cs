@@ -19,12 +19,8 @@ public class Day04 : DayBase
 			select new Tuple<Range, Range>(one, two)).ToList();
 		
 		return (
-			assignments.Count(pair => IsStrictlyOverlapped(pair.Item1, pair.Item2)),
-			assignments.Count(pair => IsOverlapped(pair.Item1, pair.Item2))
+			assignments.Count(pair => pair.Item1.Contains(pair.Item2) || pair.Item2.Contains(pair.Item1)),
+			assignments.Count(pair => pair.Item1.Overlaps(pair.Item2) || pair.Item2.Overlaps(pair.Item1))
 		);
 	}
-
-	private static bool IsStrictlyOverlapped(Range r1, Range r2) => r1.Contains(r2) || r2.Contains(r1);
-	
-	private static bool IsOverlapped(Range r1, Range r2) => r1.Overlaps(r2) || r2.Overlaps(r1);
 }
