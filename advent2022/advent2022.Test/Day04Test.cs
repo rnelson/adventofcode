@@ -19,7 +19,12 @@ public class Day04Test
 		#region Load sample and real input data
 		var sampleInput = new[]
 		{
-			""
+			"2-4,6-8",
+			"2-3,4-5",
+			"5-7,7-9",
+			"2-8,3-7",
+			"6-6,4-6",
+			"2-6,4-8"
 		};
 		sample.Input = sampleInput;
 
@@ -35,7 +40,7 @@ public class Day04Test
 	[TestMethod]
 	public void SampleA()
 	{
-		const int solution = 0;
+		const int solution = 2;
 		Assert.AreEqual(solution, sampleA);
 	}
     
@@ -49,7 +54,7 @@ public class Day04Test
 	[TestMethod]
 	public void SolutionA()
 	{
-		const int solution = 0;
+		const int solution = 538;
 		Assert.AreEqual(solution, realA);
 	}
     
