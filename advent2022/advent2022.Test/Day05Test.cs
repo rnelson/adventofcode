@@ -19,7 +19,15 @@ public class Day05Test
 		#region Load sample and real input data
 		var sampleInput = new[]
 		{
-			""
+			"    [D]    ",
+			"[N] [C]    ",
+			"[Z] [M] [P]",
+			" 1   2   3 ",
+			"",
+			"move 1 from 2 to 1",
+			"move 3 from 1 to 3",
+			"move 2 from 2 to 1",
+			"move 1 from 1 to 2"
 		};
 		sample.Input = sampleInput;
 
@@ -35,28 +43,28 @@ public class Day05Test
 	[TestMethod]
 	public void SampleA()
 	{
-		const int solution = 0;
+		const string solution = "CMZ";
 		Assert.AreEqual(solution, sampleA);
 	}
     
 	[TestMethod]
 	public void SampleB()
 	{
-		const int solution = 0;
+		const string solution = "MCD";
 		Assert.AreEqual(solution, sampleB);
 	}
     
 	[TestMethod]
 	public void SolutionA()
 	{
-		const int solution = 0;
+		const string solution = "QNHWJVJZW";
 		Assert.AreEqual(solution, realA);
 	}
     
 	[TestMethod]
 	public void SolutionB()
 	{
-		const int solution = 0;
+		const string solution = "BPCZJLFJW";
 		Assert.AreEqual(solution, realB);
 	}
 }
