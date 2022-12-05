@@ -11,9 +11,9 @@ public class Day05 : DayBase
 	public override (object, object) Solve()
 	{
 		#region Part A
-		var (stacksA, stepsA) = Parse(Input!.ToList());
+		var (stacksA, steps) = Parse(Input!.ToList());
 		
-		foreach (var (count, source, destination) in stepsA)
+		foreach (var (count, source, destination) in steps)
 		{
 			for (var i = 0; i < count; i++)
 				stacksA.ElementAt(destination - 1).Push(stacksA.ElementAt(source - 1).Pop());
@@ -23,9 +23,9 @@ public class Day05 : DayBase
 		#endregion Part A
 		
 		#region Part B
-		var (stacksB, stepsB) = Parse(Input!.ToList());
+		var (stacksB, _) = Parse(Input!.ToList());
 
-		foreach (var (count, source, destination) in stepsB)
+		foreach (var (count, source, destination) in steps)
 		{
 			var sourceStack = stacksB.ElementAt(source - 1);
 			var destinationStack = stacksB.ElementAt(destination - 1);
