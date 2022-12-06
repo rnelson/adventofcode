@@ -5,49 +5,24 @@ namespace advent2022.Solutions;
 public class Day06 : DayBase
 {
 	/// <inheritdoc />
-	public override (object, object) Solve()
-	{
-		var partA = new List<int>();
-		var partB = new List<int>();
+	public override (object, object) Solve() => (Solve(4), Solve(14));
 
-		foreach (var line in Input!)
-		{
-			var index = 1;
-			//var seen = new List<char>();
-			
-			foreach (var window in line.SlidingWindows(4))
-			{
-				// The first few can never be it
-				if (index < 4)
-				{
-					index++;
-					continue;
-				}
+	/// <summary>
+	/// Finds the marker positions.
+	/// </summary>
+	/// <remarks>
+	/// 1. Loop through all 
+	/// </remarks>
+	/// <param name="windowSize">The width of the marker.</param>
+	/// <returns>A list of marker positions.</returns>
+	private List<int> Solve(int windowSize) =>
+		Input!.Select(line => Enumerable        // For every line in the input...
+				.Range(0, line.Length)          // For every position in the line...
+				.First(i => line                //  Find the first index where...
+					.Substring(i, windowSize)   // A `windowSize` substring...
+					.Distinct()                 // Has only unique characters (relative to itself)...
+					.Count() == windowSize)     // Totaling `windowSize`.
+		                      + windowSize)     // Then add `windowSize` since we need the spot AFTER the marker.
+			.ToList();
 
-				var possibleMarker = line.Substring(index - 4, 4);
-				if (possibleMarker.Distinct().Count() == 4)
-				{
-					partA.Add(index);
-					break;
-				}
-
-				index++;
-				
-				/*
-				if (window.Distinct().Count() == window.Length &&
-				    !window.Intersect(seen).Any())
-				{
-					partA.Add(index);
-					break;
-				}
-				
-				//seen.AddRange(window.ToCharArray().Distinct());
-				seen.Add(window[0]);
-				index++;
-				*/
-			}
-		}
-		
-		return (partA, partB);
-	}
 }
