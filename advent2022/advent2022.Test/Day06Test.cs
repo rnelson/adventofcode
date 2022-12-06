@@ -19,7 +19,11 @@ public class Day06Test
 		#region Load sample and real input data
 		var sampleInput = new[]
 		{
-			""
+			"mjqjpqmgbljsphdztnvjfqwrcgsmlb",
+			"bvwbjplbgvbhsrlpgdmjqwftvncz",
+			"nppdvjthqldpwncqszvftbrmjlhg",
+			"nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg",
+			"zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"
 		};
 		sample.Input = sampleInput;
 
@@ -35,8 +39,13 @@ public class Day06Test
 	[TestMethod]
 	public void SampleA()
 	{
-		const int solution = 0;
-		Assert.AreEqual(solution, sampleA);
+		var solutions = new[] {7, 5, 6, 10, 11};
+		var sampleSolutions = sampleA as List<int>;
+		
+		for (var i = 0; i < solutions.Length; i++)
+		{
+			Assert.AreEqual(solutions[i], sampleSolutions!.ElementAt(i));
+		}
 	}
     
 	[TestMethod]
@@ -49,8 +58,13 @@ public class Day06Test
 	[TestMethod]
 	public void SolutionA()
 	{
-		const int solution = 0;
-		Assert.AreEqual(solution, realA);
+		var solutions = new[] {1929};
+		var realSolutions = realA as List<int>;
+		
+		for (var i = 0; i < realSolutions!.Count(); i++)
+		{
+			Assert.AreEqual(solutions[i], realSolutions!.ElementAt(i));
+		}
 	}
     
 	[TestMethod]
