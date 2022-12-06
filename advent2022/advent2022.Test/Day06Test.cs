@@ -51,8 +51,13 @@ public class Day06Test
 	[TestMethod]
 	public void SampleB()
 	{
-		const int solution = 0;
-		Assert.AreEqual(solution, sampleB);
+		var solutions = new[] {19, 23, 23, 29, 26};
+		var sampleSolutions = sampleB as List<int>;
+		
+		for (var i = 0; i < solutions.Length; i++)
+		{
+			Assert.AreEqual(solutions[i], sampleSolutions!.ElementAt(i));
+		}
 	}
     
 	[TestMethod]
@@ -70,7 +75,12 @@ public class Day06Test
 	[TestMethod]
 	public void SolutionB()
 	{
-		const int solution = 0;
-		Assert.AreEqual(solution, realB);
+		var solutions = new[] {3298};
+		var realSolutions = realB as List<int>;
+		
+		for (var i = 0; i < realSolutions!.Count(); i++)
+		{
+			Assert.AreEqual(solutions[i], realSolutions!.ElementAt(i));
+		}
 	}
 }
