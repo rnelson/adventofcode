@@ -11,5 +11,16 @@ public static class StringExtensions
 		return string.Join(string.Empty, intersection);
 	}
 
+	public static IEnumerable<string> SlidingWindows(this string s, int size)
+	{
+		if (s.Length < size)
+			yield return s;
+		else
+		{
+			for (var i = 0; i < s.Length - size; i++)
+				yield return s.Substring(i, size);
+		} 
+	}
+
 	public static (string, string) Halve(this string s) => (s[..(s.Length / 2)], s[^(s.Length / 2)..]);
 }
