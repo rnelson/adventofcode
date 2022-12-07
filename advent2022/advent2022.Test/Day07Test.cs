@@ -19,7 +19,29 @@ public class Day07Test
 		#region Load sample and real input data
 		var sampleInput = new[]
 		{
-			""
+			"$ cd /",
+			"$ ls",
+			"dir a",
+			"14848514 b.txt",
+			"8504156 c.dat",
+			"dir d",
+			"$ cd a",
+			"$ ls",
+			"dir e",
+			"29116 f",
+			"2557 g",
+			"62596 h.lst",
+			"$ cd e",
+			"$ ls",
+			"584 i",
+			"$ cd ..",
+			"$ cd ..",
+			"$ cd d",
+			"$ ls",
+			"4060174 j",
+			"8033020 d.log",
+			"5626152 d.ext",
+			"7214296 k"
 		};
 		sample.Input = sampleInput;
 
@@ -35,28 +57,28 @@ public class Day07Test
 	[TestMethod]
 	public void SampleA()
 	{
-		const int solution = 0;
+		const long solution = 95437;
 		Assert.AreEqual(solution, sampleA);
 	}
     
 	[TestMethod]
 	public void SampleB()
 	{
-		const int solution = 0;
+		const long solution = 0;
 		Assert.AreEqual(solution, sampleB);
 	}
     
 	[TestMethod]
 	public void SolutionA()
 	{
-		const int solution = 0;
+		const long solution = 0;
 		Assert.AreEqual(solution, realA);
 	}
     
 	[TestMethod]
 	public void SolutionB()
 	{
-		const int solution = 0;
+		const long solution = 0;
 		Assert.AreEqual(solution, realB);
 	}
 }
