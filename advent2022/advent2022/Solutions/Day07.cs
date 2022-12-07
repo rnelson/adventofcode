@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace advent2022.Solutions;
 
 public class Day07 : DayBase
@@ -28,11 +30,17 @@ public class Day07 : DayBase
 	}
 }
 
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+[SuppressMessage("ReSharper", "NotAccessedField.Global")]
+[SuppressMessage("ReSharper", "UnusedType.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 internal class Day7Classes
 {
+	[SuppressMessage("ReSharper", "UnusedMember.Global")]
 	public class Filesystem
 	{
-		public FsDirectory Root { get; set; } = new FsDirectory(null, "/");
+		public FsDirectory Root { get; } = new(null, "/");
 
 		public static Filesystem Parse(IEnumerable<string> input)
 		{
@@ -47,22 +55,23 @@ internal class Day7Classes
 					switch (line[0])
 					{
 						case '$':
-							if (line.Substring(2, 2).Equals("cd"))
+							switch (line.Substring(2, 2))
 							{
-								if (line[5] == '/')
+								case "cd" when line[5] == '/':
 									cd = fs.Root;
-								else if (line[5..] == "..")
+									break;
+								case "cd" when line[5..] == "..":
 									cd = cd!.Parent;
-								else
+									break;
+								case "cd":
 									cd = cd!.Directories.First(d => d.Name == line[5..]);
+									break;
+								case "ls":
+									// Do nothing, blindly assuming ls output down below
+									continue;
+								default:
+									throw new Exception($"unexpected command: {line.Substring(2, 2)}");
 							}
-							else if (line.Substring(2, 2).Equals("ls"))
-							{
-								// Do nothing, blindly assuming ls output down below
-								continue;
-							}
-							else
-								throw new Exception($"unexpected command: {line.Substring(2, 2)}");
 							break;
 						case 'd':
 							cd!.Directories.Add(new FsDirectory(cd, line[4..]));
@@ -131,7 +140,7 @@ internal class Day7Classes
 			
 			files.AddRange(root.Files);
 			foreach (var dir in root.Directories)
-				files.AddRange(GetAllFiles(root));
+				files.AddRange(GetAllFiles(dir));
 			
 			return files;
 		}
@@ -172,8 +181,8 @@ internal class Day7Classes
 
 	public class FsPath
 	{
-		public static char FsPathSeparator = '/';
+		public const char FsPathSeparator = '/';
 
-		public static string Combine(params string[] partials) => partials?.Length == 0 ? string.Empty : string.Join(FsPathSeparator, partials!);
+		public static string Combine(params string[] partials) => partials.Length == 0 ? string.Empty : string.Join(FsPathSeparator, partials);
 	}
 }

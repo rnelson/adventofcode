@@ -1,5 +1,8 @@
-﻿namespace advent2022.Share;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace advent2022.Share;
+
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public static class StringExtensions
 {
 	public static string Intersection(this string s1, string s2)
