@@ -71,7 +71,7 @@ public class Day07Test
 	[TestMethod]
 	public void SolutionA()
 	{
-		const long solution = 0;
+		const long solution = 1783610;
 		Assert.AreEqual(solution, realA);
 	}
     
