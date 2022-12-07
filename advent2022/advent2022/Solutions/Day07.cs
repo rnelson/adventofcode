@@ -6,12 +6,25 @@ public class Day07 : DayBase
 	public override (object, object) Solve()
 	{
 		var fs = Day7Classes.Filesystem.Parse(Input!);
+
+		const long aMaxDirectorySize = 100_000;
+		const long bMaxDiskSpace = 70_000_000;
+		const long bNecessaryUnusedDiskSpace = 30_000_000;
+		
 		var partA = fs
 			.GetAllDirectories()
-			.Where(d => d.GetTotalSize() <= 100_000)
+			.Where(d => d.GetTotalSize() <= aMaxDirectorySize)
 			.Sum(d => d.GetTotalSize());
+
+		var initialTotal = fs.Root.GetTotalSize();
+		var freeSpace = bMaxDiskSpace - initialTotal;
+		var minDelete = Math.Abs(freeSpace - bNecessaryUnusedDiskSpace);
+		var directories = fs
+			.GetAllDirectories()
+			.OrderBy(d => d.GetTotalSize());
+		var target = directories.First(d => d.GetTotalSize() >= minDelete);
 		
-		return (partA, 0L);
+		return (partA, target.GetTotalSize());
 	}
 }
 
