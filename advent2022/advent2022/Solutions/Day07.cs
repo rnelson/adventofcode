@@ -6,7 +6,12 @@ public class Day07 : DayBase
 	public override (object, object) Solve()
 	{
 		var fs = Day7Classes.Filesystem.Parse(Input!);
-		return (fs.FindDirectoriesWrong(100000).Sum(d => d.GetSize()), 0L);
+		var partA = fs
+			.GetAllDirectories()
+			.Where(d => d.GetTotalSize() <= 100_000)
+			.Sum(d => d.GetTotalSize());
+		
+		return (partA, 0L);
 	}
 }
 
@@ -86,23 +91,36 @@ internal class Day7Classes
 			return directories;
 		}
 
-		public IEnumerable<FsDirectory> FindDirectoriesWrong(long maximumSize = long.MaxValue) =>
-			FindDirectoriesWrong(Root, maximumSize);
-		
-		private static IEnumerable<FsDirectory> FindDirectoriesWrong(FsDirectory current, long maximumSize = long.MaxValue)
+		public IEnumerable<FsDirectory> GetAllDirectories()
+		{
+			var dirs = new List<FsDirectory> { Root };
+			dirs.AddRange(GetAllDirectories(Root));
+
+			return dirs;
+		}
+
+		private static IEnumerable<FsDirectory> GetAllDirectories(FsDirectory root)
 		{
 			var directories = new List<FsDirectory>();
 			
-			if (current.GetSize() <= maximumSize)
-				directories.Add(current);
-
-			foreach (var dir in current.Directories)
-			{
-				directories.AddRange(FindDirectoriesWrong(dir, maximumSize));
-				directories.AddRange(dir.Directories.Where(d => d.GetSize() <= maximumSize));
-			}
+			directories.AddRange(root.Directories);
+			foreach (var dir in root.Directories)
+				directories.AddRange(GetAllDirectories(dir));
 
 			return directories;
+		}
+
+		public IEnumerable<FsFile> GetAllFiles() => GetAllFiles(Root);
+
+		private static IEnumerable<FsFile> GetAllFiles(FsDirectory root)
+		{
+			var files = new List<FsFile>();
+			
+			files.AddRange(root.Files);
+			foreach (var dir in root.Directories)
+				files.AddRange(GetAllFiles(root));
+			
+			return files;
 		}
 	}
 
