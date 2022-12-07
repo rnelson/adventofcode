@@ -64,7 +64,7 @@ public class Day07Test
 	[TestMethod]
 	public void SampleB()
 	{
-		const long solution = 0;
+		const long solution = 24933642;
 		Assert.AreEqual(solution, sampleB);
 	}
     
@@ -78,7 +78,7 @@ public class Day07Test
 	[TestMethod]
 	public void SolutionB()
 	{
-		const long solution = 0;
+		const long solution = 4370655;
 		Assert.AreEqual(solution, realB);
 	}
 }
