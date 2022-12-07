@@ -1,6 +1,4 @@
-﻿using advent2022.Share;
-
-namespace advent2022.Solutions;
+﻿namespace advent2022.Solutions;
 
 public class Day06 : DayBase
 {

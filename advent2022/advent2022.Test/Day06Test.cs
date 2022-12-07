@@ -1,9 +1,11 @@
-﻿using advent2022.Share;
+﻿using System.Diagnostics.CodeAnalysis;
+using advent2022.Share;
 using advent2022.Solutions;
 
 namespace advent2022.Test;
 
 [TestClass]
+[SuppressMessage("ReSharper", "StringLiteralTypo")]
 public class Day06Test
 {
 	private readonly IDay sample = new Day06(); 
@@ -66,9 +68,9 @@ public class Day06Test
 		var solutions = new[] {1929};
 		var realSolutions = realA as List<int>;
 		
-		for (var i = 0; i < realSolutions!.Count(); i++)
+		for (var i = 0; i < realSolutions!.Count; i++)
 		{
-			Assert.AreEqual(solutions[i], realSolutions!.ElementAt(i));
+			Assert.AreEqual(solutions[i], realSolutions.ElementAt(i));
 		}
 	}
     
@@ -78,9 +80,9 @@ public class Day06Test
 		var solutions = new[] {3298};
 		var realSolutions = realB as List<int>;
 		
-		for (var i = 0; i < realSolutions!.Count(); i++)
+		for (var i = 0; i < realSolutions!.Count; i++)
 		{
-			Assert.AreEqual(solutions[i], realSolutions!.ElementAt(i));
+			Assert.AreEqual(solutions[i], realSolutions.ElementAt(i));
 		}
 	}
 }

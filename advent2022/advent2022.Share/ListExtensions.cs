@@ -1,5 +1,9 @@
-﻿namespace advent2022.Share;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace advent2022.Share;
+
+[SuppressMessage("ReSharper", "UnusedType.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public static class ListExtensions
 {
 	public static List<Tuple<T, T>> Pairs<T>(this List<T> list)

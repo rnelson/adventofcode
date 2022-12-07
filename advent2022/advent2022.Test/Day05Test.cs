@@ -1,9 +1,11 @@
-﻿using advent2022.Share;
+﻿using System.Diagnostics.CodeAnalysis;
+using advent2022.Share;
 using advent2022.Solutions;
 
 namespace advent2022.Test;
 
 [TestClass]
+[SuppressMessage("ReSharper", "StringLiteralTypo")]
 public class Day05Test
 {
 	private readonly IDay sample = new Day05(); 

@@ -61,7 +61,7 @@ public class Day05 : DayBase
 		for (var stackNumber = 1; stackNumber <= stackCount; stackNumber++)
 		{
 			var stack = new Stack<char>();
-			var pos = 1 + ((stackNumber - 1) * 4);
+			var pos = 1 + (stackNumber - 1) * 4;
 
 			for (var i = stackLines.Count - 1; i >= 0; i--)
 			{
