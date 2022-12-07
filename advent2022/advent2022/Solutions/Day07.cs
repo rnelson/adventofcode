@@ -6,7 +6,7 @@ public class Day07 : DayBase
 	public override (object, object) Solve()
 	{
 		var fs = Day7Classes.Filesystem.Parse(Input!);
-		return (fs.Root.GetTotalSize(), 0L);
+		return (fs.FindDirectoriesWrong(100000).Sum(d => d.GetSize()), 0L);
 	}
 }
 
@@ -69,19 +69,38 @@ internal class Day7Classes
 			return fs;
 		}
 
-		public IList<FsDirectory> FindDirectories(long? minimumSize = null) =>
-			FindDirectories(Root, minimumSize);
+		public IList<FsDirectory> FindDirectories(long? maximumSize = null) =>
+			FindDirectories(Root, maximumSize);
 		
-		private static IList<FsDirectory> FindDirectories(FsDirectory current, long? minimumSize = null)
+		private static IList<FsDirectory> FindDirectories(FsDirectory current, long? maximumSize = null)
 		{
 			var directories = new List<FsDirectory>();
 			
-			if (minimumSize != null)
-				if (current.GetSize() >= minimumSize)
+			if (maximumSize != null)
+				if (current.GetSize() <= maximumSize)
 					directories.Add(current);
 			
 			foreach (var dir in current.Directories)
-				directories.AddRange(FindDirectories(dir, minimumSize));
+				directories.AddRange(FindDirectories(dir, maximumSize));
+
+			return directories;
+		}
+
+		public IEnumerable<FsDirectory> FindDirectoriesWrong(long maximumSize = long.MaxValue) =>
+			FindDirectoriesWrong(Root, maximumSize);
+		
+		private static IEnumerable<FsDirectory> FindDirectoriesWrong(FsDirectory current, long maximumSize = long.MaxValue)
+		{
+			var directories = new List<FsDirectory>();
+			
+			if (current.GetSize() <= maximumSize)
+				directories.Add(current);
+
+			foreach (var dir in current.Directories)
+			{
+				directories.AddRange(FindDirectoriesWrong(dir, maximumSize));
+				directories.AddRange(dir.Directories.Where(d => d.GetSize() <= maximumSize));
+			}
 
 			return directories;
 		}
