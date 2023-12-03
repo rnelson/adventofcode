@@ -78,6 +78,4 @@ class Day02 : Day(2) {
     enum class BeadColor {
         RED, GREEN, BLUE
     }
-
-    data class Game(val gameNumber: Int, val counts: Map<BeadColor, Int>)
 }
