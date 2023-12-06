@@ -18,15 +18,21 @@ class Day05 : Day(5) {
     }
 
     fun findLocation(seed: Long, input: Input): Long {
-        val soil = checkMaps(seed, input.seedToSoil)
-        val fertilizer = checkMaps(soil, input.soilToFertilizer)
-        val water = checkMaps(fertilizer, input.fertilizerToWater)
-        val light = checkMaps(water, input.waterToLight)
-        val temperature = checkMaps(light, input.lightToTemperature)
-        val humidity = checkMaps(temperature, input.temperatureToHumidity)
-        val location = checkMaps(humidity, input.humidityToLocation)
-
-        return location
+        return checkMaps(
+            checkMaps(
+                checkMaps(
+                    checkMaps(
+                        checkMaps(
+                            checkMaps(
+                                checkMaps(
+                                    seed,
+                                    input.seedToSoil),
+                                input.soilToFertilizer),
+                            input.fertilizerToWater),
+                        input.waterToLight),
+                    input.lightToTemperature),
+                input.temperatureToHumidity),
+            input.humidityToLocation)
     }
 
     fun checkMaps(me: Long, section: Section): Long {
