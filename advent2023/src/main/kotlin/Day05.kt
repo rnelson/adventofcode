@@ -10,7 +10,6 @@ class Day05 : Day(5) {
     fun solve(input: Array<String>): Any {
         val data = parse(input)
 
-        // Find the location for all of our seeds
         val map = mutableMapOf<Long, Long>()
         data.seeds.forEach { map[it] = findLocation(it, data) }
 
@@ -47,22 +46,6 @@ class Day05 : Day(5) {
         }
 
         return me
-    }
-
-    fun findLargest(input: Input): Long {
-        var largestNumber: Long = -1
-
-        input.seeds.forEach { if (it > largestNumber) largestNumber = it }
-        input.sections.forEach { section ->
-            section.data.forEach {
-                if (it.destinationStart + it.length > largestNumber)
-                    largestNumber = it.destinationStart + it.length
-                if (it.sourceStart + it.length > largestNumber)
-                    largestNumber = it.sourceStart + it.length
-            }
-        }
-
-        return largestNumber
     }
 
     fun parse(input: Array<String>): Input {
