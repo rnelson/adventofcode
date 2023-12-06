@@ -1,7 +1,5 @@
 import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
-import kotlin.math.exp
 
 class UtilTest {
 
@@ -27,5 +25,14 @@ class UtilTest {
         expectedValues.forEach {
             assertTrue(actual.contains(it))
         }
+    }
+
+    @Test
+    fun smoosh() {
+        val input = arrayOf<Long>(42, 69, 0, 420)
+        val expected = "42690420"
+        val actual = input.smoosh()
+
+        assertEquals(expected, actual)
     }
 }
