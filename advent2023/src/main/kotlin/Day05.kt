@@ -10,16 +10,46 @@ class Day05 : Day(5) {
     fun solve(input: Array<String>): Any {
         val data = parse(input)
 
-        // Find the end of our data, the largest possible
-        // value that we're working with
-        val max = findLargest(data)
-
-        // Create the list of spots, and assign them all to
-        // the same value initially
-        val spots = mutableMapOf<Long, Long>()
-        for (i in 0..max) spots[i] = i
+        data.seeds.forEach { seed ->
+            val loc = findLocation(seed, data)
+            println("SEED TO LOC: $seed -> $loc")
+        }
 
         return -1
+    }
+
+    fun findLocation(seed: Long, input: Input): Long {
+        println("Seed:        $seed")
+        val soil = checkMaps(seed, input.seedToSoil)
+        println("Soil:        $soil")
+        val fertilizer = checkMaps(soil, input.soilToFertilizer)
+        println("Fertilizer:  $fertilizer")
+        val water = checkMaps(fertilizer, input.fertilizerToWater)
+        println("Water:       $water")
+        val light = checkMaps(water, input.waterToLight)
+        println("Light:       $light")
+        val temperature = checkMaps(light, input.lightToTemperature)
+        println("Temperature: $temperature")
+        val humidity = checkMaps(temperature, input.temperatureToHumidity)
+        println("Humidity:    $humidity")
+        val location = checkMaps(humidity, input.humidityToLocation)
+        println("Location:    $location")
+
+        return location
+    }
+
+    fun checkMaps(me: Long, section: Section): Long {
+        section.data.forEach { map ->
+            val start = map.sourceStart
+            val end = map.sourceStart + map.length
+            val offset = map.destinationStart - map.sourceStart
+
+            if (me in start..end) {
+                return me + offset
+            }
+        }
+
+        return me
     }
 
     fun findLargest(input: Input): Long {
