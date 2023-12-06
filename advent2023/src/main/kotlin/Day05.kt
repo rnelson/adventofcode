@@ -10,30 +10,21 @@ class Day05 : Day(5) {
     fun solve(input: Array<String>): Any {
         val data = parse(input)
 
-        data.seeds.forEach { seed ->
-            val loc = findLocation(seed, data)
-            println("SEED TO LOC: $seed -> $loc")
-        }
+        // Find the location for all of our seeds
+        val map = mutableMapOf<Long, Long>()
+        data.seeds.forEach { map[it] = findLocation(it, data) }
 
-        return -1
+        return map.values.minOf { it }
     }
 
     fun findLocation(seed: Long, input: Input): Long {
-        println("Seed:        $seed")
         val soil = checkMaps(seed, input.seedToSoil)
-        println("Soil:        $soil")
         val fertilizer = checkMaps(soil, input.soilToFertilizer)
-        println("Fertilizer:  $fertilizer")
         val water = checkMaps(fertilizer, input.fertilizerToWater)
-        println("Water:       $water")
         val light = checkMaps(water, input.waterToLight)
-        println("Light:       $light")
         val temperature = checkMaps(light, input.lightToTemperature)
-        println("Temperature: $temperature")
         val humidity = checkMaps(temperature, input.temperatureToHumidity)
-        println("Humidity:    $humidity")
         val location = checkMaps(humidity, input.humidityToLocation)
-        println("Location:    $location")
 
         return location
     }

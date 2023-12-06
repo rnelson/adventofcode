@@ -39,7 +39,7 @@ class Day05Test {
                 "56 93 4",
                 "")
         val actual = Day05().partA(input)
-        assertEquals(35, actual)
+        assertEquals(35L, actual)
     }
 
     @Test
