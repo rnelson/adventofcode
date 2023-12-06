@@ -1,19 +1,54 @@
 class Day05 : Day(5) {
     override fun partA(input: Array<String>): Any {
-        return solve(input)
+        return solveA(input)
     }
 
     override fun partB(input: Array<String>): Any {
-        return 0
+        return solveB(input)
     }
 
-    fun solve(input: Array<String>): Any {
+    fun solveA(input: Array<String>): Any {
         val data = parse(input)
-
         val map = mutableMapOf<Long, Long>()
+
         data.seeds.forEach { map[it] = findLocation(it, data) }
 
         return map.values.minOf { it }
+    }
+
+    fun solveB(input: Array<String>): Any {
+        val data = parse(input)
+        val map = mutableMapOf<Long, Long>()
+        //var seeds = mutableListOf<Long>()
+        var smallestLocation = Long.MAX_VALUE
+        var smallestSeed = -1L
+
+        for (i in 0..<data.seeds.size step 2) {
+            val start = data.seeds[i]
+            val length = data.seeds[i+1]
+
+            for (j in start..<(start + length)) {
+                print("Seed #$j lives at ")
+                val location = findLocation(j, data)
+                println("$location")
+
+                if (location < smallestLocation) {
+                    smallestSeed = j
+                    smallestLocation = location
+                }
+            }
+        }
+
+        /*
+        data.seeds = seeds
+
+        println("got here")
+        seeds.forEach { map[it] = findLocation(it, data) }
+
+        return map.values.minOf { it }
+        */
+
+        return smallestLocation
     }
 
     fun findLocation(seed: Long, input: Input): Long {
