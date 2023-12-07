@@ -19,25 +19,61 @@ class Day05 : Day(5) {
     }
 
     private fun solveB(input: Array<String>): Long {
+        /*
+        val data = parse(input)
+
+        for (i in 0..Long.MAX_VALUE) {
+            val location = findSeed(i, data)
+
+            for (i in 0..<data.seeds.size step 2) {
+                if (location >= data.seeds[i] && location <= (data.seeds[i] + data.seeds[i+1]))
+                    return location
+            }
+        }
+
+        return -3
+        // */
+
+        //*
         val data = parse(input)
         var smallestLocation = Long.MAX_VALUE
 
         for (i in 0..<data.seeds.size step 2) {
             val start = data.seeds[i]
-            val end = start + data.seeds[i+1]
+            val length = data.seeds[i+1]
+            val end = start + length
 
-            for (j in start..end) {
+            for (seed in start..(end+1)) {
                 //println("checking $j")
-                val location = findLocation(j, data)
+                val location = findLocation(seed, data)
 
                 if (location < smallestLocation) {
-                    println("New smallest! Seed $j at loc $location")
+                    println("New smallest! Seed $seed at loc $location")
                     smallestLocation = location
                 }
             }
         }
 
         return smallestLocation
+        // */
+
+        /*
+        // -Xmx62g
+        val data = parse(input)
+        val seeds = mutableListOf<Long>()
+        val map = mutableMapOf<Long, Long>()
+
+        for (i in 0..<data.seeds.size step 2) {
+            val start = data.seeds[i]
+            val end = start + data.seeds[i + 1]
+
+            for (j in start..end) seeds.add(j)
+        }
+
+        data.seeds.forEach { map[it] = findLocation(it, data) }
+
+        return map.values.minOf { it }
+        // */
     }
 
     private fun findLocation(seed: Long, input: Input): Long {
@@ -56,6 +92,24 @@ class Day05 : Day(5) {
                     input.lightToTemperature),
                 input.temperatureToHumidity),
             input.humidityToLocation)
+    }
+
+    private fun findSeed(location: Long, input: Input): Long {
+        return checkMaps(
+            checkMaps(
+                checkMaps(
+                    checkMaps(
+                        checkMaps(
+                            checkMaps(
+                                checkMaps(
+                                    location,
+                                    input.humidityToLocation),
+                                input.temperatureToHumidity),
+                            input.lightToTemperature),
+                        input.waterToLight),
+                    input.fertilizerToWater),
+                input.soilToFertilizer),
+            input.seedToSoil)
     }
 
     private fun checkMaps(me: Long, section: Section): Long {
@@ -87,7 +141,7 @@ class Day05 : Day(5) {
 
             val line = input[i].trim()
 
-            if (line.isEmpty()) {
+            if (line.isEmpty() || "ECOMPUTERSAREDUMB" == line) {
                 // We've hit the boundary between two sections
                 when (currentSection) {
                     "seed-to-soil" -> {
@@ -141,13 +195,13 @@ class Day05 : Day(5) {
 
     class Input {
         var seeds = mutableListOf<Long>()
-        val seedToSoil = Section("", mutableListOf<MapEntry>())
-        val soilToFertilizer = Section("", mutableListOf<MapEntry>())
-        val fertilizerToWater = Section("", mutableListOf<MapEntry>())
-        val waterToLight = Section("", mutableListOf<MapEntry>())
-        val lightToTemperature = Section("", mutableListOf<MapEntry>())
-        val temperatureToHumidity = Section("", mutableListOf<MapEntry>())
-        val humidityToLocation = Section("", mutableListOf<MapEntry>())
+        val seedToSoil = Section("", mutableListOf())
+        val soilToFertilizer = Section("", mutableListOf())
+        val fertilizerToWater = Section("", mutableListOf())
+        val waterToLight = Section("", mutableListOf())
+        val lightToTemperature = Section("", mutableListOf())
+        val temperatureToHumidity = Section("", mutableListOf())
+        val humidityToLocation = Section("", mutableListOf())
 
         val sections = listOf(seedToSoil,
             soilToFertilizer,
