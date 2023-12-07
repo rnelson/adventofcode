@@ -36,7 +36,6 @@ class Day07 : Day(7) {
 
         for (i in sorted.indices) {
             val score = ((i + 1) * sorted[i].bid)
-            println("${sorted[i].cards} worth ${i+1}*${sorted[i].bid}=$score")
             result += score
         }
 
@@ -48,12 +47,11 @@ class Day07 : Day(7) {
         
         input.forEach { line ->
             val bits = line.uppercase().trim().split(" ")
-            var hand = bits[0].trim()
+            val hand = bits[0].trim()
             val bid = bits[1].trim().toInt()
 
             if (wildcards && hand.contains('J')) {
                 val bestHand = findOptimalHand(hand)
-                println("Adding best hand of $bestHand [${findType(bestHand).points} pts, $$bid], was $hand")
                 result.add(Hand(hand, findType(bestHand), bid))
             } else {
                 result.add(Hand(hand, findType(hand), bid))
@@ -66,17 +64,14 @@ class Day07 : Day(7) {
     private fun findOptimalHand(hand: String): String {
         if (hand.none { it == 'J' }) return hand
 
+        // More of a kind is better, so we don't need _every_ permutation,
+        // just swap all the jokers for each other type of card
         val options = mutableSetOf<String>()
         val faces = arrayOf('2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A')
+        for (face in faces) { options.add(hand.replace('J', face)) }
 
-        for (face in faces) {
-            //println("Got a joker, considering ${hand.replace('J', face)}")
-            options.add(hand.replace('J', face))
-        }
-
-        var bestHand = ""
-        var bestScore = -1
-
+        // Find the best possible score from those options
+        var bestHand = ""; var bestScore = -1
         options.forEach { option ->
             val type = findType(option)
             if (type.points >= bestScore) {
@@ -85,7 +80,6 @@ class Day07 : Day(7) {
             }
         }
 
-        //println("Best hand is $bestHand at $bestScore points")
         return bestHand
     }
 
