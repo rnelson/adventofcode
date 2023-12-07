@@ -1,26 +1,15 @@
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-
 class Day05 : Day(5) {
     override fun partA(input: Array<String>): Any {
         return solveA(input)
     }
 
     override fun partB(input: Array<String>): Any {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-
-        var current = LocalDateTime.now().format(formatter)
-        println("Start: $current")
-
-        val result = solveB(input)
-
-        current = LocalDateTime.now().format(formatter)
-        println("End:   $current")
-
+        var result = -1L
+        time { result = solveB(input) }
         return result
     }
 
-    private fun solveA(input: Array<String>): Any {
+    private fun solveA(input: Array<String>): Long {
         val data = parse(input)
         val map = mutableMapOf<Long, Long>()
 
@@ -29,7 +18,7 @@ class Day05 : Day(5) {
         return map.values.minOf { it }
     }
 
-    private fun solveB(input: Array<String>): Any {
+    private fun solveB(input: Array<String>): Long {
         val data = parse(input)
         var smallestLocation = Long.MAX_VALUE
 
