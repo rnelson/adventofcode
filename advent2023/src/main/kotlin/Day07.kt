@@ -1,41 +1,6 @@
 class Day07 : Day(7) {
-    override fun partA(input: Array<String>): Any {
-        return solve(input)
-    }
-
-    override fun partB(input: Array<String>): Any {
-        return 0
-    }
-
-    private fun solve(input: Array<String>): Int {
-        val games = parse(input)
-        var result = 0
-
-        val sorted = games.sortedWith(HandComparator)
-
-        for (i in sorted.indices) {
-            result += ((i + 1) * sorted[i].bid)
-        }
-
-        return result
-    }
-    
-    private fun parse(input: Array<String>): List<Hand> {
-        val result = mutableListOf<Hand>()
-        
-        input.forEach { line ->
-            val bits = line.uppercase().trim().split(" ")
-            val hand = bits[0].trim()
-            val bid = bits[1].trim().toInt()
-            val type = findType(hand)
-
-            result.add(Hand(hand, type, bid))
-        }
-        
-        return result
-    }
-
-    private val HandComparator = Comparator<Hand> { hand1, hand2 ->
+    private var wildcards = false
+    private val handComparator = Comparator<Hand> { hand1, hand2 ->
         if (hand1.type.points > hand2.type.points) return@Comparator 1
         if (hand2.type.points > hand1.type.points) return@Comparator -1
 
@@ -51,6 +16,77 @@ class Day07 : Day(7) {
         }
 
         return@Comparator 0
+    }
+
+    override fun partA(input: Array<String>): Any {
+        wildcards = false
+        return solve(input)
+    }
+
+    override fun partB(input: Array<String>): Any {
+        wildcards = true
+        return solve(input)
+    }
+
+    private fun solve(input: Array<String>): Int {
+        val games = parse(input)
+        var result = 0
+
+        val sorted = games.sortedWith(handComparator)
+
+        for (i in sorted.indices) {
+            val score = ((i + 1) * sorted[i].bid)
+            println("${sorted[i].cards} worth ${i+1}*${sorted[i].bid}=$score")
+            result += score
+        }
+
+        return result
+    }
+    
+    private fun parse(input: Array<String>): List<Hand> {
+        val result = mutableListOf<Hand>()
+        
+        input.forEach { line ->
+            val bits = line.uppercase().trim().split(" ")
+            var hand = bits[0].trim()
+            val bid = bits[1].trim().toInt()
+
+            if (wildcards && hand.contains('J')) {
+                val bestHand = findOptimalHand(hand)
+                println("Adding best hand of $bestHand [${findType(bestHand).points} pts, $$bid], was $hand")
+                result.add(Hand(hand, findType(bestHand), bid))
+            } else {
+                result.add(Hand(hand, findType(hand), bid))
+            }
+        }
+        
+        return result
+    }
+
+    private fun findOptimalHand(hand: String): String {
+        if (hand.none { it == 'J' }) return hand
+
+        val options = mutableSetOf<String>()
+        val faces = arrayOf('2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A')
+
+        for (face in faces) {
+            //println("Got a joker, considering ${hand.replace('J', face)}")
+            options.add(hand.replace('J', face))
+        }
+
+        var bestHand = ""
+        var bestScore = -1
+
+        options.forEach { option ->
+            val type = findType(option)
+            if (type.points >= bestScore) {
+                bestHand = option
+                bestScore = type.points
+            }
+        }
+
+        //println("Best hand is $bestHand at $bestScore points")
+        return bestHand
     }
 
     private fun findType(hand: String): HandType {
@@ -96,7 +132,7 @@ class Day07 : Day(7) {
 
         return when (card.uppercase().trim()) {
             "T" -> 10
-            "J" -> 11
+            "J" -> if (wildcards) 1 else 11
             "Q" -> 12
             "K" -> 13
             "A" -> 14
