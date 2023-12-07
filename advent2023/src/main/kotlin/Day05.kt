@@ -1,13 +1,26 @@
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 class Day05 : Day(5) {
     override fun partA(input: Array<String>): Any {
         return solveA(input)
     }
 
     override fun partB(input: Array<String>): Any {
-        return solveB(input)
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+
+        var current = LocalDateTime.now().format(formatter)
+        println("Start: $current")
+
+        val result = solveB(input)
+
+        current = LocalDateTime.now().format(formatter)
+        println("End:   $current")
+
+        return result
     }
 
-    fun solveA(input: Array<String>): Any {
+    private fun solveA(input: Array<String>): Any {
         val data = parse(input)
         val map = mutableMapOf<Long, Long>()
 
@@ -16,42 +29,29 @@ class Day05 : Day(5) {
         return map.values.minOf { it }
     }
 
-    fun solveB(input: Array<String>): Any {
+    private fun solveB(input: Array<String>): Any {
         val data = parse(input)
-        val map = mutableMapOf<Long, Long>()
-        //var seeds = mutableListOf<Long>()
         var smallestLocation = Long.MAX_VALUE
-        var smallestSeed = -1L
 
         for (i in 0..<data.seeds.size step 2) {
             val start = data.seeds[i]
-            val length = data.seeds[i+1]
+            val end = start + data.seeds[i+1]
 
-            for (j in start..<(start + length)) {
-                print("Seed #$j lives at ")
+            for (j in start..end) {
+                //println("checking $j")
                 val location = findLocation(j, data)
-                println("$location")
 
                 if (location < smallestLocation) {
-                    smallestSeed = j
+                    println("New smallest! Seed $j at loc $location")
                     smallestLocation = location
                 }
             }
         }
 
-        /*
-        data.seeds = seeds
-
-        println("got here")
-        seeds.forEach { map[it] = findLocation(it, data) }
-
-        return map.values.minOf { it }
-        */
-
         return smallestLocation
     }
 
-    fun findLocation(seed: Long, input: Input): Long {
+    private fun findLocation(seed: Long, input: Input): Long {
         return checkMaps(
             checkMaps(
                 checkMaps(
@@ -69,7 +69,7 @@ class Day05 : Day(5) {
             input.humidityToLocation)
     }
 
-    fun checkMaps(me: Long, section: Section): Long {
+    private fun checkMaps(me: Long, section: Section): Long {
         section.data.forEach { map ->
             val start = map.sourceStart
             val end = map.sourceStart + map.length
@@ -83,7 +83,7 @@ class Day05 : Day(5) {
         return me
     }
 
-    fun parse(input: Array<String>): Input {
+    private fun parse(input: Array<String>): Input {
         val result = Input()
 
         val seedsLine = input[0].substring(7)
