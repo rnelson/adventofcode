@@ -19,22 +19,6 @@ class Day05 : Day(5) {
     }
 
     private fun solveB(input: Array<String>): Long {
-        /*
-        val data = parse(input)
-
-        for (i in 0..Long.MAX_VALUE) {
-            val location = findSeed(i, data)
-
-            for (i in 0..<data.seeds.size step 2) {
-                if (location >= data.seeds[i] && location <= (data.seeds[i] + data.seeds[i+1]))
-                    return location
-            }
-        }
-
-        return -3
-        // */
-
-        //*
         val data = parse(input)
         var smallestLocation = Long.MAX_VALUE
 
@@ -44,7 +28,6 @@ class Day05 : Day(5) {
             val end = start + length
 
             for (seed in start..(end+1)) {
-                //println("checking $j")
                 val location = findLocation(seed, data)
 
                 if (location < smallestLocation) {
@@ -55,25 +38,6 @@ class Day05 : Day(5) {
         }
 
         return smallestLocation
-        // */
-
-        /*
-        // -Xmx62g
-        val data = parse(input)
-        val seeds = mutableListOf<Long>()
-        val map = mutableMapOf<Long, Long>()
-
-        for (i in 0..<data.seeds.size step 2) {
-            val start = data.seeds[i]
-            val end = start + data.seeds[i + 1]
-
-            for (j in start..end) seeds.add(j)
-        }
-
-        data.seeds.forEach { map[it] = findLocation(it, data) }
-
-        return map.values.minOf { it }
-        // */
     }
 
     private fun findLocation(seed: Long, input: Input): Long {
