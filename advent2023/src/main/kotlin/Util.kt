@@ -45,3 +45,28 @@ fun <T>time(block: () -> T) {
         println()
     }
 }
+
+fun Long.lcm(other: Long): Long {
+    val larger = if (this > other) this else other
+    val maxLcm = this * other
+    var lcm = larger
+
+    while (lcm <= maxLcm) {
+        if (lcm % this == 0L && lcm % other == 0L) {
+            return lcm
+        }
+
+        lcm += larger
+    }
+
+    return maxLcm
+}
+
+fun Array<Long>.lcm(): Long {
+    var result = this[0]
+    for (i in 1..<this.size) {
+        result = result.lcm(this[i])
+    }
+
+    return result
+}

@@ -4,7 +4,7 @@ class Day08 : Day(8) {
     }
 
     override fun partB(input: Array<String>): Any {
-        return 0
+        return solveB(input)
     }
 
     private fun solveA(input: Array<String>): Int {
@@ -31,6 +31,58 @@ class Day08 : Day(8) {
         }
 
         return count
+    }
+
+    private fun solveB(input: Array<String>): Long {
+        val data = parse(input)
+
+        val cycles = mutableListOf<Pair<String, Long>>()
+        val starts = data.nodes.keys.filter { it.endsWith("A") }
+        val ends = data.nodes.keys.filter { it.endsWith("Z") }
+
+        starts.forEach { startNode ->
+            val steps = data.steps.toCharArray()
+
+            var currentNode = startNode
+            var currentStep = -1
+            var count = 0L
+
+            while (!ends.contains(currentNode)) {
+                count += 1
+                currentStep += 1
+                if (currentStep >= steps.size) {
+                    currentStep = 0
+                }
+
+                val direction = steps[currentStep]
+                currentNode = when (direction) {
+                    'L' -> data.nodes[currentNode]!!.first
+                    'R' -> data.nodes[currentNode]!!.second
+                    else -> throw Error("unexpected step '$direction'")
+                }
+            }
+
+            cycles.add(Pair(startNode, count))
+        }
+
+        print("Starts:")
+        starts.forEach { print(" $it")}
+        println("")
+
+        print("Ends:")
+        ends.forEach { print(" $it")}
+        println("")
+
+        cycles.forEach { println("f: ${it.first}, s: ${it.second}") }
+
+        /*var lcm = cycles[0].second
+        for (i in cycles.drop(1).indices) { lcm = lcm.lcm(cycles[i].second) }
+
+        return lcm*/
+
+        val counts = mutableListOf<Long>()
+        cycles.forEach { counts.add(it.second) }
+        return counts.toTypedArray().lcm()
     }
 
     private fun parse(input: Array<String>): Input {
