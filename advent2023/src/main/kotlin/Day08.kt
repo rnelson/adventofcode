@@ -1,8 +1,6 @@
 class Day08 : Day(8) {
     override fun partA(input: Array<String>): Any {
-        var result = 0
-        time { result = solveA(input) }
-        return result
+        return solveA(input)
     }
 
     override fun partB(input: Array<String>): Any {
@@ -13,11 +11,10 @@ class Day08 : Day(8) {
         val data = parse(input)
         val steps = data.steps.toCharArray()
 
-        var currentNode = "AAA" //data.first
+        var currentNode = "AAA"
         var currentStep = -1
         var count = 0
 
-        //while (currentNode != data.last) {
         while (currentNode != "ZZZ") {
             count += 1
             currentStep += 1
