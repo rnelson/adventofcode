@@ -36,7 +36,7 @@ class Day08 : Day(8) {
     private fun solveB(input: Array<String>): Long {
         val data = parse(input)
 
-        val cycles = mutableListOf<Pair<String, Long>>()
+        val cycles = mutableListOf<Long>()
         val starts = data.nodes.keys.filter { it.endsWith("A") }
         val ends = data.nodes.keys.filter { it.endsWith("Z") }
 
@@ -62,27 +62,10 @@ class Day08 : Day(8) {
                 }
             }
 
-            cycles.add(Pair(startNode, count))
+            cycles.add(count)
         }
 
-        print("Starts:")
-        starts.forEach { print(" $it")}
-        println("")
-
-        print("Ends:")
-        ends.forEach { print(" $it")}
-        println("")
-
-        cycles.forEach { println("f: ${it.first}, s: ${it.second}") }
-
-        /*var lcm = cycles[0].second
-        for (i in cycles.drop(1).indices) { lcm = lcm.lcm(cycles[i].second) }
-
-        return lcm*/
-
-        val counts = mutableListOf<Long>()
-        cycles.forEach { counts.add(it.second) }
-        return counts.toTypedArray().lcm()
+        return cycles.toTypedArray().lcm()
     }
 
     private fun parse(input: Array<String>): Input {
