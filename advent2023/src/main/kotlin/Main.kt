@@ -1,4 +1,4 @@
 fun main(ignoredArgs: Array<String>) {
-    val day = Day08()
+    val day = Day09()
     day.solve()
 }
