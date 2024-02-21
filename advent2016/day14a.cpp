@@ -6,6 +6,7 @@
  *
  */
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -38,7 +39,7 @@ string MD5(string input) {
 	const char *inputCString = input.c_str();
 	char md5String[33];
 
-	MD5((unsigned char *)inputCString, strlen(inputCString), (unsigned char *)&digest);
+	MD5((unsigned char *)inputCString, std::strlen(inputCString), (unsigned char *)&digest);
 
 	for (int i = 0; i < 16; i++) {
 		sprintf(&md5String[i * 2], "%02x", (unsigned int)digest[i]);

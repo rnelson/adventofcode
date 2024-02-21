@@ -1,7 +1,10 @@
-cmake_minimum_required (VERSION 2.6)
+# cmake -D CMAKE_C_COMPILER=clang -D CMAKE_CXX_COMPILER=clang++ .
+
+cmake_minimum_required (VERSION 3.28)
 project (AdventOfCode)
 
-set(CMAKE_CXX_FLAGS "--std=c++14 -O3")
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_FLAGS "-O3")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/contrib/cmake")
 
