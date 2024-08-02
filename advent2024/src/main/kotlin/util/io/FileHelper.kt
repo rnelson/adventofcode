@@ -6,7 +6,7 @@ import java.io.IOException
 import java.io.InputStream
 
 object FileHelper {
-    fun readResource(filename: String): String {
+    private fun readResource(filename: String): String {
         val classLoader = Thread.currentThread().contextClassLoader
         val inputStream: InputStream = classLoader.getResourceAsStream(filename)
             ?: throw IOException("unable to open resource: $filename")
