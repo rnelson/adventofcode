@@ -8,20 +8,19 @@ import org.junit.jupiter.api.Assertions.*
 class Day01Test {
     private val dayReference = ::Day01
     private val inputExampleA = listOf(
-        "",
-        "",
-        ""
+        "3   4",
+        "4   3",
+        "2   5",
+        "1   3",
+        "3   9",
+        "3   3"
     )
-    private val inputExampleB = listOf(
-        "",
-        "",
-        ""
-    )
+    private val inputExampleB = inputExampleA
 
-    private val expectedExampleA = ""
-    private val expectedExampleB = ""
-    private val expectedSolutionA = ""
-    private val expectedSolutionB = ""
+    private val expectedExampleA = "11"
+    private val expectedExampleB = "31"
+    private val expectedSolutionA = "2378066"
+    private val expectedSolutionB = "18934359"
 
     private fun build() = dayReference(true)
     private fun buildExampleA() = dayReference(false).also { it.setup(inputExampleA) }
