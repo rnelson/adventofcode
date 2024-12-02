@@ -1,6 +1,7 @@
 package net.libexec.adventofcode.solutions
 
 import net.libexec.adventofcode.Day
+import net.libexec.adventofcode.util.collections.splitIntegers
 import kotlin.math.abs
 
 class Day01(loadData: Boolean = true) : Day("01", loadData) {
@@ -32,9 +33,9 @@ class Day01(loadData: Boolean = true) : Day("01", loadData) {
         val right = ArrayList<Int>()
 
         input.forEach {
-            val bits = it.split(("\\s+".toRegex()))
-            left.add(bits[0].toInt())
-            right.add(bits[1].toInt())
+            val bits = it.splitIntegers("\\s+".toRegex())
+            left.add(bits[0])
+            right.add(bits[1])
         }
 
         val sortedLeft = left.sorted()
