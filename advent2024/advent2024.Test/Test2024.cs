@@ -1,11 +1,13 @@
-﻿using Libexec.Advent;
+﻿using System.Diagnostics;
+using Libexec.Advent;
+using Xunit.Abstractions;
 
 namespace advent2024.Test;
 
 /// <summary>
 /// 2024 test file
 /// </summary>
-public class Test2024
+public class Test2024(ITestOutputHelper testOutputHelper)
 {
     /// <summary>
     /// Run all tests
@@ -25,6 +27,7 @@ public class Test2024
     public void RunTests(Type dayType, string expectedA, string expectedB, bool isTest, bool twoPartTest = false)
     {
         string actualA, actualB;
+        var watch = Stopwatch.StartNew();
 
         if (!twoPartTest)
             (actualA, actualB) = GetDay(dayType, isTest).Solve();
@@ -33,7 +36,9 @@ public class Test2024
             actualA = SolveA(dayType, isTest);
             actualB = SolveB(dayType, isTest);
         }
-            
+        
+        watch.Stop();
+        testOutputHelper.WriteLine($"{dayType.Name} runtime: {watch.ElapsedMilliseconds}ms");
         
         Assert.Equal(expectedA, actualA);
         Assert.Equal(expectedB, actualB);
