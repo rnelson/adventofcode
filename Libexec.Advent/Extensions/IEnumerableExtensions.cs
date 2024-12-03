@@ -4,6 +4,9 @@ using System.Numerics;
 
 namespace Libexec.Advent.Extensions;
 
+/// <summary>
+/// Extensions to <see cref="IEnumerable{T}"/>.
+/// </summary>
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -20,6 +23,13 @@ public static class IEnumerableExtensions
         where T: INumber<T> =>
         input.Select(s => T.Parse(s, CultureInfo.CurrentCulture)).ToList();
     
+    /// <summary>
+    /// Groups this collection of data, separating the lists each time <paramref name="divider"/> is found.
+    /// </summary>
+    /// <param name="list">The list.</param>
+    /// <param name="divider">The delimiter.</param>
+    /// <typeparam name="T">The type of data in the list.</typeparam>
+    /// <returns>A series of sub-lists of this list, grouped by <paramref name="divider"/>.</returns>
     public static IEnumerable<IEnumerable<T>> GroupByDivider<T>(this IEnumerable<T> list, T divider)
     {
         var results = new List<T>();
@@ -38,6 +48,15 @@ public static class IEnumerableExtensions
         yield return results;
     }
 
+    /// <summary>
+    /// Determines whether this list only contains ascending <typeparamref name="T"/>s.
+    /// </summary>
+    /// <param name="list">The list.</param>
+    /// <typeparam name="T">The type of <see cref="INumber{TSelf}"/>s in the list.</typeparam>
+    /// <returns><c>true</c> if the list is ascending, otherwise <c>false</c>.</returns>
+    /// <remarks>
+    /// Two equivalent values are considered ascending if next to each other.
+    /// </remarks>
     public static bool IsAscending<T>(this IEnumerable<T> list) where T : INumber<T>
     {
         var array = list.ToArray();
@@ -46,6 +65,15 @@ public static class IEnumerableExtensions
         return array.IsEqualTo(sorted);
     }
 
+    /// <summary>
+    /// Determines whether this list only contains descending <typeparamref name="T"/>s.
+    /// </summary>
+    /// <param name="list">The list.</param>
+    /// <typeparam name="T">The type of <see cref="INumber{TSelf}"/>s in the list.</typeparam>
+    /// <returns><c>true</c> if the list is descending, otherwise <c>false</c>.</returns>
+    /// <remarks>
+    /// Two equivalent values are considered descending if next to each other.
+    /// </remarks>
     public static bool IsDescending<T>(this IEnumerable<T> list) where T : INumber<T>
     {
         var array = list.ToArray();
@@ -54,6 +82,13 @@ public static class IEnumerableExtensions
         return array.IsEqualTo(sorted);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="list">The list.</param>
+    /// <param name="other">The other list.</param>
+    /// <typeparam name="T">The type of data in the lists.</typeparam>
+    /// <returns><c>true</c> if the elements in the two lists are the same as determined by <see cref="Object.Equals(Object)"/>.</returns>
     public static bool IsEqualTo<T>(this IEnumerable<T> list, IEnumerable<T> other) where T : INumber<T>
     {
         try
@@ -67,6 +102,5 @@ public static class IEnumerableExtensions
         {
             return false;
         }
-        
     }
 }
