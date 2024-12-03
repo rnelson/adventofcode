@@ -20,12 +20,12 @@ public partial class Test2024(ITestOutputHelper testOutputHelper)
     /// <param name="twoPartTest"><c>true</c> for separate "a" and "b" test input files, otherwise <c>false</c>.</param>
     [Theory]
     [InlineData(typeof(Day01), "11", "31", true)]
-    [InlineData(typeof(Day01), "2378066", "18934359", false)]
+    [InlineData(typeof(Day01), "2378066", "18934359")]
     [InlineData(typeof(Day02), "2", "4", true)]
-    [InlineData(typeof(Day02), "510", "553", false)]
+    [InlineData(typeof(Day02), "510", "553")]
     [InlineData(typeof(Day03), "161", "48", true, true)]
-    [InlineData(typeof(Day03), "156388521", "75920122", false)]
-    public void RunTests(Type dayType, string expectedA, string expectedB, bool isTest, bool twoPartTest = false)
+    [InlineData(typeof(Day03), "156388521", "75920122")]
+    public void RunTests(Type dayType, string expectedA, string expectedB, bool isTest = false, bool twoPartTest = false)
     {
         string actualA, actualB;
         var watch = Stopwatch.StartNew();
