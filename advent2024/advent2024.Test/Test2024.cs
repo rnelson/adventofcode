@@ -41,7 +41,7 @@ public class Test2024
 
     private static Day GetDay(Type dayType, bool isTest, string fileSuffix = "")
     {
-        if (Activator.CreateInstance(dayType, [isTest, fileSuffix]) is not Day day)
+        if (Activator.CreateInstance(dayType, isTest, fileSuffix) is not Day day)
             throw new Exception($"unable to instantiate type {dayType.FullName}");
 
         return day;
