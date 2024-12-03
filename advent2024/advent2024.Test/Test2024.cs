@@ -38,7 +38,8 @@ public class Test2024(ITestOutputHelper testOutputHelper)
         }
         
         watch.Stop();
-        testOutputHelper.WriteLine($"{dayType.Name} runtime: {watch.ElapsedMilliseconds}ms");
+        var testText = isTest ? " test" : string.Empty;
+        testOutputHelper.WriteLine($"{dayType.FullName}{testText} runtime: {watch.ElapsedMilliseconds}ms");
         
         Assert.Equal(expectedA, actualA);
         Assert.Equal(expectedB, actualB);
