@@ -8,8 +8,9 @@ namespace advent2024;
 /// 2024 day 2
 /// </summary>
 /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data</param>
+/// <param name="fileSuffix">test file suffix</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
-public class Day02(bool isTest = false) : Day(2, isTest)
+public class Day02(bool isTest = false, string fileSuffix = "") : Day(2, isTest, fileSuffix)
 {
     /// <inheritdoc/>
     public override object PartA()
