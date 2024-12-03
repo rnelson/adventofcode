@@ -75,6 +75,7 @@ public class Day02(bool isTest = false) : Day(2, isTest)
         return safe.ToString();
     }
 
+    [SuppressMessage("Performance", "CA1859:Use concrete types when possible for improved performance")]
     private static IEnumerable<IEnumerable<int>> GetCandidates(IEnumerable<int> values)
     {
         var v = values.ToArray();
@@ -93,7 +94,7 @@ public class Day02(bool isTest = false) : Day(2, isTest)
         for (var i = 1; i < v.Length - 1; i++)
         {
             var newCandidate = new List<int>();
-            newCandidate.AddRange(v[0..i]);
+            newCandidate.AddRange(v[..i]);
             newCandidate.AddRange(v[(i+1)..]);
             
             candidates.Add(newCandidate);
