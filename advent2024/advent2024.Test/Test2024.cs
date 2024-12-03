@@ -23,8 +23,7 @@ public class Test2024
     [InlineData(typeof(Day03), "", "", false)]
     public void RunTests(Type dayType, string expectedA, string expectedB, bool isTest)
     {
-        var day = GetDay(dayType, isTest);
-        var (actualA, actualB) = day.Solve();
+        var (actualA, actualB) = (GetDay(dayType, isTest)).Solve();
         
         Assert.Equal(expectedA, actualA);
         Assert.Equal(expectedB, actualB);
