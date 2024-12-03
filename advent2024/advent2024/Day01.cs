@@ -6,7 +6,7 @@ using Libexec.Advent.Extensions;
 namespace advent2024;
 
 /// <summary>
-/// 2024 day 2
+/// 2024 day 1
 /// </summary>
 /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
