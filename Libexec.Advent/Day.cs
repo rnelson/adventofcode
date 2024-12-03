@@ -13,7 +13,7 @@ namespace Libexec.Advent;
 [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global")]
-public abstract class Day(int dayNumber, bool isTest = false)
+public abstract class Day(int dayNumber, bool isTest = false, string testSuffix = "")
 {
     /// <summary>
     /// The numerical day this code belongs to.
@@ -31,13 +31,21 @@ public abstract class Day(int dayNumber, bool isTest = false)
     public bool IsTest { get; } = isTest;
 
     /// <summary>
+    /// Test file suffix, before the extension.
+    /// </summary>
+    /// <remarks>
+    /// This is used when there are separate A and B test inputs.
+    /// </remarks>
+    public string TestSuffix { get; } = testSuffix;
+
+    /// <summary>
     /// The filename for the day's input.
     /// </summary>
     protected string InputFilename => Path.Combine(
         AppDomain.CurrentDomain.BaseDirectory,
         "Inputs",
         IsTest ? "Test" : "Real",
-        $"Day{DayNumber:00}.txt");
+        $"Day{DayNumber:00}{TestSuffix}.txt");
 
     /// <summary>
     /// Solves part A.
