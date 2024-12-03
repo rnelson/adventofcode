@@ -5,15 +5,21 @@ using Libexec.Advent.Extensions;
 
 namespace advent2024;
 
+/// <summary>
+/// 2024 day 2
+/// </summary>
+/// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 public class Day01(bool isTest = false) : Day(1, isTest)
 {
+    /// <inheritdoc/>
     public override object PartA()
     {
         var values = ParseInput();
         return values.Sum(value => Math.Abs(value.Item1 - value.Item2));
     }
 
+    /// <inheritdoc/>
     public override object PartB()
     {
         var values = ParseInput();
