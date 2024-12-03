@@ -19,6 +19,8 @@ public class Test2024
     [InlineData(typeof(Day01), "2378066", "18934359", false)]
     [InlineData(typeof(Day02), "2", "4", true)]
     [InlineData(typeof(Day02), "510", "553", false)]
+    [InlineData(typeof(Day03), "", "", true)]
+    [InlineData(typeof(Day03), "", "", false)]
     public void RunTests(Type dayType, string expectedA, string expectedB, bool isTest)
     {
         var day = GetDay(dayType, isTest);
