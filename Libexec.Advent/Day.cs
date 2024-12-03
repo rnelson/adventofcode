@@ -5,8 +5,8 @@ namespace Libexec.Advent;
 /// <summary>
 /// Base class for each day's code.
 /// </summary>
-/// <param name="dayNumber">The number of the day</param>
-/// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data</param>
+/// <param name="dayNumber">The number of the day.</param>
+/// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]

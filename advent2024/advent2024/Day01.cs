@@ -6,10 +6,10 @@ using Libexec.Advent.Extensions;
 namespace advent2024;
 
 /// <summary>
-/// 2024 day 1
+/// 2024 day 1.
 /// </summary>
-/// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data</param>
-/// <param name="fileSuffix">test file suffix</param>
+/// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
+/// <param name="fileSuffix">test file suffix.</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 public class Day01(bool isTest = false, string fileSuffix = "") : Day(1, isTest, fileSuffix)
 {
