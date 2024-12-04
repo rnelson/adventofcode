@@ -33,12 +33,12 @@ public class Day04(ITestOutputHelper output, bool isTest = false, string fileSuf
         _output.WriteLine(string.Empty);
         _output.WriteLine(string.Empty);
         foreach (var answer in answers)
-            _output.WriteLine($"Found '{searchWord}' at ({answer.Item1}, {answer.Item2}) going {answer.Item3}");
+            _output.WriteLine($"Found '{searchWord}' at (r={answer.Item1}, c={answer.Item2}) going {answer.Item3}");
 
         return answers.Count.ToString();
     }
 
-    private List<(int, int, Direction)> FindWord(Matrix<char> m, string word)
+    private static List<(int, int, Direction)> FindWord(Matrix<char> m, string word)
     {
         var result = new List<(int, int, Direction)>();
         var directions = Enum.GetValues<Direction>().ToArray();
@@ -52,83 +52,20 @@ public class Day04(ITestOutputHelper output, bool isTest = false, string fileSuf
             if (m[r, c] != firstLetter)
                 continue;
             
-            _output.WriteLine($"Found {firstLetter} at ({r}, {c})");
-            foreach (var direction in directions)
-            {
-                var success = CheckDirection(m, r, c, word, direction);
-                if (success)
-                    result.Add((r, c, direction));
-                _output.WriteLine($"   Checking direction {direction}...: {success}");
-            }
-            
-            // result.AddRange(
-            //         from direction in directions
-            //         where CheckDirection(m, x, y, word, direction)
-            //         select (x, y, direction)
-            //     );
+            result.AddRange(
+                    from direction in directions
+                    where CheckDirection(m, r, c, word, direction)
+                    select (r, c, direction)
+                );
         }
 
         return result;
     }
 
-    private bool CheckDirection(Matrix<char> m, int startRow, int startColumn, string word, Direction direction)
+    private static bool CheckDirection(Matrix<char> m, int startRow, int startColumn, string word, Direction direction)
     {
-        var search = word.ToCharArray();
-        int endRow, endColumn, rowDelta /* change in x-coord */, columnDelta /* change in y-coord */;
-
-        switch (direction)
-        {
-            case Direction.Up:
-                endRow = startRow - search.Length + 1;
-                endColumn = startColumn;
-                rowDelta = -1;
-                columnDelta = 0;
-                break;
-            case Direction.Down:
-                endRow = startRow + search.Length - 1;
-                endColumn = startColumn;
-                rowDelta = 1;
-                columnDelta = 0;
-                break;
-            case Direction.Left:
-                endRow = startRow;
-                endColumn = startColumn - search.Length + 1;
-                rowDelta = 0;
-                columnDelta = -1;
-                break;
-            case Direction.Right:
-                endRow = startRow;
-                endColumn = startColumn + search.Length - 1;
-                rowDelta = 0;
-                columnDelta = 1;
-                break;
-            case Direction.UpLeft:
-                endRow = startRow - search.Length + 1;
-                endColumn = startColumn - search.Length + 1;
-                rowDelta = -1;
-                columnDelta = -1;
-                break;
-            case Direction.UpRight:
-                endRow = startRow - (search.Length - 1);
-                endColumn = startColumn + search.Length - 1;
-                rowDelta = -1;
-                columnDelta = 1;
-                break;
-            case Direction.DownLeft:
-                endRow = startRow + search.Length - 1;
-                endColumn = startColumn - search.Length + 1;
-                rowDelta = 1;
-                columnDelta = -1;
-                break;
-            case Direction.DownRight:
-                endRow = startRow + search.Length - 1;
-                endColumn = startColumn - search.Length + 1;
-                rowDelta = 1;
-                columnDelta = 1;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-        }
+        var (rowDelta, columnDelta) = direction.GetDeltas();
+        var (endRow, endColumn) = direction.GetExpectedEndCoordinates(word, startRow, startColumn);
 
         // Check to see if we're going to go out of bounds in the direction we're searching. If so,
         // we can quit here because we're obviously not going to find the full string from (startX, startY)
@@ -158,16 +95,53 @@ public class Day04(ITestOutputHelper output, bool isTest = false, string fileSuf
 
         return foundString.Equals(word);
     }
+}
 
-    private enum Direction
+internal enum Direction
+{
+    Up,
+    Down,
+    Left,
+    Right,
+    UpLeft,
+    UpRight,
+    DownLeft,
+    DownRight
+}
+
+internal static class DirectionExtensions
+{
+    public static (int, int) GetDeltas(this Direction direction)
     {
-        Up,
-        Down,
-        Left,
-        Right,
-        UpLeft,
-        UpRight,
-        DownLeft,
-        DownRight
+        return direction switch
+        {
+            Direction.Up => (-1, 0),
+            Direction.Down => (1, 0),
+            Direction.Left => (0, -1),
+            Direction.Right => (0, 1),
+            Direction.UpLeft => (-1, -1),
+            Direction.UpRight => (-1, 1),
+            Direction.DownLeft => (1, -1),
+            Direction.DownRight => (1, 1),
+            _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+        };
+    }
+
+    public static (int, int) GetExpectedEndCoordinates(this Direction direction, string searchWord, int row, int column)
+    {
+        var len = searchWord.Length;
+        
+        return direction switch
+        {
+            Direction.Up => (row - len + 1, column),
+            Direction.Down => (row + len - 1, column),
+            Direction.Left => (row, column - len + 1),
+            Direction.Right => (row, column + len - 1),
+            Direction.UpLeft => (row - len + 1, column - len + 1),
+            Direction.UpRight => (row - len + 1, column + len - 1),
+            Direction.DownLeft => (row + len - 1, column - len + 1),
+            Direction.DownRight => (row + len - 1, column + len - 1),
+            _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+        };
     }
 }
