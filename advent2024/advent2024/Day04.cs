@@ -18,10 +18,13 @@ public class Day04(ITestOutputHelper output, bool isTest = false, string fileSuf
     private readonly ITestOutputHelper _output = output;
 
     /// <inheritdoc/>
-    public override object PartA()
+    public override object PartA() => WordSearch(Input.ToMatrix(), "XMAS");
+
+    /// <inheritdoc/>
+    public override object PartB() => string.Empty;
+
+    private string WordSearch(Matrix<char> m, string searchWord)
     {
-        const string searchWord = "XMAS";
-        var m = Input.ToMatrix();
         var answers = FindWord(m, searchWord);
         
         _output.WriteLine(string.Empty);
@@ -33,12 +36,6 @@ public class Day04(ITestOutputHelper output, bool isTest = false, string fileSuf
             _output.WriteLine($"Found '{searchWord}' at ({answer.Item1}, {answer.Item2}) going {answer.Item3}");
 
         return answers.Count.ToString();
-    }
-
-    /// <inheritdoc/>
-    public override object PartB()
-    {
-        return string.Empty;
     }
 
     private List<(int, int, Direction)> FindWord(Matrix<char> m, string word)
@@ -63,7 +60,7 @@ public class Day04(ITestOutputHelper output, bool isTest = false, string fileSuf
                     result.Add((r, c, direction));
                 _output.WriteLine($"   Checking direction {direction}...: {success}");
             }
-                
+            
             // result.AddRange(
             //         from direction in directions
             //         where CheckDirection(m, x, y, word, direction)
