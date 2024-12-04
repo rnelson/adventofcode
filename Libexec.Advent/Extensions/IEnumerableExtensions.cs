@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
+using Libexec.Advent.Collections;
 
 namespace Libexec.Advent.Extensions;
 
@@ -13,6 +14,33 @@ namespace Libexec.Advent.Extensions;
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public static class IEnumerableExtensions
 {
+    /// <summary>
+    /// Converts this list of strings into a character matrix.
+    /// </summary>
+    /// <param name="source">The list of strings.</param>
+    /// <returns>A <see cref="Matrix{T}"/> of <see cref="char"/>s.</returns>
+    /// <remarks>
+    /// This requires all elements in <paramref name="source"/> be the same length.
+    /// </remarks>
+    public static Matrix<char> ToMatrix(this IEnumerable<string> source)
+    {
+        var data = source.ToArray();
+        var width = data[0].ToCharArray().Length;
+        var height = data.Length;
+        var array = new char[width, height];
+
+        for (var y = 0; y < height; y++)
+        {
+            var element = data[y];
+            var chars = element.ToCharArray();
+            
+            for (var x = 0; x < width; x++)
+                array[y, x] = chars[x];
+        }
+        
+        return Matrix<char>.Create(array, width, height);
+    }
+    
     /// <summary>
     /// Gets <paramref name="input"/> as a list of <typeparamref name="T"/>s.
     /// </summary>

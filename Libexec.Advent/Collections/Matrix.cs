@@ -5,46 +5,46 @@ namespace Libexec.Advent.Collections;
 
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-public class Matrix<T>(int xSize, int ySize)
+public class Matrix<T>(int rows, int columns)
 {
-    private readonly T[] _data = new T[xSize * ySize];
+    private readonly T[] _data = new T[rows * columns];
     
     /// <summary>
     /// Gets the size of the matrix.
     /// </summary>
     /// <remarks>
-    /// The first item is the width, the second item is the height.
+    /// The first item is the number of rows, the second item is the number of columns.
     /// </remarks>
-    public (int, int) Size { get; } = (xSize, ySize);
+    public (int, int) Size { get; } = (rows, columns);
 
     /// <summary>
-    /// Creates a new <see cref="Matrix{T}"/> of size <paramref name="xSize"/>x<paramref name="ySize"/> containing
+    /// Creates a new <see cref="Matrix{T}"/> of size <paramref name="rows"/>x<paramref name="columns"/> containing
     /// the data in <paramref name="data"/>.
     /// </summary>
     /// <param name="data">The data to put into the matrix.</param>
-    /// <param name="xSize">The width of the data.</param>
-    /// <param name="ySize">The height of the data.</param>
+    /// <param name="rows">The width of the data.</param>
+    /// <param name="columns">The height of the data.</param>
     /// <returns>A new <see cref="Matrix{T}"/>.</returns>
-    public static Matrix<T> Create(T[,] data, int xSize, int ySize)
+    public static Matrix<T> Create(T[,] data, int rows, int columns)
     {
-        var m = new Matrix<T>(xSize, ySize);
+        var m = new Matrix<T>(rows, columns);
         
-        for (var x = 0; x < xSize; x++)
-            for (var y = 0; y < ySize; y++)
-                m[x, y] = data[x, y];
+        for (var r = 0; r < rows; r++)
+            for (var c = 0; c < columns; c++)
+                m[r, c] = data[r, c];
 
         return m;
     }
 
     /// <summary>
-    /// Gets or sets the element at (<paramref name="x"/>, <paramref name="y"/>).
+    /// Gets or sets the element at (<paramref name="row"/>, <paramref name="column"/>).
     /// </summary>
-    /// <param name="x">The X coordinate.</param>
-    /// <param name="y">The Y coordinate.</param>
-    public T this[int x, int y]
+    /// <param name="row">The row.</param>
+    /// <param name="column">The Y coordinate.</param>
+    public T this[int row, int column]
     {
-        get => _data[x * xSize + y];
-        set => _data[x * xSize + y] = value;
+        get => _data[row * columns + column];
+        set => _data[row * columns + column] = value;
     }
     
     /// <summary>
@@ -59,10 +59,10 @@ public class Matrix<T>(int xSize, int ySize)
     public override string ToString()
     {
         var sb = new StringBuilder();
-        for (var x = 0; x < Size.Item1; x++)
+        for (var r = 0; r < Size.Item1; r++)
         {
-            for (var y = 0; y < Size.Item2; y++)
-                sb.Append($"{this[x, y]} ");
+            for (var c = 0; c < Size.Item2; c++)
+                sb.Append($"{this[r, c]}");
             sb.AppendLine();
         }
         

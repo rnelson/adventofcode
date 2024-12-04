@@ -2,16 +2,18 @@
 using System.Diagnostics.CodeAnalysis;
 using Libexec.Advent;
 using Libexec.Advent.Extensions;
+using Xunit.Abstractions;
 
 namespace advent2024;
 
 /// <summary>
 /// 2024 day 1.
 /// </summary>
+/// <param name="output">A <see cref="ITestOutputHelper"/> to use for logging.</param>
 /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
 /// <param name="fileSuffix">test file suffix.</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
-public class Day01(bool isTest = false, string fileSuffix = "") : Day(1, isTest, fileSuffix)
+public class Day01(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(1, output, isTest, fileSuffix)
 {
     /// <inheritdoc/>
     public override object PartA()

@@ -25,17 +25,19 @@ public partial class Test2024(ITestOutputHelper testOutputHelper)
     [InlineData(typeof(Day02), "510", "553")]
     [InlineData(typeof(Day03), "161", "48", true, true)]
     [InlineData(typeof(Day03), "156388521", "75920122")]
+    [InlineData(typeof(Day04), "18", "", true)]
+    [InlineData(typeof(Day04), "", "")]
     public void RunTests(Type dayType, string expectedA, string expectedB, bool isTest = false, bool twoPartTest = false)
     {
         string actualA, actualB;
         var watch = Stopwatch.StartNew();
 
         if (!twoPartTest)
-            (actualA, actualB) = GetDay(dayType, isTest).Solve();
+            (actualA, actualB) = GetDay(dayType, testOutputHelper, isTest).Solve();
         else
         {
-            actualA = SolveA(dayType, isTest);
-            actualB = SolveB(dayType, isTest);
+            actualA = SolveA(dayType, testOutputHelper, isTest);
+            actualB = SolveB(dayType, testOutputHelper, isTest);
         }
         
         watch.Stop();
