@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Xunit.Abstractions;
+#pragma warning disable CS9113 // Parameter is unread.
 
 namespace Libexec.Advent;
 

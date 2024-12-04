@@ -15,8 +15,6 @@ namespace advent2024;
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 public class Day04(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(4, output, isTest, fileSuffix)
 {
-    private readonly ITestOutputHelper _output = output;
-
     /// <inheritdoc/>
     public override object PartA() => FindWord(Input.ToMatrix(), "XMAS").Count.ToString();
 
@@ -34,17 +32,9 @@ public class Day04(ITestOutputHelper output, bool isTest = false, string fileSuf
             var delta = find.Item3.GetDeltas();
             var (aRow, aCol) = (find.Item1 + delta.Item1, find.Item2 + delta.Item2);
             
-            if (ehs.Contains((aRow, aCol)))
+            if (!ehs.Add((aRow, aCol)))
                 exes++;
-            else
-                ehs.Add((aRow, aCol));
         }
-
-        // foreach (var eh in ehs)
-        // {
-        //     if (ehs.Count(tuple => tuple.Item1 == eh.Item1 && tuple.Item2 == eh.Item2) > 1)
-        //         exes++;
-        // }
         
         return exes.ToString();
     }
