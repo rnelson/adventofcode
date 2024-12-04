@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Xunit.Abstractions;
 
 namespace Libexec.Advent;
 
@@ -6,6 +7,7 @@ namespace Libexec.Advent;
 /// Base class for each day's code.
 /// </summary>
 /// <param name="dayNumber">The number of the day.</param>
+/// <param name="output">A <see cref="ITestOutputHelper"/> to use for logging.</param>
 /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -13,7 +15,7 @@ namespace Libexec.Advent;
 [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global")]
-public abstract class Day(int dayNumber, bool isTest = false, string testSuffix = "")
+public abstract class Day(int dayNumber, ITestOutputHelper output, bool isTest = false, string testSuffix = "")
 {
     /// <summary>
     /// The numerical day this code belongs to.
