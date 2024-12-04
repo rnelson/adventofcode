@@ -42,18 +42,11 @@ public class Day04(ITestOutputHelper output, bool isTest = false, string fileSuf
     private static List<(int, int, Direction)> FindWord(Matrix<char> m, string word, bool diagonalsOnly = false)
     {
         var result = new List<(int, int, Direction)>();
-        var directions = Enum.GetValues<Direction>().ToArray();
-
-        if (diagonalsOnly)
-        {
-            directions =
-            [
-                Direction.UpLeft,
-                Direction.UpRight,
-                Direction.DownLeft,
-                Direction.DownRight
-            ];
-        }
+        
+        var directions = (diagonalsOnly
+                ? DirectionCollections.GetDiagonals()
+                : DirectionCollections.GetAll())
+            .ToArray();
         
         var (rows, columns) = m.Size;
         var firstLetter = word[0];
@@ -156,4 +149,26 @@ internal static class DirectionExtensions
             _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
         };
     }
+}
+
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
+internal static class DirectionCollections
+{
+    public static IEnumerable<Direction> GetAll() => Enum.GetValues<Direction>();
+
+    public static IEnumerable<Direction> GetCardinals() =>
+    [
+        Direction.Left,
+        Direction.Right,
+        Direction.Up,
+        Direction.Down
+    ];
+
+    public static IEnumerable<Direction> GetDiagonals() =>
+    [
+        Direction.UpLeft,
+        Direction.UpRight,
+        Direction.DownLeft,
+        Direction.DownRight
+    ];
 }
