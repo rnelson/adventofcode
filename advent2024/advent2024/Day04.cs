@@ -18,30 +18,52 @@ public class Day04(ITestOutputHelper output, bool isTest = false, string fileSuf
     private readonly ITestOutputHelper _output = output;
 
     /// <inheritdoc/>
-    public override object PartA() => WordSearch(Input.ToMatrix(), "XMAS");
+    public override object PartA() => FindWord(Input.ToMatrix(), "XMAS").Count.ToString();
 
     /// <inheritdoc/>
-    public override object PartB() => string.Empty;
-
-    private string WordSearch(Matrix<char> m, string searchWord)
+    public override object PartB()
     {
-        var answers = FindWord(m, searchWord);
-        
-        _output.WriteLine(string.Empty);
-        _output.WriteLine(string.Empty);
-        _output.WriteLine(string.Empty);
-        _output.WriteLine(string.Empty);
-        _output.WriteLine(string.Empty);
-        foreach (var answer in answers)
-            _output.WriteLine($"Found '{searchWord}' at (r={answer.Item1}, c={answer.Item2}) going {answer.Item3}");
+        var matrix = Input.ToMatrix();
+        var finds = FindWord(matrix, "MAS", true);
 
-        return answers.Count.ToString();
+        var ehs = new SortedSet<(int, int)>();
+        var exes = 0;
+        
+        foreach (var find in finds)
+        {
+            var delta = find.Item3.GetDeltas();
+            var (aRow, aCol) = (find.Item1 + delta.Item1, find.Item2 + delta.Item2);
+            
+            if (ehs.Contains((aRow, aCol)))
+                exes++;
+            else
+                ehs.Add((aRow, aCol));
+        }
+
+        // foreach (var eh in ehs)
+        // {
+        //     if (ehs.Count(tuple => tuple.Item1 == eh.Item1 && tuple.Item2 == eh.Item2) > 1)
+        //         exes++;
+        // }
+        
+        return exes.ToString();
     }
 
-    private static List<(int, int, Direction)> FindWord(Matrix<char> m, string word)
+    private static List<(int, int, Direction)> FindWord(Matrix<char> m, string word, bool diagonalsOnly = false)
     {
         var result = new List<(int, int, Direction)>();
         var directions = Enum.GetValues<Direction>().ToArray();
+
+        if (diagonalsOnly)
+        {
+            directions =
+            [
+                Direction.UpLeft,
+                Direction.UpRight,
+                Direction.DownLeft,
+                Direction.DownRight
+            ];
+        }
         
         var (rows, columns) = m.Size;
         var firstLetter = word[0];
