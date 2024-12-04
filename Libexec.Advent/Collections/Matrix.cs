@@ -7,7 +7,6 @@ namespace Libexec.Advent.Collections;
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public class Matrix<T>(int xSize, int ySize)
 {
-    //private readonly T[,] _data = new T[xSize, ySize];
     private readonly T[] _data = new T[xSize * ySize];
     
     /// <summary>
@@ -44,9 +43,6 @@ public class Matrix<T>(int xSize, int ySize)
     /// <param name="y">The Y coordinate.</param>
     public T this[int x, int y]
     {
-        //get => _data[x, y];
-        //set => _data[x, y] = value;
-        
         get => _data[x * xSize + y];
         set => _data[x * xSize + y] = value;
     }
