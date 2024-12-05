@@ -108,6 +108,18 @@ public class Day05 : Day
             return true;
         }
 
+        /// <summary>
+        /// Rearranges the pages in <paramref name="old"/> to compile with the <paramref name="rules"/>.
+        /// </summary>
+        /// <param name="old">The original <see cref="Update{T}"/>.</param>
+        /// <param name="rules">The <see cref="Rule{T}"/>s that must be followed.</param>
+        /// <returns>The type of data in <paramref name="old"/>/<paramref name="rules"/>.</returns>
+        /// <remarks>
+        /// This is the bit I'm most proud of here. Rather than go through a bunch of work to manually sort
+        /// the list, I just make sure it's in array and call Array.Sort() on it, passing in an
+        /// <see cref="IComparer{T}"/>. It will ensure the entire list is sorted appropriately and I don't
+        /// have to worry about it. :-)
+        /// </remarks>
         public static Update<T> Rearrange(Update<T> old, IEnumerable<Rule<T>> rules)
         {
             var update = new Update<T>(old._pages.ToArray());
@@ -137,15 +149,22 @@ public class Day05 : Day
             /// <inheritdoc/>
             public int Compare(TCompare? x, TCompare? y)
             {
-                if (x is null && y is null)
-                    return 0;
+                // While IComparer<T> supports nulls, custom generics in Day05 all specify that
+                // the contained type is notnull. Just err out if somehow that constraint is violated.
+                if (x is null || y is null)
+                    throw new NotSupportedException("Cannot compare with a null value");
                 
+                // If `x` should come before `y` according to the rules, return -1 so whatever is using
+                // the comparer knows to keep `x` earlier.
                 if (rules.Any(r => r.EarlierPage.Equals(x) && r.LaterPage.Equals(y)))
                     return -1;
-
+                
+                // If `y` should come before `x` according to the rules, return 1 so whatever is using
+                // the comparer knows to keep `x` later.
                 if (rules.Any(r => r.EarlierPage.Equals(y) && r.LaterPage.Equals(x)))
                     return 1;
                 
+                // Neither before nor after? Mark them as equal and call it a day.
                 return 0;
             }
         }
