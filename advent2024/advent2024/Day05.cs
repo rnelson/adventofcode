@@ -32,31 +32,27 @@ public class Day05(ITestOutputHelper output, bool isTest = false, string fileSuf
 
     private (IEnumerable<Rule<int>>, IEnumerable<Update<int>>) ParseInput()
     {
-        var lines = Input.ToArray();
-        var rules = new List<Rule<int>>();
-        var updates = new List<Update<int>>();
+        var lines = Input.Select(i => i.Trim()).ToArray();
 
-        var lineNumber = 0;
-        
-        // Parse rules.
-        while (!"".Equals(lines[lineNumber].Trim()))
-        {
-            var pages = lines[lineNumber].Trim().Split("|").Select(int.Parse).ToArray();
-            rules.Add(new(pages[0], pages[1]));
-            lineNumber++;
-        }
-        
-        // Skip past the blank line.
-        lineNumber++;
-        
-        // Parse updates.
-        while (lineNumber < lines.Length)
-        {
-            var pages = lines[lineNumber].Trim().Split(",").Select(int.Parse).ToArray();
-            updates.Add(new(pages));
-            lineNumber++;
-        }
-        
+        var delimiter = Array.IndexOf(lines, string.Empty);
+        var rulesLines = lines.Take(delimiter).ToArray();
+        var updatesLines = lines.Skip(delimiter + 1).ToArray();
+
+        var rules = rulesLines
+            .Select(line => line.Split("|")
+                .Select(int.Parse)
+                .ToArray())
+            .Select(pages => new Rule<int>(pages[0], pages[1]))
+            .ToList();
+
+        var updates = updatesLines
+            .Select(line => line
+                .Split(",")
+                .Select(int.Parse)
+                .ToArray())
+            .Select(pages => new Update<int>(pages))
+            .ToList();
+
         return (rules, updates);
     }
 
@@ -91,10 +87,7 @@ public class Day05(ITestOutputHelper output, bool isTest = false, string fileSuf
             return update;
         }
 
-        public override string ToString()
-        {
-            return string.Join(",", _pages);
-        }
+        public override string ToString() => string.Join(",", _pages);
 
         private static UpdateComparer<T> SortPages(IEnumerable<Rule<T>> rules) => new(rules);
 
@@ -102,12 +95,8 @@ public class Day05(ITestOutputHelper output, bool isTest = false, string fileSuf
         {
             public int Compare(TCompare? x, TCompare? y)
             {
-                if (x is null && y is null)
-                    return 0;
-
-                if (rules.Any(r => r.EarlierPage!.Equals(x) && r.LaterPage!.Equals(y)))
-                    return -1;
-                
+                if (x is null && y is null) return 0;
+                if (rules.Any(r => r.EarlierPage!.Equals(x) && r.LaterPage!.Equals(y))) return -1;
                 return rules.Any(r => r.EarlierPage!.Equals(y) && r.LaterPage!.Equals(x)) ? 1 : 0;
             }
         }
