@@ -38,18 +38,26 @@ public class Day05 : Day
     /// <inheritdoc/>
     public override object PartB() => _invalidUpdates.Sum(update => Update<int>.Rearrange(update, _rules).GetMiddle()).ToString();
 
+    /// <summary>
+    /// Parses the collection of input strings to determine all rules and updates.
+    /// </summary>
+    /// <returns>A tuple containing <see cref="Rule{T}"/>s and <see cref="Update{T}"/>s.</returns>
     private (IEnumerable<Rule<int>>, IEnumerable<Update<int>>) ParseInput()
     {
         var lines = Input.Select(i => i.Trim()).ToArray();
+        
+        // Find the blank line separating rules and updates, then take the respective two groups and shove them
+        // into arrays.
         var delimiter = Array.IndexOf(lines, string.Empty);
         var rulesLines = lines.Take(delimiter).ToArray();
         var updatesLines = lines.Skip(delimiter + 1).ToArray();
 
+        // Split each line (on "|" for rules, "," for updates) and send those bits to int.Parse, then build
+        // the appropriate Rule or Update instances.
         var rules = rulesLines
             .Select(line => line.Split("|").Select(int.Parse).ToArray())
             .Select(pages => new Rule<int>(pages[0], pages[1]))
             .ToList();
-
         var updates = updatesLines
             .Select(line => line.Split(",").Select(int.Parse).ToArray())
             .Select(pages => new Update<int>(pages))
@@ -58,18 +66,40 @@ public class Day05 : Day
         return (rules, updates);
     }
 
-    private record Rule<T>([NotNull] T EarlierPage, [NotNull] T LaterPage) where T : notnull;
+    /// <summary>
+    /// An individual rule.
+    /// </summary>
+    /// <param name="EarlierPage">The <typeparamref name="T"/> that must come before <paramref name="LaterPage"/>.</param>
+    /// <param name="LaterPage">The <typeparamref name="T"/> that must come after <paramref name="EarlierPage"/>.</param>
+    /// <typeparam name="T">The type for <paramref name="EarlierPage"/> and <paramref name="LaterPage"/>.</typeparam>
+    private record Rule<T>(T EarlierPage, T LaterPage) where T : notnull;
 
+    /// <summary>
+    /// A list of pages comprising an update.
+    /// </summary>
+    /// <param name="pages">The <typeparamref name="T"/>s that make up the update.</param>
+    /// <typeparam name="T">The type for <paramref name="pages"/>.</typeparam>
     private class Update<T>(T[] pages) where T : notnull
     {
         private readonly T[] _pages = pages;
         
-        public T GetMiddle() => _pages[(int)Math.Ceiling(_pages.Length / 2f) - 1];
+        /// <summary>
+        /// Gets the middle item in <see cref="pages"/>.
+        /// </summary>
+        /// <returns>The middle <see cref="T"/> in <see cref="pages"/>.</returns>
+        public T GetMiddle() => _pages[(int)Math.Floor(_pages.Length / 2f)];
         
+        /// <summary>
+        /// Determines whether this update is valid for the specified <paramref name="rules"/>.
+        /// </summary>
+        /// <param name="rules">The collection of <see cref="Rule{T}"/>s that must be followed.</param>
+        /// <returns><c>true</c> if the update is valid, otherwise <c>false</c>.</returns>
         public bool IsValid(IEnumerable<Rule<T>> rules)
         {
             var rulesArray = rules.ToArray();
             
+            // Iterate through every page in _pages, then compare all values after it in the update. If any of them
+            // violate `rules`, nope out.
             foreach (var (index, page) in _pages.Enumerate())
                 for (var i = index + 1; i < _pages.Length; i++)
                     if (rulesArray.Any(rule => rule.EarlierPage.Equals(_pages[i]) && rule.LaterPage.Equals(page)))
@@ -85,14 +115,26 @@ public class Day05 : Day
             return update;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => string.Join(",", _pages);
 
+        /// <summary>
+        /// Creates an <see cref="UpdateComparer{TCompare}"/> to sort an update with.
+        /// </summary>
+        /// <param name="rules">The <see cref="Rule{T}"/>s to follow.</param>
+        /// <returns>An <see cref="UpdateComparer{TCompare}"/> that will sort the update.</returns>
         private static UpdateComparer<T> SortPages(IEnumerable<Rule<T>> rules) => new(rules);
 
+        /// <summary>
+        /// An <see cref="IComparer{T}"/> used for sorting the pages in an update.
+        /// </summary>
+        /// <param name="rules">The <see cref="Rule{T}"/>s that must be followed.</param>
+        /// <typeparam name="TCompare">The type of data in the <see cref="Update{T}._pages"/>.</typeparam>
         private class UpdateComparer<TCompare>(IEnumerable<Rule<TCompare>> rules)
             : IComparer<TCompare>
             where TCompare : notnull
         {
+            /// <inheritdoc/>
             public int Compare(TCompare? x, TCompare? y)
             {
                 if (x is null && y is null)
