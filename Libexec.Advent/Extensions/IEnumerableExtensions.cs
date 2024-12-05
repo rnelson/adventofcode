@@ -15,6 +15,19 @@ namespace Libexec.Advent.Extensions;
 public static class IEnumerableExtensions
 {
     /// <summary>
+    /// Enumerates over this collection, providing a <see cref="Tuple{T1,T2}"/> with the numeric index and the value.
+    /// </summary>
+    /// <param name="items">The collection to enumerate.</param>
+    /// <typeparam name="T">The type of data in the collection.</typeparam>
+    /// <returns>A collection of <see cref="Tuple{T1,T2}"/>s containing the index and the value.</returns>
+    public static IEnumerable<Tuple<int, T>> Enumerate<T>(this IEnumerable<T> items)
+    {
+        var index = 0;
+        foreach (var item in items)
+            yield return new(index++, item);
+    }
+    
+    /// <summary>
     /// Converts this list of strings into a character matrix.
     /// </summary>
     /// <param name="source">The list of strings.</param>
