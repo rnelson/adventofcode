@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Libexec.Advent;
 using Libexec.Advent.Extensions;
 using Xunit.Abstractions;
@@ -69,13 +70,15 @@ public class Day05(ITestOutputHelper output, bool isTest = false, string fileSuf
             var rulesArray = rules.ToArray();
             
             foreach (var (index, page) in _pages.Enumerate())
-            {
                 for (var i = index + 1; i < _pages.Length; i++)
-                {
-                    if (rulesArray.Any(rule => rule.EarlierPage!.Equals(_pages[i]) && rule.LaterPage!.Equals(page)))
+                    if (rulesArray.Any(rule =>
+                        {
+                            Debug.Assert(rule.EarlierPage != null);
+                            Debug.Assert(rule.LaterPage != null);
+                            
+                            return rule.EarlierPage.Equals(_pages[i]) && rule.LaterPage.Equals(page);
+                        }))
                         return false;
-                }
-            }
             
             return true;
         }
