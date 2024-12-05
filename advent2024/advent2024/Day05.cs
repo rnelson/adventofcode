@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Libexec.Advent;
 using Libexec.Advent.Extensions;
 using Xunit.Abstractions;
@@ -9,48 +8,50 @@ namespace advent2024;
 /// <summary>
 /// 2024 day 5.
 /// </summary>
-/// <param name="output">A <see cref="ITestOutputHelper"/> to use for logging.</param>
-/// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
-/// <param name="fileSuffix">test file suffix.</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
-public class Day05(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(5, output, isTest, fileSuffix)
+[SuppressMessage("ReSharper", "ConvertIfStatementToReturnStatement")]
+public class Day05 : Day
 {
-    /// <inheritdoc/>
-    public override object PartA()
+    private readonly IEnumerable<Rule<int>> _rules;
+    private readonly IEnumerable<Update<int>> _validUpdates;
+    private readonly IEnumerable<Update<int>> _invalidUpdates;
+    
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Day05"/> class.
+    /// </summary>
+    /// <param name="output">A <see cref="ITestOutputHelper"/> to use for logging.</param>
+    /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
+    /// <param name="fileSuffix">test file suffix.</param>
+    public Day05(ITestOutputHelper output, bool isTest = false, string fileSuffix = "")
+        : base(5, output, isTest, fileSuffix)
     {
-        var (rules, updates) = ParseInput();
-        var validUpdates = updates.Where(update => update.IsValid(rules)).ToArray();
-        return validUpdates.Sum(update => update.GetMiddle()).ToString();
+        (_rules, var allUpdates) = ParseInput();
+        var updates = allUpdates.ToArray();
+        
+        _validUpdates = updates.Where(update => update.IsValid(_rules));
+        _invalidUpdates = updates.Where(update => !update.IsValid(_rules));
     }
+    
+    /// <inheritdoc/>
+    public override object PartA() => _validUpdates.Sum(update => update.GetMiddle()).ToString();
 
     /// <inheritdoc/>
-    public override object PartB()
-    {
-        var (rules, updates) = ParseInput();
-        var invalidUpdates = updates.Where(update => !update.IsValid(rules)).ToArray();
-        return invalidUpdates.Sum(update => Update<int>.Rearrange(update, rules).GetMiddle()).ToString();
-    }
+    public override object PartB() => _invalidUpdates.Sum(update => Update<int>.Rearrange(update, _rules).GetMiddle()).ToString();
 
     private (IEnumerable<Rule<int>>, IEnumerable<Update<int>>) ParseInput()
     {
         var lines = Input.Select(i => i.Trim()).ToArray();
-
         var delimiter = Array.IndexOf(lines, string.Empty);
         var rulesLines = lines.Take(delimiter).ToArray();
         var updatesLines = lines.Skip(delimiter + 1).ToArray();
 
         var rules = rulesLines
-            .Select(line => line.Split("|")
-                .Select(int.Parse)
-                .ToArray())
+            .Select(line => line.Split("|").Select(int.Parse).ToArray())
             .Select(pages => new Rule<int>(pages[0], pages[1]))
             .ToList();
 
         var updates = updatesLines
-            .Select(line => line
-                .Split(",")
-                .Select(int.Parse)
-                .ToArray())
+            .Select(line => line.Split(",").Select(int.Parse).ToArray())
             .Select(pages => new Update<int>(pages))
             .ToList();
 
@@ -94,9 +95,16 @@ public class Day05(ITestOutputHelper output, bool isTest = false, string fileSuf
         {
             public int Compare(TCompare? x, TCompare? y)
             {
-                if (x is null && y is null) return 0;
-                if (rules.Any(r => r.EarlierPage!.Equals(x) && r.LaterPage!.Equals(y))) return -1;
-                return rules.Any(r => r.EarlierPage!.Equals(y) && r.LaterPage!.Equals(x)) ? 1 : 0;
+                if (x is null && y is null)
+                    return 0;
+                
+                if (rules.Any(r => r.EarlierPage.Equals(x) && r.LaterPage.Equals(y)))
+                    return -1;
+
+                if (rules.Any(r => r.EarlierPage.Equals(y) && r.LaterPage.Equals(x)))
+                    return 1;
+                
+                return 0;
             }
         }
     }
