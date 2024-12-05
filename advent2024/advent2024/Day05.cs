@@ -57,9 +57,9 @@ public class Day05(ITestOutputHelper output, bool isTest = false, string fileSuf
         return (rules, updates);
     }
 
-    private record Rule<T>([NotNull] T EarlierPage, [NotNull] T LaterPage);
+    private record Rule<T>([NotNull] T EarlierPage, [NotNull] T LaterPage) where T : notnull;
 
-    private class Update<T>(T[] pages)
+    private class Update<T>(T[] pages) where T : notnull
     {
         private readonly T[] _pages = pages;
         
@@ -71,13 +71,7 @@ public class Day05(ITestOutputHelper output, bool isTest = false, string fileSuf
             
             foreach (var (index, page) in _pages.Enumerate())
                 for (var i = index + 1; i < _pages.Length; i++)
-                    if (rulesArray.Any(rule =>
-                        {
-                            Debug.Assert(rule.EarlierPage != null);
-                            Debug.Assert(rule.LaterPage != null);
-                            
-                            return rule.EarlierPage.Equals(_pages[i]) && rule.LaterPage.Equals(page);
-                        }))
+                    if (rulesArray.Any(rule => rule.EarlierPage.Equals(_pages[i]) && rule.LaterPage.Equals(page)))
                         return false;
             
             return true;
@@ -94,7 +88,9 @@ public class Day05(ITestOutputHelper output, bool isTest = false, string fileSuf
 
         private static UpdateComparer<T> SortPages(IEnumerable<Rule<T>> rules) => new(rules);
 
-        private class UpdateComparer<TCompare>(IEnumerable<Rule<TCompare>> rules) : IComparer<TCompare>
+        private class UpdateComparer<TCompare>(IEnumerable<Rule<TCompare>> rules)
+            : IComparer<TCompare>
+            where TCompare : notnull
         {
             public int Compare(TCompare? x, TCompare? y)
             {
