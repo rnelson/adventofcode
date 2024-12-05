@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Libexec.Advent;
 using Libexec.Advent.Extensions;
 using Xunit.Abstractions;
@@ -109,12 +108,7 @@ public class Day05(ITestOutputHelper output, bool isTest = false, string fileSuf
                 if (rules.Any(r => r.EarlierPage!.Equals(x) && r.LaterPage!.Equals(y)))
                     return -1;
                 
-                if (rules.Any(r => r.EarlierPage!.Equals(y) && r.LaterPage!.Equals(x)))
-                    return 1;
-                
-                return 0;
-
-                return 1;
+                return rules.Any(r => r.EarlierPage!.Equals(y) && r.LaterPage!.Equals(x)) ? 1 : 0;
             }
         }
     }
