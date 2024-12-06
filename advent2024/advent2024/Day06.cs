@@ -77,17 +77,10 @@ public class Day06(ITestOutputHelper output, bool isTest = false, string fileSuf
             response.Map[obstacleRow, obstacleColumn] = 'O';
         }
         
+        var visited = new Dictionary<(int x, int y, GuardDirection), int>();
         var (guardRow, guardColumn) = response.Map.First('^');
         var direction = GuardDirection.Up;
-        var delta = (-1, 0); /*direction switch
-        {
-            GuardDirection.Up => (-1, 0),
-            GuardDirection.Down => (1, 0),
-            GuardDirection.Left => (0, -1),
-            GuardDirection.Right => (0, 1),
-        };*/
-        
-        var visited = new Dictionary<(int x, int y, GuardDirection), int>();
+        var delta = (-1, 0);
 
         while (response.Map.ContainsPoint(guardRow, guardColumn))
         {
