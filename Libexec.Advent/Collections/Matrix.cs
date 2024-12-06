@@ -37,6 +37,38 @@ public class Matrix<T>(int rows, int columns)
     }
 
     /// <summary>
+    /// Searches the matrix for <paramref name="value"/>.
+    /// </summary>
+    /// <param name="value">The value to find.</param>
+    /// <returns>The coordinates if found, otherwise <c>(-1, -1)</c>.</returns>
+    public (int, int) First(T value)
+    {
+        for (var r = 0; r < rows; r++)
+        for (var c = 0; c < columns; c++)
+            if (this[r, c]!.Equals(value))
+                return (r, c);
+
+        return (-1, -1);
+    }
+
+    /// <summary>
+    /// Finds all coordinates in the matrix where <paramref name="predicate"/> is <c>true</c>.
+    /// </summary>
+    /// <param name="predicate">The <see cref="Func{TResult,T1}"/> to use to filter coordinates.</param>
+    /// <returns>A collection of all matching coordinates.</returns>
+    public IEnumerable<(int, int)> Where(Func<T, bool> predicate)
+    {
+        var results = new List<(int, int)>();
+        
+        for (var r = 0; r < rows; r++)
+            for (var c = 0; c < columns; c++)
+                if (predicate(this[r, c]!))
+                    results.Add((r, c));
+
+        return results;
+    }
+
+    /// <summary>
     /// Gets or sets the element at (<paramref name="row"/>, <paramref name="column"/>).
     /// </summary>
     /// <param name="row">The row.</param>
