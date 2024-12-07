@@ -16,7 +16,7 @@ namespace advent2024;
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
 [SuppressMessage("ReSharper", "PropertyCanBeMadeInitOnly.Local")]
-public class Day06(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(6, output, isTest, fileSuffix)
+public class Day06(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(2024, 6, output, isTest, fileSuffix)
 {
     /// <inheritdoc/>
     public override object PartA() =>

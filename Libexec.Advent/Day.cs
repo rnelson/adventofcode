@@ -7,7 +7,8 @@ namespace Libexec.Advent;
 /// <summary>
 /// Base class for each day's code.
 /// </summary>
-/// <param name="dayNumber">The number of the day.</param>
+/// <param name="year">The year this puzzle belongs to.</param>
+/// <param name="dayNumber">The number of the day for this puzzle.</param>
 /// <param name="output">A <see cref="ITestOutputHelper"/> to use for logging.</param>
 /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
@@ -16,8 +17,13 @@ namespace Libexec.Advent;
 [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global")]
-public abstract class Day(int dayNumber, ITestOutputHelper output, bool isTest = false, string testSuffix = "")
+public abstract class Day(int year, int dayNumber, ITestOutputHelper output, bool isTest = false, string testSuffix = "")
 {
+    /// <summary>
+    /// The year this code belongs to.
+    /// </summary>
+    public int Year { get; } = year;
+    
     /// <summary>
     /// The numerical day this code belongs to.
     /// </summary>
@@ -44,10 +50,13 @@ public abstract class Day(int dayNumber, ITestOutputHelper output, bool isTest =
     /// <summary>
     /// The filename for the day's input.
     /// </summary>
+    /// <remarks>
+    /// After removing my inputs from the repo, I had two options: do this right, or do it fast. And
+    /// this is Advent of Code, dang it! Going lazy.
+    /// </remarks>
     protected string InputFilename => Path.Combine(
-        AppDomain.CurrentDomain.BaseDirectory,
-        "Inputs",
-        IsTest ? "Test" : "Real",
+        IsWindows() ? $"C:/dev/aoc-inputs/{year}" : $"~/dev/aoc-inputs/{year}",
+        IsTest ? "test" : "real",
         $"Day{DayNumber:00}{TestSuffix}.txt");
 
     /// <summary>
@@ -72,4 +81,13 @@ public abstract class Day(int dayNumber, ITestOutputHelper output, bool isTest =
         var b = PartB().ToString() ?? "<null>";
         return (a, b);
     }
+    
+    /// <summary>
+    /// Tells us whether we're running on Windows.
+    /// </summary>
+    /// <returns><c>true</c> if Windows, else <c>false</c>.</returns>
+    private static bool IsWindows() => Environment.OSVersion.Platform == PlatformID.Win32S
+        || Environment.OSVersion.Platform == PlatformID.Win32Windows
+        || Environment.OSVersion.Platform == PlatformID.Win32NT
+        || Environment.OSVersion.Platform == PlatformID.WinCE;
 }

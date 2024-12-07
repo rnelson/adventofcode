@@ -12,7 +12,7 @@ namespace advent2024;
 /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
 /// <param name="fileSuffix">test file suffix.</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
-public class Day02(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(2, output, isTest, fileSuffix)
+public class Day02(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(2024, 2, output, isTest, fileSuffix)
 {
     /// <inheritdoc/>
     public override object PartA()

@@ -23,7 +23,7 @@ public class Day05 : Day
     /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
     /// <param name="fileSuffix">test file suffix.</param>
     public Day05(ITestOutputHelper output, bool isTest = false, string fileSuffix = "")
-        : base(5, output, isTest, fileSuffix)
+        : base(2024, 5, output, isTest, fileSuffix)
     {
         (_rules, var allUpdates) = ParseInput();
         var updates = allUpdates.ToArray();
