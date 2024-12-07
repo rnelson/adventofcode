@@ -17,8 +17,8 @@ namespace advent2024;
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(2024, 7, output, isTest, fileSuffix)
 {
-    private char[] _partASymbols = ['*', '+'];
-    private char[] _partBSymbols = ['*', '+', '|'];
+    private readonly char[] _partASymbols = ['*', '+'];
+    private readonly char[] _partBSymbols = ['|', '*', '+'];
 
     /// <inheritdoc/>
     public override object PartA()
