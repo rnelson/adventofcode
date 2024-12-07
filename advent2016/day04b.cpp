@@ -108,7 +108,7 @@ string Room::decrypt() {
 
 int main(void) {
 	// Open the input file
-	ifstream fin("input04.txt");
+	ifstream fin("../../aoc-inputs/2016/input04.txt");
 	if (!fin) {
 		cerr << "Error reading input file input04.txt" << endl;
 		return -1;

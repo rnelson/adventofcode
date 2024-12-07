@@ -56,7 +56,7 @@ from math import sqrt
 import os
 import sys
 
-INFILE = 'inputs/input20.txt'
+INFILE = '../../aoc-inputs/2015/input20.txt'
 
 
 def divisors(n):

@@ -3,7 +3,7 @@ use std::fs;
 fn main() {
 	println!("AoC 2022 - Day 1: Calorie Counting");
 
-	let input = fs::read_to_string("input.txt").expect("cannot read input file");
+	let input = fs::read_to_string("../../aoc-inputs/2022/input.txt").expect("cannot read input file");
     let lines: Vec<&str> = input.lines().collect();
     
     let mut calories: Vec<u32> = vec![];

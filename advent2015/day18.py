@@ -160,7 +160,7 @@ from copy import deepcopy
 import os
 import sys
 
-INFILE = 'inputs/input18.txt'
+INFILE = '../../aoc-inputs/2015/input18.txt'
 DIMENSION = 100
 STEPS = 100
 

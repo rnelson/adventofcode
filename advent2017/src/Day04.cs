@@ -10,7 +10,7 @@ namespace AoC2017
     {
         static void Main(string[] args)
         {
-            var input = File.ReadAllLines(@"../inputs/day04.txt");
+            var input = File.ReadAllLines(@"../../../aoc-inputs/2017/day04.txt");
             var part1 = 0;
             var part2 = 0;
 

@@ -50,7 +50,7 @@ program puzzle04
     integer :: strlen, i, j, digestlen
     logical :: found
 
-    open(unit=infile, file='../advent2015/inputs/input04.txt')
+    open(unit=infile, file='../../aoc-inputs/2015/input04.txt')
 
     ! Read the input file
     read(infile, '(a10000)') text

@@ -17,7 +17,7 @@ namespace AoC2017
 
         static void Main(string[] args)
         {
-            var inputFile = @"../inputs/sample06.txt";
+            var inputFile = @"../../../aoc-inputs/2017/sample06.txt";
             var part1 = 0;
             var part2 = 0;
 

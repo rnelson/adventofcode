@@ -17,7 +17,7 @@
 
 using namespace std;
 
-const string INPUT_FILE = "input05.txt";
+const string INPUT_FILE = "../../aoc-inputs/2016/input05.txt";
 const int MAX_LINE_LENGTH = 2000;
 typedef unsigned long long ull;
 

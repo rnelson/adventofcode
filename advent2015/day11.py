@@ -58,7 +58,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input11.txt'
+INFILE = '../../aoc-inputs/2015/input11.txt'
 
 MINLENGTH = 8
 MAXLENGTH = MINLENGTH

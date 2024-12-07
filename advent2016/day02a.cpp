@@ -20,7 +20,7 @@ const int MAX_LINE_LENGTH = 2000;
 
 int main(void) {
 	// Open the input file
-	std::ifstream fin("input02.txt");
+	std::ifstream fin("../../aoc-inputs/2016/input02.txt");
 	if (!fin) {
 		std::cerr << "Error reading input file input02.txt" << std::endl;
 		return -1;

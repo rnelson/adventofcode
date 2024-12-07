@@ -11,7 +11,7 @@ abstract class Day(private val day: Int) {
         val filename = "$prefix.txt"
 
         val pwd = Paths.get("").toAbsolutePath().toString()
-        val input = Paths.get(pwd, "/src/main/resources/$filename").toAbsolutePath().toString()
+        val input = Paths.get(pwd, "/src/main/resources/$filename").toAbsolutePath().toString() // Yeah, this won't work
 
         val result = mutableListOf<String>()
         File(input).useLines { lines -> lines.forEach { result.add(it) }}

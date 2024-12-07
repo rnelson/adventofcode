@@ -10,7 +10,7 @@ namespace AoC2017
     {
         static void Main(string[] args)
         {
-            var inputFile = @"../inputs/day05.txt";
+            var inputFile = @"../../../aoc-inputs/2017/day05.txt";
             var part1 = 0;
             var part2 = 0;
 

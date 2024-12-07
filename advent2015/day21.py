@@ -89,7 +89,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input21.txt'
+INFILE = '../../aoc-inputs/2015/input21.txt'
 VERBOSE = False
 
 Item = namedtuple('Item', 'type, name, cost, damage, armor')

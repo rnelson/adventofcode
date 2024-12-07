@@ -72,7 +72,7 @@ from __future__ import print_function, unicode_literals
 import os
 import sys
 
-INFILE = 'inputs/input07.txt'
+INFILE = '../../aoc-inputs/2015/input07.txt'
 
 
 class Wires:

@@ -67,7 +67,7 @@ namespace AoC2017
 
         static void Main(string[] args)
         {
-            var inputFile = @"../inputs/day08.txt";
+            var inputFile = @"../../../aoc-inputs/2017/day08.txt";
             var part1 = long.MinValue;
             var part2 = long.MinValue;
 

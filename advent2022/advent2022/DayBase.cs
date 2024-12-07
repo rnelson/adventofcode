@@ -26,7 +26,7 @@ public abstract class DayBase : IDay
     public IEnumerable<string> LoadInput()
     {
         var typeName = GetType().Name;
-        var inputFile = $"Input/{typeName}.txt";
+        var inputFile = $"../../aoc-inputs/2022/{typeName}.txt";
 
         return File.ReadAllLines(inputFile);
     }

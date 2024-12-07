@@ -67,7 +67,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input05.txt'
+INFILE = '../../aoc-inputs/2015/input05.txt'
 
 # Part 1 parameters
 VOWELS = r'[aeiou]'

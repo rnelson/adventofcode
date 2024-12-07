@@ -19,7 +19,7 @@ using namespace std;
 const int CHIP_A = 61;
 const int CHIP_B = 17;
 
-const string INPUT_FILE = "input10.txt";
+const string INPUT_FILE = "../../aoc-inputs/2016/input10.txt";
 const int MAX_LINE_LENGTH = 2000;
 
 enum magnitude_t { LOW, HIGH };

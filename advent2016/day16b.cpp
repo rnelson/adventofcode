@@ -13,7 +13,7 @@
 
 using namespace std;
 
-const string INPUT_FILE = "input16.txt";
+const string INPUT_FILE = "../../aoc-inputs/2016/input16.txt";
 const int SIZE = 35651584;
 
 string generateData(string input, size_t length) {

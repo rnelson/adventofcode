@@ -84,7 +84,7 @@ namespace advent
             if (string.IsNullOrWhiteSpace(pwd))
                 throw new InvalidOperationException("unable to determine current directory");
 
-            var filename = Path.Combine(pwd, $"../../../Inputs/{DayNumber.ToString().PadLeft(2, '0')}.txt");
+            var filename = Path.Combine(pwd, $"../../../../../aoc-inputs/2021/{DayNumber.ToString().PadLeft(2, '0')}.txt");
             if (!File.Exists(filename))
                 throw new InvalidOperationException($"cannot read {filename}");
 

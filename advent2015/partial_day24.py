@@ -74,7 +74,7 @@ from operator import mul
 import os
 import sys
 
-INFILE = 'inputs/input24.txt'
+INFILE = '../../aoc-inputs/2015/input24.txt'
 
 
 def find(weights, group_count):

@@ -54,7 +54,7 @@ from __future__ import print_function, unicode_literals
 import os
 import sys
 
-INFILE = 'inputs/input03.txt'
+INFILE = '../../aoc-inputs/2015/input03.txt'
 
 
 def follow_route(route):

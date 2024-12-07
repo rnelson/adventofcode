@@ -48,7 +48,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input12.txt'
+INFILE = '../../aoc-inputs/2015/input12.txt'
 P1REGEX = r'-?\d+'
 
 

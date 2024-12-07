@@ -16,7 +16,7 @@
 
 using namespace std;
 
-const string INPUT_FILE = "input22.txt";
+const string INPUT_FILE = "../../aoc-inputs/2016/input22.txt";
 const int MAX_LINE_LENGTH = 2000;
 const regex PATTERN("/dev/grid/(node-x(\\d+)-y(\\d+))\\s+(\\d+)T\\s+(\\d+)T\\s+(\\d+)T\\s+(\\d+)%");
 

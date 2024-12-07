@@ -62,7 +62,7 @@ std::vector<std::string> split(const std::string &s, char delim) {
 
 int main(void) {
 	// Open the input file
-	std::ifstream fin("input03.txt");
+	std::ifstream fin("../../aoc-inputs/2016/input03.txt");
 	if (!fin) {
 		std::cerr << "Error reading input file input03.txt" << std::endl;
 		return -1;

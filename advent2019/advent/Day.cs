@@ -76,7 +76,7 @@ namespace advent
                 throw new InvalidOperationException(Resources.GetString("Help.SpecifyDay", Culture));
 
 			var pwd = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var filename = Path.Combine(pwd, $"../../../Inputs/input{DayNumber}.txt");
+            var filename = Path.Combine(pwd, $"../../../../../aoc-inputs/2019/input{DayNumber}.txt");
             if (!File.Exists(filename))
                 throw new InvalidOperationException($"cannot read {filename}");
 

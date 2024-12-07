@@ -53,7 +53,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input08.txt'
+INFILE = '../../aoc-inputs/2015/input08.txt'
 
 
 def main():

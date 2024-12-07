@@ -70,7 +70,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input06.txt'
+INFILE = '../../aoc-inputs/2015/input06.txt'
 
 # Part 1 parameters
 P1REGEX = r'(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)'

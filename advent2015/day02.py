@@ -58,7 +58,7 @@ from operator import mul
 import os
 import sys
 
-INFILE = 'inputs/input02.txt'
+INFILE = '../../aoc-inputs/2015/input02.txt'
 
 
 def main():

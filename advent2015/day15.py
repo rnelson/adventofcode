@@ -79,7 +79,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input15.txt'
+INFILE = '../../aoc-inputs/2015/input15.txt'
 EXPR = ('(\w+): capacity (-?\d+), durability (-?\d+), flavor '
         '(-?\d+), texture (-?\d+), calories (-?\d+)')
 KNAPSACK_SIZE = 100

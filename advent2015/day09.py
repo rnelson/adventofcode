@@ -53,7 +53,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input09.txt'
+INFILE = '../../aoc-inputs/2015/input09.txt'
 EXPR = r'(\w+) to (\w+) = (\d+)'
 
 

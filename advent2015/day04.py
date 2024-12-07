@@ -33,7 +33,7 @@ import hashlib
 import os
 import sys
 
-INFILE = 'inputs/input04.txt'
+INFILE = '../../aoc-inputs/2015/input04.txt'
 
 
 def md5(input):

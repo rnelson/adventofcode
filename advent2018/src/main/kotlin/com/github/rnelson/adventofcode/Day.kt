@@ -7,7 +7,7 @@ abstract class Day {
 
     fun setup(dayNumber: String) {
         input = ArrayList()
-        File("input/day$dayNumber.txt").forEachLine { input.add(it) }
+        File("../aoc-inputs/2018/day$dayNumber.txt").forEachLine { input.add(it) }
     }
 
     abstract fun solveA(): String

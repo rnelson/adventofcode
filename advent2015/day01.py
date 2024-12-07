@@ -45,7 +45,7 @@ from __future__ import print_function, unicode_literals
 import os
 import sys
 
-INFILE = 'inputs/input01.txt'
+INFILE = '../../aoc-inputs/2015/input01.txt'
 
 
 def main():

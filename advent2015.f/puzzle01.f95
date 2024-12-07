@@ -49,7 +49,7 @@ program puzzle01
     logical :: found
 
     ! Open the text file and read all 7,000 characters
-    open(unit=infile, file='../advent2015/inputs/input01.txt')
+    open(unit=infile, file='../../aoc-inputs/2015/input01.txt')
     read(infile, '(a7000)') text
 
     fl = 0

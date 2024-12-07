@@ -73,7 +73,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input14.txt'
+INFILE = '../../aoc-inputs/2015/input14.txt'
 EXPR = ('(\w+) can fly (\d+) km/s for (\d+) seconds, but '
         'then must rest for (\d+) seconds.')
 

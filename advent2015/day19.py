@@ -90,7 +90,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input19.txt'
+INFILE = '../../aoc-inputs/2015/input19.txt'
 EXPR = r'(\S+) => (\S+)'
 
 

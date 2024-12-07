@@ -55,7 +55,7 @@ program puzzle03
     character(8) :: num
     integer :: strlen, cnt, cnt2, i, j
 
-    open(unit=infile, file='../advent2015/inputs/input03.txt')
+    open(unit=infile, file='../../aoc-inputs/2015/input03.txt')
 
     ! Read the input file
     read(infile, '(a10000)') text

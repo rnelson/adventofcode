@@ -75,7 +75,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input16.txt'
+INFILE = '../../aoc-inputs/2015/input16.txt'
 EXPR = 'Sue (\d+): (\w+): (\d+), (\w+): (\d+), (\w+): (\d+)'
 MFCSAM_RESULTS = {
     'children': 3,

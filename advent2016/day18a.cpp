@@ -15,7 +15,7 @@
 
 using namespace std;
 
-const string INPUT_FILE = "input18.txt";
+const string INPUT_FILE = "../../aoc-inputs/2016/input18.txt";
 const int MAX_LINE_LENGTH = 2000;
 const int MAX_ROWS = 40;
 

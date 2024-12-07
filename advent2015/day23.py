@@ -64,7 +64,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input23.txt'
+INFILE = '../../aoc-inputs/2015/input23.txt'
 VERBOSE = False
 
 

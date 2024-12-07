@@ -14,7 +14,7 @@
 
 using namespace std;
 
-const string INPUT_FILE = "input20.txt";
+const string INPUT_FILE = "../../aoc-inputs/2016/input20.txt";
 const int MAX_LINE_LENGTH = 2000;
 
 void split(const string &s, char delim, vector<string> &elems) {

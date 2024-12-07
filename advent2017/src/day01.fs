@@ -5,7 +5,7 @@ open System.Linq
 //Directory.SetCurrentDirectory (Path.GetDirectoryName (Util.CurrentQueryPath));
 
 // Read the input file
-let input = File.ReadAllText("../inputs/day01.txt")
+let input = File.ReadAllText("../../../aoc-inputs/2017/day01.txt")
 
 // Part 1
 let sequence = Seq.append (input.Select (fun c -> System.Int32.Parse(string c))) [input.[0] |> string |> System.Int32.Parse]

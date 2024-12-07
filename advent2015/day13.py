@@ -77,7 +77,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input13.txt'
+INFILE = '../../aoc-inputs/2015/input13.txt'
 EXPR = r'(\w+) would (\w+) (\d+) happiness units by sitting next to (\w+).'
 
 

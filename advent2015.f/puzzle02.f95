@@ -58,7 +58,7 @@ program puzzle02
     integer :: paper, ribbon, length, width, height, ios
     integer :: area1, area2, area3, smallarea, s1, s2
 
-    open(unit=infile, file='../advent2015/inputs/input02.txt')
+    open(unit=infile, file='../../aoc-inputs/2015/input02.txt')
     paper = 0
     ribbon = 0
 

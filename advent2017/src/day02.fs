@@ -24,7 +24,7 @@ let getDifferencCount arr =
     sum
 
 // Read the input file
-let input = readInput("../inputs/day02.txt")
+let input = readInput("../../../aoc-inputs/2017/day02.txt")
 
 let part1 = getDifferencCount(input)
 let part2 = 0

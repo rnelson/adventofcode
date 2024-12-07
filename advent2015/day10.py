@@ -41,7 +41,7 @@ import os
 import re
 import sys
 
-INFILE = 'inputs/input10.txt'
+INFILE = '../../aoc-inputs/2015/input10.txt'
 
 
 def work(input, iterations):

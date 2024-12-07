@@ -17,7 +17,7 @@
 
 using namespace std;
 
-const string INPUT_FILE = "input21.txt";
+const string INPUT_FILE = "../../aoc-inputs/2016/input21.txt";
 const int MAX_LINE_LENGTH = 2000;
 const string START_TEXT = "fbgdceah";
 
