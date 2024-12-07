@@ -19,10 +19,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="Inputs\Test\*">
+        <Folder Include="..\..\aoc-inputs\2024\test"/>
+        <Folder Include="..\..\aoc-inputs\2024\real"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\aoc-inputs\2024\test\*">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="Inputs\Real\*">
+        <Content Include="..\..\aoc-inputs\2024\real\*">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
