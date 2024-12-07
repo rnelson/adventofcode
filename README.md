@@ -9,9 +9,9 @@ For 2024 onward, the assumption is that this repository is cloned to `~/dev/adve
 `C:\dev\adventofcode`, whether UNIX or Windows. Alongside it is a `~/dev/aoc-inputs`/`C:\dev\aoc-inputs` 
 which has the following structure:
 
-`adventYEAR` -> `test` and `real` -> `DayXX.txt`
+`YEAR` -> `test` and `real` -> `DayXX.txt`
 
-For example, `advent2024/test/Day03.txt` and `advent2024/real/Day01.txt`.
+For example, `2024/test/Day04.txt` and `2024/real/Day01.txt`.
 
 ## License
 
