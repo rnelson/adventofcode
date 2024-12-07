@@ -55,7 +55,7 @@ public abstract class Day(int year, int dayNumber, ITestOutputHelper output, boo
     /// this is Advent of Code, dang it! Going lazy.
     /// </remarks>
     protected string InputFilename => Path.Combine(
-        IsWindows() ? $"C:/dev/aoc-inputs/{year}" : $"~/dev/aoc-inputs/{year}",
+        IsWindows ? $"C:/dev/aoc-inputs/{Year}" : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), $"dev/aoc-inputs/{Year}"),
         IsTest ? "test" : "real",
         $"Day{DayNumber:00}{TestSuffix}.txt");
 
@@ -86,7 +86,7 @@ public abstract class Day(int year, int dayNumber, ITestOutputHelper output, boo
     /// Tells us whether we're running on Windows.
     /// </summary>
     /// <returns><c>true</c> if Windows, else <c>false</c>.</returns>
-    private static bool IsWindows() => Environment.OSVersion.Platform == PlatformID.Win32S
+    private static bool IsWindows => Environment.OSVersion.Platform == PlatformID.Win32S
         || Environment.OSVersion.Platform == PlatformID.Win32Windows
         || Environment.OSVersion.Platform == PlatformID.Win32NT
         || Environment.OSVersion.Platform == PlatformID.WinCE;
