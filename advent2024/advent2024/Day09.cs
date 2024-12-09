@@ -17,8 +17,7 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
     public override object PartA()
     {
         var disk = ParseInput();
-        var yuck = Fragment(disk);
-        return Checksum(yuck);
+        return Fragment(disk);
     }
 
     /// <inheritdoc/>
@@ -27,9 +26,9 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
         return "";
     }
 
-    private char[] ParseInput()
+    private int[] ParseInput()
     {
-        var disk = new List<char>();
+        var disk = new List<int>();
         var input = Input.First().ToCharArray();
 
         var currentFile = 0;
@@ -37,13 +36,13 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
         
         foreach (var ch in input)
         {
-            var n = int.Parse(ch.ToString());
+            var n = ch - '0';
             
             if (onFile)
-                for (var i = 0; i < n; i++) disk.Add(currentFile.ToString()[0]);
+                for (var i = 0; i < n; i++) disk.Add(currentFile);
             else
             {
-                for (var i = 0; i < n; i++) disk.Add('.');
+                for (var i = 0; i < n; i++) disk.Add(-1);
                 currentFile++;
             }
 
@@ -53,51 +52,31 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
         return disk.ToArray();
     }
 
-    private char[] Defragment(char[] disk)
+    private ulong Fragment(int[] disk)
     {
-        var filesOnly = disk.ToList();
-        filesOnly.RemoveAll(b => b == '.');
-
-        for (var i = 0; i < disk.Length - filesOnly.Count(); i++)
-            filesOnly.Add('.');
-        
-        return filesOnly.ToArray();
-    }
-
-    private char[] Fragment(char[] disk)
-    {
+        var checksum = 0UL;
         var newFilesystem = disk.ToArray();
         
         for (var i = newFilesystem.Length - 1; i > 0; i--)
         {
-            if (newFilesystem[i] == '.')
+            if (newFilesystem[i] == -1)
                 continue;
 
-            var openSpace = Array.IndexOf(newFilesystem, '.');
+            var openSpace = Array.IndexOf(newFilesystem, -1);
 
             if (openSpace > i)
                 break;
             
             newFilesystem[openSpace] = newFilesystem[i];
-            newFilesystem[i] = '.';
+            newFilesystem[i] = -1;
+        }
+
+        for (var i = 0; i < newFilesystem.Length; i++)
+        {
+            if (newFilesystem[i] != -1)
+                checksum += (ulong)newFilesystem[i] * (ulong)i;
         }
         
-        return newFilesystem;
-    }
-
-    private ulong Checksum(char[] disk)
-    {
-        var result = 0UL;
-
-        for (var i = 0; i < disk.Length; i++)
-        {
-            if (disk[i] == '.')
-                break;
-            
-            var digit = disk[i] - '0';
-            result += (ulong)digit * (ulong)i;
-        }
-
-        return result;
+        return checksum;
     }
 }

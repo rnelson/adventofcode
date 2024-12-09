@@ -35,8 +35,8 @@ public partial class Test2024(ITestOutputHelper testOutputHelper)
     [InlineData(typeof(Day07), "1260333054159", "")]
     [InlineData(typeof(Day08), "14", "", true)]
     [InlineData(typeof(Day08), "", "")]
-    [InlineData(typeof(Day09), "1928", "", true)]
-    [InlineData(typeof(Day09), "", "")]
+    [InlineData(typeof(Day09), "1928", "2858", true)]
+    [InlineData(typeof(Day09), "6330095022244", "")]
     public void RunTests(Type dayType, string expectedA, string expectedB, bool isTest = false, bool twoPartTest = false)
     {
         string actualA, actualB;
