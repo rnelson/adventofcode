@@ -14,18 +14,10 @@ namespace advent2024;
 public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(2024, 9, output, isTest, fileSuffix)
 {
     /// <inheritdoc/>
-    public override object PartA()
-    {
-        var disk = ParseInput();
-        return Fragment(disk);
-    }
+    public override object PartA() => Fragment(ParseInput());
 
     /// <inheritdoc/>
-    public override object PartB()
-    {
-        var disk = ParseInput();
-        return DoNotFragment(disk);
-    }
+    public override object PartB() => DoNotFragment(ParseInput());
 
     private int[] ParseInput()
     {
@@ -60,23 +52,18 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
         
         for (var i = newFilesystem.Length - 1; i > 0; i--)
         {
-            if (newFilesystem[i] == -1)
-                continue;
+            if (newFilesystem[i] == -1) continue;
 
             var openSpace = Array.IndexOf(newFilesystem, -1);
-
-            if (openSpace > i)
-                break;
+            if (openSpace > i) break;
             
             newFilesystem[openSpace] = newFilesystem[i];
             newFilesystem[i] = -1;
         }
 
         for (var i = 0; i < newFilesystem.Length; i++)
-        {
             if (newFilesystem[i] != -1)
                 checksum += (ulong)newFilesystem[i] * (ulong)i;
-        }
         
         return checksum;
     }
@@ -96,12 +83,10 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
                 continue;
             }
 
-            if (startIndex < 0)
-                startIndex = i;
+            if (startIndex < 0) startIndex = i;
             
             currentSize++;
-            if (currentSize < size)
-                continue;
+            if (currentSize < size) continue;
             
             fits = true;
             break;
@@ -117,8 +102,7 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
         
         for (var i = newFilesystem.Length - 1; i > 0; i--)
         {
-            if (newFilesystem[i] == -1)
-                continue;
+            if (newFilesystem[i] == -1) continue;
 
             var thisFile = newFilesystem[i];
             var startOfFile = Array.IndexOf(newFilesystem, thisFile);
@@ -135,10 +119,8 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
         }
 
         for (var i = 0; i < newFilesystem.Length; i++)
-        {
             if (newFilesystem[i] != -1)
                 checksum += (ulong)newFilesystem[i] * (ulong)i;
-        }
         
         return checksum;
     }
