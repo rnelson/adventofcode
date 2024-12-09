@@ -21,7 +21,7 @@ public partial class Test2024
     private static Day GetDay(Type dayType, ITestOutputHelper output, bool isTest, string fileSuffix = "")
     {
         if (Activator.CreateInstance(dayType, output, isTest, fileSuffix) is not Day day)
-            throw new Exception($"unable to instantiate type {dayType.FullName}");
+            throw new($"unable to instantiate type {dayType.FullName}");
 
         return day;
     }

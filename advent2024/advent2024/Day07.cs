@@ -75,7 +75,7 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
         return AddSymbols(s, symbols);
     }
 
-    private IEnumerable<string> AddSymbols(string s, char[] symbols)
+    private static IEnumerable<string> AddSymbols(string s, char[] symbols)
     {
         if (!s.Contains(' '))
         {
@@ -125,7 +125,7 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
             }
     }
 
-    private IEnumerable<(T, IEnumerable<T>)> ParseInput<T>()
+    private List<(T, IEnumerable<T>)> ParseInput<T>()
         where T : INumber<T> =>
         (from line in Input
             select line.Split(": ")

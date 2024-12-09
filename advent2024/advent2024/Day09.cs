@@ -110,7 +110,7 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
         return fits ? startIndex : -1;
     }
 
-    private ulong DoNotFragment(int[] disk)
+    private static ulong DoNotFragment(int[] disk)
     {
         var checksum = 0UL;
         var newFilesystem = disk.ToArray();
