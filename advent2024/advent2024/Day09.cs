@@ -23,7 +23,8 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
     /// <inheritdoc/>
     public override object PartB()
     {
-        return "";
+        var disk = ParseInput();
+        return DoNotFragment(disk);
     }
 
     private int[] ParseInput()
@@ -52,7 +53,7 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
         return disk.ToArray();
     }
 
-    private ulong Fragment(int[] disk)
+    private static ulong Fragment(int[] disk)
     {
         var checksum = 0UL;
         var newFilesystem = disk.ToArray();
@@ -69,6 +70,68 @@ public class Day09(ITestOutputHelper output, bool isTest = false, string fileSuf
             
             newFilesystem[openSpace] = newFilesystem[i];
             newFilesystem[i] = -1;
+        }
+
+        for (var i = 0; i < newFilesystem.Length; i++)
+        {
+            if (newFilesystem[i] != -1)
+                checksum += (ulong)newFilesystem[i] * (ulong)i;
+        }
+        
+        return checksum;
+    }
+
+    private static int FindChunk(int[] disk, int size)
+    {
+        var startIndex = -1;
+        var currentSize = 0;
+        var fits = false;
+        
+        for (var i = 0; i < disk.Length; i++)
+        {
+            if (disk[i] > -1)
+            {
+                startIndex = -1;
+                currentSize = 0;
+                continue;
+            }
+
+            if (startIndex < 0)
+                startIndex = i;
+            
+            currentSize++;
+            if (currentSize < size)
+                continue;
+            
+            fits = true;
+            break;
+        }
+
+        return fits ? startIndex : -1;
+    }
+
+    private ulong DoNotFragment(int[] disk)
+    {
+        var checksum = 0UL;
+        var newFilesystem = disk.ToArray();
+        
+        for (var i = newFilesystem.Length - 1; i > 0; i--)
+        {
+            if (newFilesystem[i] == -1)
+                continue;
+
+            var thisFile = newFilesystem[i];
+            var startOfFile = Array.IndexOf(newFilesystem, thisFile);
+            var fileSize = i - startOfFile + 1;
+            var newLocation = FindChunk(newFilesystem, fileSize);
+
+            if (newLocation > -1 && newLocation < startOfFile)
+            {
+                Array.Fill(newFilesystem, thisFile, newLocation, fileSize);
+                Array.Fill(newFilesystem, -1, startOfFile, fileSize);
+            }
+            else
+                i = startOfFile;
         }
 
         for (var i = 0; i < newFilesystem.Length; i++)
