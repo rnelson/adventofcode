@@ -96,10 +96,6 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
                     if (!map.ContainsPoint(aNode.Row, aNode.Column))
                         continue;
                     
-                    // Skip this antinode if it's one of the nodes for this frequency.
-                    if (map[aNode.Row, aNode.Column] == frequency)
-                        continue;
-                    
                     // Add the antinode to the list.
                     if (antinodes.TryGetValue((aNode.Row, aNode.Column), out var frequenciesThere))
                         frequenciesThere.Add(frequency);
@@ -114,11 +110,29 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
 
     private class AntennaLocation : IComparable<AntennaLocation>
     {
-        public int Row { get; set; }
-        public int Column { get; set; }
+        public int Row { get; private init; }
+        public int Column { get; private init; }
 
         public static AntennaLocation Create((int row, int column) location) =>
             new() { Row = location.row, Column = location.column };
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not AntennaLocation antennaLocation)
+                return false;
+            
+            return Row == antennaLocation.Row && Column == antennaLocation.Column;
+        }
+
+        public bool Equals(AntennaLocation other)
+        {
+            return Row == other.Row && Column == other.Column;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Row, Column);
+        }
 
         public int CompareTo(AntennaLocation? other)
         {
@@ -176,30 +190,59 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
         public static IEnumerable<AntennaLocation> FindAntinodes2(Matrix<char> map, AntennaLocation one, AntennaLocation two, char frequency = '.')
         {
             var antinodes = new List<AntennaLocation>();
-                
-            var rowDelta = Math.Abs(one.Row - two.Row);
-            var colDelta = Math.Abs(one.Column - two.Column);
+            
+            var rowDelta = one.Row - two.Row;
+            var colDelta = one.Column - two.Column;
 
             if (rowDelta == 0 && colDelta == 0)
                 throw new InvalidOperationException("identical points not allowed");
-                
-            var plus = new AntennaLocation { Row = one.Row + rowDelta, Column = one.Column + colDelta };
-            var minus = new AntennaLocation { Row = one.Row - rowDelta, Column = one.Column - colDelta };
 
-            while (map.ContainsPoint(plus.Row, plus.Column))
+            var node1 = new AntennaLocation { Row = one.Row + rowDelta, Column = one.Column + colDelta };
+            //var node2 = new AntennaLocation { Row = one.Row + rowDelta, Column = one.Column - colDelta };
+            //var node3 = new AntennaLocation { Row = one.Row - rowDelta, Column = one.Column + colDelta };
+            //var node4 = new AntennaLocation { Row = one.Row - rowDelta, Column = one.Column - colDelta };
+            var node5 = new AntennaLocation { Row = two.Row + rowDelta, Column = two.Column + colDelta };
+            //var node6 = new AntennaLocation { Row = two.Row + rowDelta, Column = two.Column - colDelta };
+            //var node7 = new AntennaLocation { Row = two.Row - rowDelta, Column = two.Column + colDelta };
+            //var node8 = new AntennaLocation { Row = two.Row - rowDelta, Column = two.Column - colDelta };
+
+            while (map.ContainsPoint(node1.Row, node1.Column)
+                   //|| map.ContainsPoint(node2.Row, node2.Column)
+                   //|| map.ContainsPoint(node3.Row, node3.Column)
+                   //|| map.ContainsPoint(node4.Row, node4.Column)
+                   || map.ContainsPoint(node5.Row, node5.Column)
+                   //|| map.ContainsPoint(node6.Row, node6.Column)
+                   //|| map.ContainsPoint(node7.Row, node7.Column)
+                   //|| map.ContainsPoint(node8.Row, node8.Column))
+                   )
             {
-                if (map[plus.Row, plus.Column] != frequency)
-                    antinodes.Add(plus);
-                plus = new() { Row = plus.Row + rowDelta, Column = plus.Column + colDelta };
+                if (map.ContainsPoint(node1.Row, node1.Column) && (node1.Equals(one) || node1.Equals(two)))
+                    antinodes.Add(node1);
+                //if (map.ContainsPoint(node2.Row, node2.Column) && (node2.Equals(one) || node2.Equals(two)))
+                //    antinodes.Add(node2);
+                //if (map.ContainsPoint(node3.Row, node3.Column) && (node3.Equals(one) || node3.Equals(two)))
+                //    antinodes.Add(node3);
+                //if (map.ContainsPoint(node4.Row, node4.Column) && (node4.Equals(one) || node4.Equals(two)))
+                //    antinodes.Add(node4);
+                if (map.ContainsPoint(node5.Row, node5.Column) && (node5.Equals(one) || node5.Equals(two)))
+                    antinodes.Add(node5);
+                //if (map.ContainsPoint(node6.Row, node6.Column) && (node6.Equals(one) || node6.Equals(two)))
+                //    antinodes.Add(node6);
+                //if (map.ContainsPoint(node7.Row, node7.Column) && (node7.Equals(one) || node7.Equals(two)))
+                //    antinodes.Add(node7);
+                //if (map.ContainsPoint(node8.Row, node8.Column) && (node8.Equals(one) || node8.Equals(two)))
+                //    antinodes.Add(node8);
+                
+                node1 = new() { Row = node1.Row + rowDelta, Column = node1.Column + colDelta };
+                //node2 = new() { Row = node2.Row + rowDelta, Column = node2.Column - colDelta };
+                //node3 = new() { Row = node3.Row - rowDelta, Column = node3.Column + colDelta };
+                //node4 = new() { Row = node4.Row - rowDelta, Column = node4.Column - colDelta };
+                node5 = new() { Row = node5.Row + rowDelta, Column = node5.Column + colDelta };
+                //node6 = new() { Row = node6.Row + rowDelta, Column = node6.Column - colDelta };
+                //node7 = new() { Row = node7.Row - rowDelta, Column = node7.Column + colDelta };
+                //node8 = new() { Row = node8.Row - rowDelta, Column = node8.Column - colDelta };
             }
             
-            while (map.ContainsPoint(minus.Row, minus.Column))
-            {
-                if (map[minus.Row, minus.Column] != frequency)
-                    antinodes.Add(minus);
-                minus = new() { Row = minus.Row + rowDelta, Column = minus.Column + colDelta };
-            }
-                
             return antinodes;
         }
     }
