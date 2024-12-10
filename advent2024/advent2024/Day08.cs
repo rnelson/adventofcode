@@ -24,7 +24,6 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
     public override object PartA()
     {
         var map = Input.ToMatrix();
-        var antennae = map.Where(c => _antennaCharacters.Contains(c)).ToArray();
         var antinodes = new Dictionary<(int, int), List<char>>();
 
         foreach (var frequency in _antennaCharacters)
@@ -77,7 +76,7 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
         public int Column { get; set; }
 
         public static AntennaLocation Create((int row, int column) location) =>
-            new AntennaLocation { Row = location.row, Column = location.column };
+            new() { Row = location.row, Column = location.column };
 
         public int CompareTo(AntennaLocation? other)
         {
