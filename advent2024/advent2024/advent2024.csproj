@@ -11,8 +11,4 @@
       <ProjectReference Include="..\..\Libexec.Advent\Libexec.Advent.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="MathEvaluator" Version="2.2.4" />
-    </ItemGroup>
-
 </Project>

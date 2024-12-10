@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Numerics;
 using System.Text;
 using Libexec.Advent;
-using MathEvaluation.Extensions;
+using Libexec.Advent.Extensions;
 using Xunit.Abstractions;
 
 namespace advent2024;
@@ -28,10 +28,10 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
         
         foreach (var item in input)
         {
-            var equations = GetEquationPossibilities(item.Item2, _partASymbols, addParens: true);
+            var equations = GetEquationPossibilities(item.Item2, _partASymbols);
             foreach (var equation in equations)
             {
-                var math = (ulong)equation.Evaluate();
+                var math = equation.DoMath_2024d7();
                 if (math != item.Item1)
                     continue;
                 
@@ -51,10 +51,10 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
         
         foreach (var item in input)
         {
-            var equations = AddParens(GetEquationPossibilities(item.Item2, _partBSymbols), _partBSymbols).ToArray();
+            var equations = GetEquationPossibilities(item.Item2, _partBSymbols).ToArray();
             foreach (var equation in equations)
             {
-                var math = (ulong)equation.Evaluate();
+                var math = equation.DoMath_2024d7();
                 if (math != item.Item1)
                     continue;
                 
@@ -66,29 +66,19 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
         return sum;
     }
 
-    private IEnumerable<string> GetEquationPossibilities<T>(IEnumerable<T> components, char[] symbols, bool addParens = false)
+    private IEnumerable<string> GetEquationPossibilities<T>(IEnumerable<T> components, char[] symbols)
         where T : INumber<T>
     {
         var bits = components.Select(b => b.ToString()!).ToArray();
         var s = string.Join(" ", bits);
 
-        return AddSymbols(s, symbols, addParens);
+        return AddSymbols(s, symbols);
     }
 
-    private static IEnumerable<string> AddSymbols(string s, char[] symbols, bool addParens = false)
+    private static IEnumerable<string> AddSymbols(string s, char[] symbols)
     {
         if (!s.Contains(' '))
-        {
-            var sb = new StringBuilder();
-            
-            if (addParens)
-                for (var i = 0; i < s.Count(c => c == ')') ; i++)
-                    sb.Append('(');
-            
-            sb.Append(s);
-            
-            yield return sb.ToString();
-        }
+            yield return s;
         
         var idx = s.IndexOf(' ');
 
@@ -99,11 +89,9 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
 
                 if (symbol == '|')
                 {
-                    sb.Append(s);
-                    //sb.Append(s[..idx]);
-                    //sb.Append(s[(idx + 1)..]);
-                    
-                    if (addParens) sb.Append(") ");
+                    sb.Append(s[..idx]);
+                    sb.Append(symbol);
+                    sb.Append(s[(idx + 1)..]);
                 }
                 else
                 {
@@ -113,71 +101,19 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
 
                     if (nextSpace >= 0)
                     {
-                        sb.Append(s[(idx + 1)..nextSpace]);
-                        if (addParens) sb.Append(") ");
-                        sb.Append(s[(nextSpace + 1)..]);
+                        sb.Append(s[(idx + 1)..]);
+                        //sb.Append(s[(idx + 1)..nextSpace]);
+                        //sb.Append(s[(nextSpace + 1)..]);
                     }
                     else
                     {
                         sb.Append(s[(idx + 1)..]);
                     }
-
-                    if (addParens) sb.Append(')');
                 }
 
-                foreach (var u in AddSymbols(sb.ToString().Trim(), symbols, addParens))
+                foreach (var u in AddSymbols(sb.ToString().Trim(), symbols))
                     yield return u;
             }
-    }
-
-    private IEnumerable<string> AddParens(IEnumerable<string> items, char[] symbols)
-    {
-        var modified = new List<string>();
-
-        foreach (var item in items)
-        {
-            if (item.Count(c => !char.IsDigit(c)) < 2)
-            {
-                modified.Add(item);
-                continue;
-            }
-
-            var sb = new StringBuilder();
-            
-            // Find the first symbol. We're ignoring this one intentionally.
-            var left = item.IndexOfAny(symbols);
-            var lastLeft = 0;
-
-            while (true)
-            {
-                // Find the next symbol.
-                left = item.IndexOfAny(symbols, left + 1);
-
-                // If we're all done, add the rest of the string and bail.
-                if (left < 0)
-                {
-                    sb.Append(item[lastLeft..]);
-                    break;
-                }
-                
-                // Add everything in that range to our result.
-                sb.Append(item[lastLeft..left]);
-                
-                // Add a close paren
-                sb.Append(')');
-                
-                // Update our last left position.
-                lastLeft = left;
-            }
-            
-            // Balance parentheses.
-            for (var i = 0; i < sb.ToString().Count(c => c == ')'); i++)
-                sb.Insert(0, '(');
-            
-            modified.Add(sb.ToString());
-        }
-
-        return modified;
     }
 
     private List<(T, IEnumerable<T>)> ParseInput<T>()

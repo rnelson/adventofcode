@@ -32,7 +32,7 @@ public partial class Test2024(ITestOutputHelper testOutputHelper)
     [InlineData(typeof(Day06), "41", "6", true)]
     [InlineData(typeof(Day06), "4602", "1703")]
     [InlineData(typeof(Day07), "3749", "11387", true)]
-    [InlineData(typeof(Day07), "1260333054159", "")]
+    [InlineData(typeof(Day07), "1260333054159", "162042343638683")]
     [InlineData(typeof(Day08), "14", "", true)]
     [InlineData(typeof(Day08), "", "")]
     [InlineData(typeof(Day09), "1928", "2858", true)]

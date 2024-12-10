@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
+using MathEvaluation.Extensions;
 
 namespace Libexec.Advent.Extensions;
 
@@ -12,6 +13,50 @@ namespace Libexec.Advent.Extensions;
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 public static class StringExtensions
 {
+    /// <summary>
+    /// Does the math from 2024's day 7. You probably don't want to use this
+    /// in any other year.
+    /// </summary>
+    /// <param name="s">The string containing the formula.</param>
+    /// <returns>The result.</returns>
+    public static ulong DoMath_2024d7(this string str)
+    {
+        // Having previously completed part A, I know that it's safe to work
+        // on all of these for both A and B, thus a single method here.
+        char[] symbols = ['|', '*', '+'];
+
+        var s = new string(str);
+
+        while (symbols.Any(s.Contains))
+        {
+            var symbol = s.IndexOfAny(symbols);
+            var nextSymbol = s.IndexOfAny(symbols, symbol + 1);
+
+            if (nextSymbol == -1)
+            {
+                if (s[symbol] == '|')
+                    s = s.Remove(symbol, 1);
+                else
+                    return (ulong)s.Evaluate();
+            }
+            else
+            {
+                if (s[symbol] == '|')
+                    s = s.Remove(symbol, 1);
+                else
+                {
+                    var bit = s[..nextSymbol];
+                    var math = bit.Evaluate();
+                    
+                    s = s.Remove(0, nextSymbol);
+                    s = s.Insert(0, math.ToString(CultureInfo.InvariantCulture));
+                }
+            }
+        }
+        
+        return (ulong)s.Evaluate();
+    }
+    
     /// <summary>
     /// Splits the string in half.
     /// </summary>
