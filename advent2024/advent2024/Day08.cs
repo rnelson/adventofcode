@@ -163,9 +163,6 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
             var rowDelta = one.Row - two.Row;
             var colDelta = one.Column - two.Column;
 
-            if (rowDelta == 0 && colDelta == 0)
-                throw new InvalidOperationException("identical points not allowed");
-
             var node1 = new AntennaLocation { Row = one.Row, Column = one.Column };
             var node2 = new AntennaLocation { Row = two.Row, Column = two.Column };
             
