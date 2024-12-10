@@ -64,6 +64,20 @@ public static class IEnumerableExtensions
         where T: INumber<T> =>
         input.Select(s => T.Parse(s, CultureInfo.CurrentCulture)).ToList();
     
+    public static IEnumerable<IEnumerable<T>> GetPermutations<T>(this IEnumerable<T> list, int length)
+    {
+        var enumerated = list.ToArray();
+        
+        if (length == 1)
+            return enumerated.Select(t => new T[] { t });
+
+        return enumerated
+            .GetPermutations(length - 1)
+            .SelectMany(t => enumerated.Where(e => !t.Contains(e)),
+                (t1, t2) => t1.Concat([t2]).ToArray())
+            .ToArray();
+    }
+    
     /// <summary>
     /// Groups this collection of data, separating the lists each time <paramref name="divider"/> is found.
     /// </summary>
