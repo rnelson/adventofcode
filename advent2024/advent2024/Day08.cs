@@ -42,7 +42,8 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
                 var aNodes = AntennaLocation.FindAntinodes(
                     map,
                     AntennaLocation.Create(one),
-                    AntennaLocation.Create(two));
+                    AntennaLocation.Create(two),
+                    maxIterations: 1);
 
                 foreach (var aNode in aNodes)
                 {
@@ -144,8 +145,12 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
             var row = Row.CompareTo(o.Row);
             return row != 0 ? Column.CompareTo(o.Column) : row;
         }
+        
+        public (int, int) ToMatrixCoords() => (Row, Column);
 
-        public static IEnumerable<AntennaLocation> FindAntinodes(Matrix<char> map, AntennaLocation one, AntennaLocation two, char frequency = '.')
+        public static implicit operator (int, int)(AntennaLocation instance) => instance.ToMatrixCoords();
+
+        public static IEnumerable<AntennaLocation> FindAntinodes(Matrix<char> map, AntennaLocation one, AntennaLocation two, int maxIterations = int.MaxValue - 1)
         {
             var antinodes = new List<AntennaLocation>();
             
@@ -155,33 +160,91 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
             if (rowDelta == 0 && colDelta == 0)
                 throw new InvalidOperationException("identical points not allowed");
 
+            var node1 = new AntennaLocation { Row = one.Row, Column = one.Column };
+            var node2 = new AntennaLocation { Row = two.Row, Column = two.Column };
+            
             if (rowDelta == 0)
             {
-                antinodes.Add(new() { Row = one.Row, Column = one.Column + colDelta });
-                antinodes.Add(new() { Row = one.Row, Column = one.Column - colDelta });
+                for (var i = 1; i <= maxIterations; i++)
+                {
+                    node1 = new() { Row = node1.Row, Column = node1.Column + i * colDelta };
+                    node2 = new() { Row = node1.Row, Column = node1.Column - i * colDelta };
+                    
+                    if (map.ContainsPoint(node1))
+                        antinodes.Add(node1);
+                    if (map.ContainsPoint(node2))
+                        antinodes.Add(node2);
+
+                    if (!map.ContainsPoint(node1) && !map.ContainsPoint(node2))
+                        break;
+                }
             }
             else if (colDelta == 0)
             {
-                antinodes.Add(new() { Row = one.Row + rowDelta, Column = one.Column });
-                antinodes.Add(new() { Row = one.Row - rowDelta, Column = one.Column });
+                for (var i = 1; i <= maxIterations; i++)
+                {
+                    node1 = new() { Row = node1.Row + i * rowDelta, Column = node1.Column };
+                    node2 = new() { Row = node1.Row - i * rowDelta, Column = node1.Column };
+                    
+                    if (map.ContainsPoint(node1))
+                        antinodes.Add(node1);
+                    if (map.ContainsPoint(node2))
+                        antinodes.Add(node2);
+
+                    if (!map.ContainsPoint(node1) && !map.ContainsPoint(node2))
+                        break;
+                }
             }
             else if (rowDelta < 0)
             {
                 if (colDelta < 0)
                 {
-                    antinodes.Add(new() { Row = one.Row + rowDelta, Column = one.Column + colDelta });
-                    antinodes.Add(new() { Row = two.Row - rowDelta, Column = two.Column - colDelta });
+                    for (var i = 1; i <= maxIterations; i++)
+                    {
+                        node1 = new() { Row = node1.Row + i * rowDelta, Column = node1.Column + i * colDelta };
+                        node2 = new() { Row = node2.Row - i * rowDelta, Column = node2.Column - i * colDelta };
+                    
+                        if (map.ContainsPoint(node1))
+                            antinodes.Add(node1);
+                        if (map.ContainsPoint(node2))
+                            antinodes.Add(node2);
+
+                        if (!map.ContainsPoint(node1) && !map.ContainsPoint(node2))
+                            break;
+                    }
                 }
                 else
                 {
-                    antinodes.Add(new() { Row = one.Row - rowDelta, Column = one.Column - colDelta });
-                    antinodes.Add(new() { Row = two.Row + rowDelta, Column = two.Column + colDelta });
+                    for (var i = 1; i <= maxIterations; i++)
+                    {
+                        node1 = new() { Row = node1.Row - i * rowDelta, Column = node1.Column - i * colDelta };
+                        node2 = new() { Row = node2.Row + i * rowDelta, Column = node2.Column + i * colDelta };
+                    
+                        if (map.ContainsPoint(node1))
+                            antinodes.Add(node1);
+                        if (map.ContainsPoint(node2))
+                            antinodes.Add(node2);
+
+                        if (!map.ContainsPoint(node1) && !map.ContainsPoint(node2))
+                            break;
+                    }
                 }
             }
             else
             {
-                antinodes.Add(new() { Row = one.Row + rowDelta, Column = one.Column + colDelta });
-                antinodes.Add(new() { Row = two.Row - rowDelta, Column = two.Column - colDelta });
+                for (var i = 1; i <= maxIterations; i++)
+                {
+                    node1 = new() { Row = node1.Row + i * rowDelta, Column = node1.Column + i * colDelta };
+                    node2 = new() { Row = node2.Row - i * rowDelta, Column = node2.Column - i * colDelta };
+                    
+                    if (map.ContainsPoint(node1))
+                        antinodes.Add(node1);
+                    if (map.ContainsPoint(node2))
+                        antinodes.Add(node2);
+
+                    if (!map.ContainsPoint(node1) && !map.ContainsPoint(node2))
+                        break;
+                }
             }
             
             return antinodes;

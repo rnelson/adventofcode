@@ -80,12 +80,23 @@ public class Matrix<T>(int rows, int columns)
     }
     
     /// <summary>
-    /// Determines whether this matrix contains a data point at (<paramref name="x"/>, <paramref name="y"/>).
+    /// Determines whether this matrix contains a location at (<paramref name="x"/>, <paramref name="y"/>).
     /// </summary>
     /// <param name="x">The X coordinate.</param>
     /// <param name="y">The Y coordinate.</param>
     /// <returns><c>true</c> if (<paramref name="x"/>, <paramref name="y"/>) is a valid point in the matrix.</returns>
     public bool ContainsPoint(int x, int y) => x >= 0 && x < Size.Item1 && y >= 0 && y < Size.Item2;
+    
+    /// <summary>
+    /// Determines whether this matrix contains a location.
+    /// </summary>
+    /// <param name="coordinate">The coordinate pair (<c>(x, y)</c>).</param>
+    /// <returns><c>true</c> if (<paramref name="coordinate.x"/>, <paramref name="coordinate.y"/>) is a valid point in the matrix.</returns>
+    public bool ContainsPoint((int x, int y) coordinate) =>
+        coordinate.x >= 0
+        && coordinate.x < Size.Item1
+        && coordinate.y >= 0
+        && coordinate.y < Size.Item2;
 
     /// <inheritdoc/>
     public override string ToString()
