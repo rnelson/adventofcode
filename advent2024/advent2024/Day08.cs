@@ -163,39 +163,7 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
             var node1 = new AntennaLocation { Row = one.Row, Column = one.Column };
             var node2 = new AntennaLocation { Row = two.Row, Column = two.Column };
             
-            if (rowDelta == 0)
-            {
-                for (var i = 1; i <= maxIterations; i++)
-                {
-                    node1 = new() { Row = node1.Row, Column = node1.Column + i * colDelta };
-                    node2 = new() { Row = node1.Row, Column = node1.Column - i * colDelta };
-                    
-                    if (map.ContainsPoint(node1))
-                        antinodes.Add(node1);
-                    if (map.ContainsPoint(node2))
-                        antinodes.Add(node2);
-
-                    if (!map.ContainsPoint(node1) && !map.ContainsPoint(node2))
-                        break;
-                }
-            }
-            else if (colDelta == 0)
-            {
-                for (var i = 1; i <= maxIterations; i++)
-                {
-                    node1 = new() { Row = node1.Row + i * rowDelta, Column = node1.Column };
-                    node2 = new() { Row = node1.Row - i * rowDelta, Column = node1.Column };
-                    
-                    if (map.ContainsPoint(node1))
-                        antinodes.Add(node1);
-                    if (map.ContainsPoint(node2))
-                        antinodes.Add(node2);
-
-                    if (!map.ContainsPoint(node1) && !map.ContainsPoint(node2))
-                        break;
-                }
-            }
-            else if (rowDelta < 0)
+            if (rowDelta < 0)
             {
                 if (colDelta < 0)
                 {
