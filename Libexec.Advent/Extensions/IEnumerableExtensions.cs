@@ -28,33 +28,6 @@ public static class IEnumerableExtensions
     }
     
     /// <summary>
-    /// Converts this list of strings into a character matrix.
-    /// </summary>
-    /// <param name="source">The list of strings.</param>
-    /// <returns>A <see cref="Matrix{T}"/> of <see cref="char"/>s.</returns>
-    /// <remarks>
-    /// This requires all elements in <paramref name="source"/> be the same length.
-    /// </remarks>
-    public static Matrix<char> ToMatrix(this IEnumerable<string> source)
-    {
-        var data = source.ToArray();
-        var width = data[0].ToCharArray().Length;
-        var height = data.Length;
-        var array = new char[width, height];
-
-        for (var y = 0; y < height; y++)
-        {
-            var element = data[y];
-            var chars = element.ToCharArray();
-            
-            for (var x = 0; x < width; x++)
-                array[y, x] = chars[x];
-        }
-        
-        return Matrix<char>.Create(array, width, height);
-    }
-    
-    /// <summary>
     /// Gets <paramref name="input"/> as a list of <typeparamref name="T"/>s.
     /// </summary>
     /// <param name="input">The enumerable string list to convert to a list of <typeparamref name="T"/>.</param>
@@ -64,6 +37,13 @@ public static class IEnumerableExtensions
         where T: INumber<T> =>
         input.Select(s => T.Parse(s, CultureInfo.CurrentCulture)).ToList();
     
+    /// <summary>
+    /// Gets permutations of size <paramref name="length"/> from <paramref name="list"/>.
+    /// </summary>
+    /// <param name="list">The list to permute.</param>
+    /// <param name="length">The grouping size.</param>
+    /// <typeparam name="T">The type of data in <paramref name="list"/>.</typeparam>
+    /// <returns>Permutations of <paramref name="list"/>.</returns>
     public static IEnumerable<IEnumerable<T>> GetPermutations<T>(this IEnumerable<T> list, int length)
     {
         var enumerated = list.ToArray();
@@ -157,5 +137,32 @@ public static class IEnumerableExtensions
         {
             return false;
         }
+    }
+    
+    /// <summary>
+    /// Converts this list of strings into a character matrix.
+    /// </summary>
+    /// <param name="source">The list of strings.</param>
+    /// <returns>A <see cref="Matrix{T}"/> of <see cref="char"/>s.</returns>
+    /// <remarks>
+    /// This requires all elements in <paramref name="source"/> be the same length.
+    /// </remarks>
+    public static Matrix<char> ToMatrix(this IEnumerable<string> source)
+    {
+        var data = source.ToArray();
+        var width = data[0].ToCharArray().Length;
+        var height = data.Length;
+        var array = new char[width, height];
+
+        for (var y = 0; y < height; y++)
+        {
+            var element = data[y];
+            var chars = element.ToCharArray();
+            
+            for (var x = 0; x < width; x++)
+                array[y, x] = chars[x];
+        }
+        
+        return Matrix<char>.Create(array, width, height);
     }
 }
