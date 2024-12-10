@@ -201,20 +201,19 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
             //var node2 = new AntennaLocation { Row = one.Row + rowDelta, Column = one.Column - colDelta };
             //var node3 = new AntennaLocation { Row = one.Row - rowDelta, Column = one.Column + colDelta };
             //var node4 = new AntennaLocation { Row = one.Row - rowDelta, Column = one.Column - colDelta };
-            var node5 = new AntennaLocation { Row = two.Row + rowDelta, Column = two.Column + colDelta };
+            //var node5 = new AntennaLocation { Row = two.Row + rowDelta, Column = two.Column + colDelta };
             //var node6 = new AntennaLocation { Row = two.Row + rowDelta, Column = two.Column - colDelta };
             //var node7 = new AntennaLocation { Row = two.Row - rowDelta, Column = two.Column + colDelta };
-            //var node8 = new AntennaLocation { Row = two.Row - rowDelta, Column = two.Column - colDelta };
+            var node8 = new AntennaLocation { Row = two.Row - rowDelta, Column = two.Column - colDelta };
 
             while (map.ContainsPoint(node1.Row, node1.Column)
                    //|| map.ContainsPoint(node2.Row, node2.Column)
                    //|| map.ContainsPoint(node3.Row, node3.Column)
                    //|| map.ContainsPoint(node4.Row, node4.Column)
-                   || map.ContainsPoint(node5.Row, node5.Column)
+                   //|| map.ContainsPoint(node5.Row, node5.Column)
                    //|| map.ContainsPoint(node6.Row, node6.Column)
                    //|| map.ContainsPoint(node7.Row, node7.Column)
-                   //|| map.ContainsPoint(node8.Row, node8.Column))
-                   )
+                   || map.ContainsPoint(node8.Row, node8.Column))
             {
                 if (map.ContainsPoint(node1.Row, node1.Column) && (node1.Equals(one) || node1.Equals(two)))
                     antinodes.Add(node1);
@@ -224,23 +223,23 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
                 //    antinodes.Add(node3);
                 //if (map.ContainsPoint(node4.Row, node4.Column) && (node4.Equals(one) || node4.Equals(two)))
                 //    antinodes.Add(node4);
-                if (map.ContainsPoint(node5.Row, node5.Column) && (node5.Equals(one) || node5.Equals(two)))
-                    antinodes.Add(node5);
+                //if (map.ContainsPoint(node5.Row, node5.Column) && (node5.Equals(one) || node5.Equals(two)))
+                //    antinodes.Add(node5);
                 //if (map.ContainsPoint(node6.Row, node6.Column) && (node6.Equals(one) || node6.Equals(two)))
                 //    antinodes.Add(node6);
                 //if (map.ContainsPoint(node7.Row, node7.Column) && (node7.Equals(one) || node7.Equals(two)))
                 //    antinodes.Add(node7);
-                //if (map.ContainsPoint(node8.Row, node8.Column) && (node8.Equals(one) || node8.Equals(two)))
-                //    antinodes.Add(node8);
+                if (map.ContainsPoint(node8.Row, node8.Column) && (node8.Equals(one) || node8.Equals(two)))
+                    antinodes.Add(node8);
                 
                 node1 = new() { Row = node1.Row + rowDelta, Column = node1.Column + colDelta };
                 //node2 = new() { Row = node2.Row + rowDelta, Column = node2.Column - colDelta };
                 //node3 = new() { Row = node3.Row - rowDelta, Column = node3.Column + colDelta };
                 //node4 = new() { Row = node4.Row - rowDelta, Column = node4.Column - colDelta };
-                node5 = new() { Row = node5.Row + rowDelta, Column = node5.Column + colDelta };
+                //node5 = new() { Row = node5.Row + rowDelta, Column = node5.Column + colDelta };
                 //node6 = new() { Row = node6.Row + rowDelta, Column = node6.Column - colDelta };
                 //node7 = new() { Row = node7.Row - rowDelta, Column = node7.Column + colDelta };
-                //node8 = new() { Row = node8.Row - rowDelta, Column = node8.Column - colDelta };
+                node8 = new() { Row = node8.Row - rowDelta, Column = node8.Column - colDelta };
             }
             
             return antinodes;
