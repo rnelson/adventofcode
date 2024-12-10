@@ -215,21 +215,21 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
                    //|| map.ContainsPoint(node7.Row, node7.Column)
                    || map.ContainsPoint(node8.Row, node8.Column))
             {
-                if (map.ContainsPoint(node1.Row, node1.Column) && !(node1.Equals(one) || node1.Equals(two)))
+                if (map.ContainsPoint(node1.Row, node1.Column) && !node1.Equals(one) && !node1.Equals(two))
                     antinodes.Add(node1);
-                //if (map.ContainsPoint(node2.Row, node2.Column) && !(node2.Equals(one) || node2.Equals(two)))
+                //if (map.ContainsPoint(node2.Row, node2.Column) && !node2.Equals(one) && !node2.Equals(two))
                 //    antinodes.Add(node2);
-                //if (map.ContainsPoint(node3.Row, node3.Column) && !(node3.Equals(one) || node3.Equals(two)))
+                //if (map.ContainsPoint(node3.Row, node3.Column) && !node3.Equals(one) && !node3.Equals(two))
                 //    antinodes.Add(node3);
-                //if (map.ContainsPoint(node4.Row, node4.Column) && !(node4.Equals(one) || node4.Equals(two)))
+                //if (map.ContainsPoint(node4.Row, node4.Column) && !node4.Equals(one) && !node4.Equals(two))
                 //    antinodes.Add(node4);
-                //if (map.ContainsPoint(node5.Row, node5.Column) && !(node5.Equals(one) || node5.Equals(two)))
+                //if (map.ContainsPoint(node5.Row, node5.Column) && !node5.Equals(one) && !node5.Equals(two))
                 //    antinodes.Add(node5);
-                //if (map.ContainsPoint(node6.Row, node6.Column) && !(node6.Equals(one) || node6.Equals(two)))
+                //if (map.ContainsPoint(node6.Row, node6.Column) && !node6.Equals(one) && !node6.Equals(two))
                 //    antinodes.Add(node6);
-                //if (map.ContainsPoint(node7.Row, node7.Column) && !(node7.Equals(one) || node7.Equals(two)))
+                //if (map.ContainsPoint(node7.Row, node7.Column) && !node7.Equals(one) || node7.Equals(two))
                 //    antinodes.Add(node7);
-                if (map.ContainsPoint(node8.Row, node8.Column) && !(node8.Equals(one) || node8.Equals(two)))
+                if (map.ContainsPoint(node8.Row, node8.Column) && !node8.Equals(one)&& !node8.Equals(two))
                     antinodes.Add(node8);
                 
                 node1 = new() { Row = node1.Row + rowDelta, Column = node1.Column + colDelta };
