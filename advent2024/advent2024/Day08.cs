@@ -25,37 +25,44 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
     {
         var map = Input.ToMatrix();
         var antennae = map.Where(c => _antennaCharacters.Contains(c)).ToArray();
+        var antinodes = new Dictionary<(int, int), List<char>>();
 
         foreach (var frequency in _antennaCharacters)
         {
             var matchingAntennae = map.Where(c => c == frequency).ToArray();
-            var permutations = matchingAntennae.GetPermutations(2);
+            var permutations = matchingAntennae.GetPermutations(2).ToArray();
 
-            var options = (
-                from list in permutations
-                from antenna in list
-                select AntennaLocation.Create(antenna)
-                ).ToArray();
-
-            /*
-            var allOptionsWithDupes = permutations
-                .SelectMany(o => o.ToArray())
-                .Select(AntennaLocation.Create)
-                .ToArray();
-            Array.Sort(allOptionsWithDupes);
-
-            var optionsList = new List<AntennaLocation>();
-            foreach (var o in allOptionsWithDupes)
+            foreach (var permutation in permutations)
             {
-                if (!optionsList.Any(i => i.Row == o.Row && i.Column == o.Column))
-                    optionsList.Add(o);
-            }
+                var pArray = permutation.ToArray();
+                var one = pArray.First();
+                var two = pArray.Last();
+                
+                // Find all potential antinodes.
+                var aNodes = AntennaLocation.FindAntinodes(
+                    AntennaLocation.Create(one),
+                    AntennaLocation.Create(two));
 
-            var options = optionsList.ToArray();
-            */
+                foreach (var aNode in aNodes)
+                {
+                    // Skip past any impossible points.
+                    if (!map.ContainsPoint(aNode.Row, aNode.Column))
+                        continue;
+                    
+                    // Skip this antinode if it's one of the nodes for this frequency.
+                    if (map[aNode.Row, aNode.Column] == frequency)
+                        continue;
+                    
+                    // Add the antinode to the list.
+                    if (antinodes.TryGetValue((aNode.Row, aNode.Column), out var frequenciesThere))
+                        frequenciesThere.Add(frequency);
+                    else
+                        antinodes.Add((aNode.Row, aNode.Column), [frequency]);
+                }
+            }
         }
         
-        return "";
+        return antinodes.Keys.Count;
     }
 
     /// <inheritdoc/>
@@ -81,6 +88,48 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
             
             var row = Row.CompareTo(o.Row);
             return row != 0 ? Column.CompareTo(o.Column) : row;
+        }
+
+        public static IEnumerable<AntennaLocation> FindAntinodes(AntennaLocation one, AntennaLocation two)
+        {
+            var antinodes = new List<AntennaLocation>();
+            
+            var rowDelta = one.Row - two.Row;
+            var colDelta = one.Column - two.Column;
+
+            if (rowDelta == 0 && colDelta == 0)
+                throw new InvalidOperationException("identical points not allowed");
+
+            if (rowDelta == 0)
+            {
+                antinodes.Add(new() { Row = one.Row, Column = one.Column + colDelta });
+                antinodes.Add(new() { Row = one.Row, Column = one.Column - colDelta });
+            }
+            else if (colDelta == 0)
+            {
+                antinodes.Add(new() { Row = one.Row + rowDelta, Column = one.Column });
+                antinodes.Add(new() { Row = one.Row - rowDelta, Column = one.Column });
+            }
+            else if (rowDelta < 0)
+            {
+                if (colDelta < 0)
+                {
+                    antinodes.Add(new() { Row = one.Row + rowDelta, Column = one.Column + colDelta });
+                    antinodes.Add(new() { Row = two.Row - rowDelta, Column = two.Column - colDelta });
+                }
+                else
+                {
+                    antinodes.Add(new() { Row = one.Row - rowDelta, Column = one.Column - colDelta });
+                    antinodes.Add(new() { Row = two.Row + rowDelta, Column = two.Column + colDelta });
+                }
+            }
+            else
+            {
+                antinodes.Add(new() { Row = one.Row + rowDelta, Column = one.Column + colDelta });
+                antinodes.Add(new() { Row = two.Row - rowDelta, Column = two.Column - colDelta });
+            }
+            
+            return antinodes;
         }
     }
 }
