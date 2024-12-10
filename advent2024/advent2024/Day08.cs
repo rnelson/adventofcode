@@ -149,6 +149,12 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
         public (int, int) ToMatrixCoords() => (Row, Column);
 
         public static implicit operator (int, int)(AntennaLocation instance) => instance.ToMatrixCoords();
+        
+        public static AntennaLocation operator +(AntennaLocation instance, (int row, int column) delta) =>
+            new() { Row = instance.Row + delta.row, Column = instance.Column + delta.column };
+        
+        public static AntennaLocation operator -(AntennaLocation instance, (int row, int column) delta) =>
+            new() { Row = instance.Row - delta.row, Column = instance.Column - delta.column };
 
         public static IEnumerable<AntennaLocation> FindAntinodes(Matrix<char> map, AntennaLocation one, AntennaLocation two, int maxIterations = int.MaxValue - 1)
         {
@@ -169,8 +175,8 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
                 {
                     for (var i = 1; i <= maxIterations; i++)
                     {
-                        node1 = new() { Row = node1.Row + i * rowDelta, Column = node1.Column + i * colDelta };
-                        node2 = new() { Row = node2.Row - i * rowDelta, Column = node2.Column - i * colDelta };
+                        node1 += (rowDelta * i, colDelta * i);
+                        node2 -= (rowDelta * i, colDelta * i);
                     
                         if (map.ContainsPoint(node1))
                             antinodes.Add(node1);
@@ -185,8 +191,8 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
                 {
                     for (var i = 1; i <= maxIterations; i++)
                     {
-                        node1 = new() { Row = node1.Row - i * rowDelta, Column = node1.Column - i * colDelta };
-                        node2 = new() { Row = node2.Row + i * rowDelta, Column = node2.Column + i * colDelta };
+                        node1 -= (rowDelta * i, colDelta * i);
+                        node2 += (rowDelta * i, colDelta * i);
                     
                         if (map.ContainsPoint(node1))
                             antinodes.Add(node1);
@@ -202,8 +208,8 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
             {
                 for (var i = 1; i <= maxIterations; i++)
                 {
-                    node1 = new() { Row = node1.Row + i * rowDelta, Column = node1.Column + i * colDelta };
-                    node2 = new() { Row = node2.Row - i * rowDelta, Column = node2.Column - i * colDelta };
+                    node1 += (rowDelta * i, colDelta * i);
+                    node2 -= (rowDelta * i, colDelta * i);
                     
                     if (map.ContainsPoint(node1))
                         antinodes.Add(node1);
