@@ -87,29 +87,9 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
             {
                 var sb = new StringBuilder();
 
-                if (symbol == '|')
-                {
-                    sb.Append(s[..idx]);
-                    sb.Append(symbol);
-                    sb.Append(s[(idx + 1)..]);
-                }
-                else
-                {
-                    var nextSpace = s.IndexOf(' ', idx + 1);
-                    sb.Append(s[..idx]);
-                    sb.Append(symbol);
-
-                    if (nextSpace >= 0)
-                    {
-                        sb.Append(s[(idx + 1)..]);
-                        //sb.Append(s[(idx + 1)..nextSpace]);
-                        //sb.Append(s[(nextSpace + 1)..]);
-                    }
-                    else
-                    {
-                        sb.Append(s[(idx + 1)..]);
-                    }
-                }
+                sb.Append(s[..idx]);
+                sb.Append(symbol);
+                sb.Append(s[(idx + 1)..]);
 
                 foreach (var u in AddSymbols(sb.ToString().Trim(), symbols))
                     yield return u;
