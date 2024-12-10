@@ -28,7 +28,7 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
         
         foreach (var item in input)
         {
-            var equations = GetEquationPossibilities(item.Item2, _partASymbols);
+            var equations = GetEquationPossibilities(item.Item2, _partASymbols, addParens: true);
             foreach (var equation in equations)
             {
                 var math = (ulong)equation.Evaluate();
@@ -51,7 +51,7 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
         
         foreach (var item in input)
         {
-            var equations = GetEquationPossibilities(item.Item2, _partBSymbols).ToArray();
+            var equations = AddParens(GetEquationPossibilities(item.Item2, _partBSymbols), _partBSymbols).ToArray();
             foreach (var equation in equations)
             {
                 var math = (ulong)equation.Evaluate();
@@ -66,22 +66,25 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
         return sum;
     }
 
-    private IEnumerable<string> GetEquationPossibilities<T>(IEnumerable<T> components, char[] symbols)
+    private IEnumerable<string> GetEquationPossibilities<T>(IEnumerable<T> components, char[] symbols, bool addParens = false)
         where T : INumber<T>
     {
         var bits = components.Select(b => b.ToString()!).ToArray();
         var s = string.Join(" ", bits);
 
-        return AddSymbols(s, symbols);
+        return AddSymbols(s, symbols, addParens);
     }
 
-    private static IEnumerable<string> AddSymbols(string s, char[] symbols)
+    private static IEnumerable<string> AddSymbols(string s, char[] symbols, bool addParens = false)
     {
         if (!s.Contains(' '))
         {
             var sb = new StringBuilder();
-            for (var i = 0; i < s.Count(c => c == ')') ; i++)
-                sb.Append('(');
+            
+            if (addParens)
+                for (var i = 0; i < s.Count(c => c == ')') ; i++)
+                    sb.Append('(');
+            
             sb.Append(s);
             
             yield return sb.ToString();
@@ -96,9 +99,11 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
 
                 if (symbol == '|')
                 {
-                    sb.Append(s[..idx]);
-                    sb.Append(s[(idx + 1)..]);
-                    sb.Append(") ");
+                    sb.Append(s);
+                    //sb.Append(s[..idx]);
+                    //sb.Append(s[(idx + 1)..]);
+                    
+                    if (addParens) sb.Append(") ");
                 }
                 else
                 {
@@ -109,7 +114,7 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
                     if (nextSpace >= 0)
                     {
                         sb.Append(s[(idx + 1)..nextSpace]);
-                        sb.Append(") ");
+                        if (addParens) sb.Append(") ");
                         sb.Append(s[(nextSpace + 1)..]);
                     }
                     else
@@ -117,12 +122,62 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
                         sb.Append(s[(idx + 1)..]);
                     }
 
-                    sb.Append(')');
+                    if (addParens) sb.Append(')');
                 }
 
-                foreach (var u in AddSymbols(sb.ToString().Trim(), symbols))
+                foreach (var u in AddSymbols(sb.ToString().Trim(), symbols, addParens))
                     yield return u;
             }
+    }
+
+    private IEnumerable<string> AddParens(IEnumerable<string> items, char[] symbols)
+    {
+        var modified = new List<string>();
+
+        foreach (var item in items)
+        {
+            if (item.Count(c => !char.IsDigit(c)) < 2)
+            {
+                modified.Add(item);
+                continue;
+            }
+
+            var sb = new StringBuilder();
+            
+            // Find the first symbol. We're ignoring this one intentionally.
+            var left = item.IndexOfAny(symbols);
+            var lastLeft = 0;
+
+            while (true)
+            {
+                // Find the next symbol.
+                left = item.IndexOfAny(symbols, left + 1);
+
+                // If we're all done, add the rest of the string and bail.
+                if (left < 0)
+                {
+                    sb.Append(item[lastLeft..]);
+                    break;
+                }
+                
+                // Add everything in that range to our result.
+                sb.Append(item[lastLeft..left]);
+                
+                // Add a close paren
+                sb.Append(')');
+                
+                // Update our last left position.
+                lastLeft = left;
+            }
+            
+            // Balance parentheses.
+            for (var i = 0; i < sb.ToString().Count(c => c == ')'); i++)
+                sb.Insert(0, '(');
+            
+            modified.Add(sb.ToString());
+        }
+
+        return modified;
     }
 
     private List<(T, IEnumerable<T>)> ParseInput<T>()
