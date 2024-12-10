@@ -125,6 +125,7 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
         }
 
         [SuppressMessage("ReSharper", "MemberCanBePrivate.Local")]
+        [SuppressMessage("ReSharper", "UnusedMember.Local")]
         public bool Equals(AntennaLocation other)
         {
             return Row == other.Row && Column == other.Column;
@@ -139,14 +140,10 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
         {
             if (other == null)
                 return -1;
-
-            var o = other!;
             
-            var row = Row.CompareTo(o.Row);
-            return row != 0 ? Column.CompareTo(o.Column) : row;
+            var row = Row.CompareTo(other.Row);
+            return row != 0 ? Column.CompareTo(other.Column) : row;
         }
-        
-        public (int, int) ToMatrixCoords() => (Row, Column);
 
         public static implicit operator (int, int)(AntennaLocation instance) => instance.ToMatrixCoords();
         
@@ -220,5 +217,7 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
             
             return antinodes;
         }
+
+        private (int, int) ToMatrixCoords() => (Row, Column);
     }
 }

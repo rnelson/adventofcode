@@ -25,7 +25,7 @@ public static class ListExtensions
 		
         for (var i = 0; i < list.Count; i++)
         for (var j = i + 1; j < list.Count; j++)
-            result.Add(new Tuple<T, T>(list.ElementAt(i), list.ElementAt(j)));
+            result.Add(new(list.ElementAt(i), list.ElementAt(j)));
 
         return result;
     }

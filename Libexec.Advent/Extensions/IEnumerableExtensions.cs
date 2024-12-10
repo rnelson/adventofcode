@@ -49,7 +49,7 @@ public static class IEnumerableExtensions
         var enumerated = list.ToArray();
         
         if (length == 1)
-            return enumerated.Select(t => new T[] { t });
+            return enumerated.Select(t => new[] { t });
 
         return enumerated
             .GetPermutations(length - 1)

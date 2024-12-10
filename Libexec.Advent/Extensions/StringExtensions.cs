@@ -17,7 +17,7 @@ public static class StringExtensions
     /// Does the math from 2024's day 7. You probably don't want to use this
     /// in any other year.
     /// </summary>
-    /// <param name="s">The string containing the formula.</param>
+    /// <param name="str">The string containing the formula.</param>
     /// <returns>The result.</returns>
     public static ulong DoMath_2024d7(this string str)
     {

@@ -66,7 +66,7 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
         return sum;
     }
 
-    private IEnumerable<string> GetEquationPossibilities<T>(IEnumerable<T> components, char[] symbols)
+    private static IEnumerable<string> GetEquationPossibilities<T>(IEnumerable<T> components, char[] symbols)
         where T : INumber<T>
     {
         var bits = components.Select(b => b.ToString()!).ToArray();
@@ -82,18 +82,18 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
         
         var idx = s.IndexOf(' ');
 
-        if (idx >= 0)
-            foreach (var symbol in symbols)
-            {
-                var sb = new StringBuilder();
+        if (idx < 0) yield break;
+        foreach (var symbol in symbols)
+        {
+            var sb = new StringBuilder();
 
-                sb.Append(s[..idx]);
-                sb.Append(symbol);
-                sb.Append(s[(idx + 1)..]);
+            sb.Append(s[..idx]);
+            sb.Append(symbol);
+            sb.Append(s[(idx + 1)..]);
 
-                foreach (var u in AddSymbols(sb.ToString().Trim(), symbols))
-                    yield return u;
-            }
+            foreach (var u in AddSymbols(sb.ToString().Trim(), symbols))
+                yield return u;
+        }
     }
 
     private List<(T, IEnumerable<T>)> ParseInput<T>()
@@ -102,7 +102,7 @@ public class Day07(ITestOutputHelper output, bool isTest = false, string fileSuf
             select line.Split(": ")
             into halves
             let answer = T.Parse(halves[0], NumberStyles.Integer, CultureInfo.InvariantCulture)
-            let components = Enumerable.Select(halves[1]
-                .Split(" "), c => T.Parse(c, NumberStyles.Integer, CultureInfo.InvariantCulture))
+            let components = Enumerable.Select(halves[1].Split(" "),
+                c => T.Parse(c, NumberStyles.Integer, CultureInfo.InvariantCulture))
             select (answer, components)).ToList();
 }
