@@ -18,7 +18,7 @@ public class Day11(ITestOutputHelper output, bool isTest = false, string fileSuf
     public override object PartA() => Blink(25);
 
     /// <inheritdoc/>
-    public override object PartB() => "";
+    public override object PartB() => ""; //Blink(75);
 
     private int Blink(int blinkCount)
     {
@@ -31,35 +31,28 @@ public class Day11(ITestOutputHelper output, bool isTest = false, string fileSuf
             
             foreach (var stone in blinkResult)
             {
-                newStones.AddRange(ApplyRule(stone));
+                if (stone == 0)
+                {
+                    newStones.AddRange([1]);
+                    continue;
+                }
+
+                if (stone.ToString().Length % 2 != 0)
+                {
+                    newStones.AddRange([stone * 2024]);
+                    continue;
+                }
+
+                var s = stone.ToString();
+                var bits = new[] { s[..(s.Length / 2)], s[(s.Length / 2)..] };
+                var halves = bits.Select(ulong.Parse).ToArray();
+
+                newStones.AddRange([halves[0], halves[1]]);
             }
             
             blinkResult = newStones.ToArray();
         }
         
         return blinkResult.Length;
-    }
-
-    private IEnumerable<ulong> ApplyRule(ulong input)
-    {
-        if (input == 0)
-            return [1];
-
-        if (input.ToString().Length % 2 != 0)
-            return [input * 2024];
-        
-        var s = input.ToString();
-        var bits = new[] { s[..(s.Length / 2)], s[(s.Length / 2)..] };
-        var halves = bits.Select(ulong.Parse).ToArray();
-
-        return [halves[0], halves[1]];
-
-        var r1 = ApplyRule(halves[0]).ToArray();
-        var r2 = ApplyRule(halves[1]).ToArray();
-        var l = new List<ulong>();
-        l.AddRange(r1);
-        l.AddRange(r2);
-
-        return l;
     }
 }
