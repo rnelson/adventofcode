@@ -153,7 +153,7 @@ public class Day08(ITestOutputHelper output, bool isTest = false, string fileSuf
         public static AntennaLocation operator -(AntennaLocation instance, (int row, int column) delta) =>
             new() { Row = instance.Row - delta.row, Column = instance.Column - delta.column };
 
-        public static IEnumerable<AntennaLocation> FindAntinodes(Matrix<char> map, AntennaLocation one, AntennaLocation two, int maxIterations = int.MaxValue - 1)
+        public static List<AntennaLocation> FindAntinodes(Matrix<char> map, AntennaLocation one, AntennaLocation two, int maxIterations = int.MaxValue - 1)
         {
             var antinodes = new List<AntennaLocation>();
             
