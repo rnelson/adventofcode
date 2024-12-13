@@ -74,13 +74,13 @@ public partial class Day13(ITestOutputHelper output, bool isTest = false, string
         ulong buttonACost = 3,
         ulong buttonBCost = 1)
     {
-        public Button A { get; private init; } = new(aMovement.Item1, aMovement.Item2);
-        public ulong ButtonACost { get; private init; } = buttonACost;
+        public Button A { get; } = new(aMovement.Item1, aMovement.Item2);
+        public ulong ButtonACost { get; } = buttonACost;
         
-        public Button B { get; private init; } = new(bMovement.Item1, bMovement.Item2);
-        public ulong ButtonBCost { get; private init; } = buttonBCost;
+        public Button B { get; } = new(bMovement.Item1, bMovement.Item2);
+        public ulong ButtonBCost { get; } = buttonBCost;
         
-        public Location Prize { get; private init; } = new(prizeLocation.Item1, prizeLocation.Item2);
+        public Location Prize { get; } = new(prizeLocation.Item1, prizeLocation.Item2);
 
         public (ulong, ulong) Solve()
         {
