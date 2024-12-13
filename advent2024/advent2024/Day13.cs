@@ -1,8 +1,6 @@
-﻿using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using Libexec.Advent;
-using Libexec.Advent.Extensions;
 using Xunit.Abstractions;
 
 namespace advent2024;
@@ -40,15 +38,48 @@ public partial class Day13(ITestOutputHelper output, bool isTest = false, string
         return machines.ToArray();
     }
     
-    private record Button(int X, int Y);
+    private record Button(long X, long Y);
 
-    private record Location(int X, int Y);
+    private record Location(long X, long Y);
 
-    private partial class ClawMachine((int, int) prizeLocation, (int, int) aMovement, (int, int) bMovement)
+    private partial class ClawMachine((long, long) prizeLocation,
+        (long, long) aMovement,
+        (long, long) bMovement,
+        int buttonACost = 3,
+        int buttonBCost = 1)
     {
         public Button A { get; private init; } = new(aMovement.Item1, aMovement.Item2);
+        public int ButtonACost { get; private init; } = buttonACost;
+        
         public Button B { get; private init; } = new(bMovement.Item1, bMovement.Item2);
+        public int ButtonBCost { get; private init; } = buttonBCost;
+        
         public Location Prize { get; private init; } = new(prizeLocation.Item1, prizeLocation.Item2);
+
+        public ulong Solve()
+        {
+            //A=80,B=40
+            //80*94 + 40*22 = 8400
+            //80*34 + 40*67 = 5400
+            
+            // aCount * A.X + bCount * B.X = Prize.X
+            // aCount * A.Y + bCount & B.Y = Prize.Y
+            
+            // px = A*ax + B*bx
+            // py = A*ay + B*by
+            
+            // px = A*ax + B*bx
+            // A*ax = px - B*bx
+            // A = (px - B*bx) / ax
+            
+            // py = A*ay + B*by
+            // B = (py - A*ay) / by
+            
+            // A = (px - ((py - A*ay) / by)*bx) / ax
+            // A = px - 
+            
+            // B = (py - ((px - B*bx) / ax)*ay) / by
+        }
         
         public static ClawMachine Create(string buttonA, string buttonB, string prize)
         {
@@ -66,14 +97,14 @@ public partial class Day13(ITestOutputHelper output, bool isTest = false, string
             var prizeMatches = prizeRegex.Matches(prize);
 
             var aMovement = (
-                int.Parse(aMatches[0].Groups[1].Value),
-                int.Parse(aMatches[0].Groups[2].Value));
+                long.Parse(aMatches[0].Groups[1].Value),
+                long.Parse(aMatches[0].Groups[2].Value));
             var bMovement = (
-                int.Parse(bMatches[0].Groups[1].Value),
-                int.Parse(bMatches[0].Groups[2].Value));
+                long.Parse(bMatches[0].Groups[1].Value),
+                long.Parse(bMatches[0].Groups[2].Value));
             var prizeLocation = (
-                int.Parse(prizeMatches[0].Groups[1].Value),
-                int.Parse(prizeMatches[0].Groups[2].Value));
+                long.Parse(prizeMatches[0].Groups[1].Value),
+                long.Parse(prizeMatches[0].Groups[2].Value));
             
             return new(prizeLocation, aMovement, bMovement);
         }
