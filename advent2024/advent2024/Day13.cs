@@ -84,19 +84,12 @@ public partial class Day13(ITestOutputHelper output, bool isTest = false, string
 
         public (ulong, ulong) Solve()
         {
-            //A=80,B=40
-            //80*94 + 40*22 = 8400 || aCount * ax + bCount * bx = px
-            //80*34 + 40*67 = 5400 || aCount * ay + bCount * by = py
-            
             // px = aCount * ax + bCount * bx
             // py = aCount * ay + bCount * by
-            
-            // aCount = (px - bCount * bx) / ax
-            // bCount = (py - aCount * by) / ay
-            
+            // 
             // Some math goes here! I'm far too removed from my math classes and
             // used the internet to sort these out
-            
+            // 
             // aCount = (bx * py - by * px) / (bx * ay - by * ax)
             // bCount = (ax * py - ay * px) / (ax * by - ay * bx)
 
