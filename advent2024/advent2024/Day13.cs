@@ -18,13 +18,39 @@ public partial class Day13(ITestOutputHelper output, bool isTest = false, string
     public override object PartA()
     {
         var machines = GetMachines();
-        return "";
+        var answer = 0UL;
+
+        foreach (var machine in machines)
+        {
+            var counts = machine.Solve();
+            
+            if (counts.Item1 != ulong.MaxValue && counts.Item2 != ulong.MaxValue)
+                answer += counts.Item1 * machine.ButtonACost + counts.Item2 * machine.ButtonBCost;
+        }
+        
+        return answer;
     }
 
     /// <inheritdoc/>
     public override object PartB()
     {
-        return "";
+        const long offset = 10000000000000L;
+        
+        var machines = GetMachines();
+        var answer = 0UL;
+
+        foreach (var machine in machines)
+        {
+            var newMachine = new ClawMachine((machine.Prize.X + offset, machine.Prize.Y + offset),
+                (machine.A.X, machine.A.Y),
+                (machine.B.X, machine.B.Y));
+            var counts = newMachine.Solve();
+            
+            if (counts.Item1 != ulong.MaxValue && counts.Item2 != ulong.MaxValue)
+                answer += counts.Item1 * machine.ButtonACost + counts.Item2 * machine.ButtonBCost;
+        }
+        
+        return answer;
     }
 
     private ClawMachine[] GetMachines()
@@ -45,40 +71,47 @@ public partial class Day13(ITestOutputHelper output, bool isTest = false, string
     private partial class ClawMachine((long, long) prizeLocation,
         (long, long) aMovement,
         (long, long) bMovement,
-        int buttonACost = 3,
-        int buttonBCost = 1)
+        ulong buttonACost = 3,
+        ulong buttonBCost = 1)
     {
         public Button A { get; private init; } = new(aMovement.Item1, aMovement.Item2);
-        public int ButtonACost { get; private init; } = buttonACost;
+        public ulong ButtonACost { get; private init; } = buttonACost;
         
         public Button B { get; private init; } = new(bMovement.Item1, bMovement.Item2);
-        public int ButtonBCost { get; private init; } = buttonBCost;
+        public ulong ButtonBCost { get; private init; } = buttonBCost;
         
         public Location Prize { get; private init; } = new(prizeLocation.Item1, prizeLocation.Item2);
 
-        public ulong Solve()
+        public (ulong, ulong) Solve()
         {
             //A=80,B=40
-            //80*94 + 40*22 = 8400
-            //80*34 + 40*67 = 5400
+            //80*94 + 40*22 = 8400 || aCount * ax + bCount * bx = px
+            //80*34 + 40*67 = 5400 || aCount * ay + bCount * by = py
             
-            // aCount * A.X + bCount * B.X = Prize.X
-            // aCount * A.Y + bCount & B.Y = Prize.Y
+            // px = aCount * ax + bCount * bx
+            // py = aCount * ay + bCount * by
             
-            // px = A*ax + B*bx
-            // py = A*ay + B*by
+            // aCount = (px - bCount * bx) / ax
+            // bCount = (py - aCount * by) / ay
             
-            // px = A*ax + B*bx
-            // A*ax = px - B*bx
-            // A = (px - B*bx) / ax
+            // Some math goes here! I'm far too removed from my math classes and
+            // used the internet to sort these out
             
-            // py = A*ay + B*by
-            // B = (py - A*ay) / by
+            // aCount = (bx * py - by * px) / (bx * ay - by * ax)
+            // bCount = (ax * py - ay * px) / (ax * by - ay * bx)
+
+            var aCountN = B.X * Prize.Y - B.Y * Prize.X;
+            var aCountD = B.X * A.Y - B.Y * A.X;
+            var bCountN = A.X * Prize.Y - A.Y * Prize.X;
+            var bCountD = A.X * B.Y - A.Y * B.X;
+
+            var a = (ulong)Math.DivRem(aCountN, aCountD, out var aCountRemainder);
+            var b = (ulong)Math.DivRem(bCountN, bCountD, out var bCountRemainder);
             
-            // A = (px - ((py - A*ay) / by)*bx) / ax
-            // A = px - 
-            
-            // B = (py - ((px - B*bx) / ax)*ay) / by
+            if (aCountRemainder != 0) a = ulong.MaxValue;
+            if (bCountRemainder != 0) b = ulong.MaxValue;
+
+            return (a, b);
         }
         
         public static ClawMachine Create(string buttonA, string buttonB, string prize)
