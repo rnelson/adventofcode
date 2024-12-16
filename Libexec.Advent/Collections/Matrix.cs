@@ -78,6 +78,16 @@ public class Matrix<T>(int rows, int columns)
         get => _data[row * columns + column];
         set => _data[row * columns + column] = value;
     }
+
+    /// <summary>
+    /// Gets or sets the element at the specified coordinate.
+    /// </summary>
+    /// <param name="coordinate">The coordinate.</param>
+    public T this[(int row, int column) coordinate]
+    {
+        get => _data[coordinate.row * columns + coordinate.column];
+        set => _data[coordinate.row * columns + coordinate.column] = value;
+    }
     
     /// <summary>
     /// Determines whether this matrix contains a location at (<paramref name="x"/>, <paramref name="y"/>).
