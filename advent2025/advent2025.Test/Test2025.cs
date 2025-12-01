@@ -19,8 +19,8 @@ public partial class Test2025(ITestOutputHelper testOutputHelper)
     /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
     /// <param name="twoPartTest"><c>true</c> for separate "a" and "b" test input files, otherwise <c>false</c>.</param>
     [Theory]
-    [InlineData(typeof(Day01), "3", "", true)]
-    [InlineData(typeof(Day01), "", "")]
+    [InlineData(typeof(Day01), "3", "0", true)]
+    [InlineData(typeof(Day01), "1081", "0")]
     public void RunTests(Type dayType, string expectedA, string expectedB, bool isTest = false, bool twoPartTest = false)
     {
         string actualA, actualB;
