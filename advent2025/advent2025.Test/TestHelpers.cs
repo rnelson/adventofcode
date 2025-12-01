@@ -18,13 +18,9 @@ public partial class Test2025
     /// <param name="fileSuffix">File suffix for input file (e.g., "a" or "b" for separate test inputs).</param>
     /// <returns>The <paramref name="dayType"/> instance.</returns>
     /// <exception cref="Exception">Instantiating a <paramref name="dayType"/> object failed.</exception>
-    private static Day GetDay(Type dayType, ITestOutputHelper output, bool isTest, string fileSuffix = "")
-    {
-        if (Activator.CreateInstance(dayType, output, isTest, fileSuffix) is not Day day)
-            throw new($"unable to instantiate type {dayType.FullName}");
-
-        return day;
-    }
+    private static Day GetDay(Type dayType, ITestOutputHelper output, bool isTest, string fileSuffix = "") =>
+        Activator.CreateInstance(dayType, output, isTest, fileSuffix) as Day
+        ?? throw new($"unable to instantiate type {dayType.FullName}");
 
     /// <summary>
     /// Runs SolveA() on the specified <see cref="Day"/>.

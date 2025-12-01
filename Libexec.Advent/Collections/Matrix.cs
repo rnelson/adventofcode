@@ -5,6 +5,7 @@ namespace Libexec.Advent.Collections;
 
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class Matrix<T>(int rows, int columns)
 {
     private readonly T[] _data = new T[rows * columns];

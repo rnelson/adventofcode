@@ -35,8 +35,8 @@ public class Day01(ITestOutputHelper output, bool isTest = false, string fileSuf
 
     private class CombinationLock(int start, int end, int initial)
     {
-        private int Start { get; init; } = start;
-        private int End { get; init; } = end;
+        private int Start { get; } = start;
+        private int End { get; } = end;
         private int _location = initial;
 
         internal enum Direction { Left, Right }
