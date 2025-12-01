@@ -1,7 +1,5 @@
-﻿using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Libexec.Advent;
-using Libexec.Advent.Extensions;
 using Xunit.Abstractions;
 
 namespace advent2025;
@@ -13,25 +11,16 @@ namespace advent2025;
 /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
 /// <param name="fileSuffix">test file suffix.</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
+[SuppressMessage("Performance", "CA1859:Use concrete types when possible for improved performance")]
 public class Day01(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(2025, 1, output, isTest, fileSuffix)
 {
     /// <inheritdoc/>
-    public override object PartA()
-    {
-        var cLock = new CombinationLock(0, 99, 50);
-        var turns = ParseInput();
-        
-        foreach (var turn in turns)
-            cLock.Rotate(turn.Item1, turn.Item2);
-        
-        return cLock.Zeroes;
-    }
+    public override object PartA() => new CombinationLock(0, 99, 50)
+        .CountZeroes(ParseInput());
 
     /// <inheritdoc/>
-    public override object PartB()
-    {
-        return 0;
-    }
+    public override object PartB() => new CombinationLock(0, 99, 50)
+        .CountZeroes(ParseInput(), false);
 
     private IEnumerable<Tuple<CombinationLock.Direction, int>> ParseInput()
     {
@@ -48,25 +37,37 @@ public class Day01(ITestOutputHelper output, bool isTest = false, string fileSuf
     {
         private int Start { get; init; } = start;
         private int End { get; init; } = end;
-        private int Initial { get; init; } = initial;
-        public int Zeroes { get; private set;  } = 0;
         private int _location = initial;
 
         internal enum Direction { Left, Right }
 
-        public void Rotate(Direction direction, int count)
+        public int CountZeroes(IEnumerable<Tuple<Direction, int>> rotations, bool stopsOnly = true)
         {
-            var totalSize = End - Start + 1;
-            var moving = direction == Direction.Right ? count : -count;
-            _location = (_location + moving) % totalSize;
+            if (stopsOnly)
+                return rotations.Count(r => Rotate(r.Item1, r.Item2).ToArray().Last() == 0);
 
-            if (_location < Start)
-                _location = End - Math.Abs(_location) + 1;
-            if (_location > End)
-                _location = Start + _location;
+            return rotations.Select(r => Rotate(r.Item1, r.Item2).ToArray())
+                .Select(ticks => ticks.Count(i => i == 0))
+                .Sum();
+        }
 
-            if (_location == 0)
-                Zeroes++;
+        private IEnumerable<int> Rotate(Direction direction, int count)
+        {
+            var moved = 0;
+            var delta = direction == Direction.Right ? 1 : -1;
+            
+            while (moved < count)
+            {
+                _location += delta;
+
+                if (_location > End)
+                    _location = Start;
+                if (_location < Start)
+                    _location = End;
+                
+                yield return _location;
+                moved++;
+            }
         }
     }
 }
