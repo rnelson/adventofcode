@@ -13,37 +13,17 @@ namespace advent2025;
 /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
 /// <param name="fileSuffix">test file suffix.</param>
 [SuppressMessage("ReSharper", "UnusedType.Global")]
-public class Day01(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(2024, 1, output, isTest, fileSuffix)
+public class Day01(ITestOutputHelper output, bool isTest = false, string fileSuffix = "") : Day(2025, 1, output, isTest, fileSuffix)
 {
     /// <inheritdoc/>
     public override object PartA()
     {
-        var values = ParseInput();
-        return values.Sum(value => Math.Abs(value.Item1 - value.Item2));
+        return 0;
     }
 
     /// <inheritdoc/>
     public override object PartB()
     {
-        var values = ParseInput();
-        return values.Sum(l => l.Item1 * values.Count(r => r.Item2 == l.Item1));
-    }
-
-    private List<Tuple<int, int>> ParseInput()
-    {
-        var left = new List<int>();
-        var right = new List<int>();
-
-        foreach (var line in Input)
-        {
-            var bits = line.ParseMany<int>().ToArray();
-            left.Add(bits[0]);
-            right.Add(bits[1]);
-        }
-        
-        var sortedLeft = left.ToImmutableArray().Sort();
-        var sortedRight = right.ToImmutableArray().Sort();
-
-        return sortedLeft.Select((value, index) => new Tuple<int, int>(value, sortedRight[index])).ToList();
+        return 0;
     }
 }
