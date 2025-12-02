@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 namespace advent2025;
 
 /// <summary>
-/// 2024 day 1.
+/// 2025 day 1.
 /// </summary>
 /// <param name="output">A <see cref="ITestOutputHelper"/> to use for logging.</param>
 /// <param name="isTest"><c>true</c> to load test data, <c>false</c> to load real data.</param>
