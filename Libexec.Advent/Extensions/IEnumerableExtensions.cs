@@ -44,6 +44,26 @@ public static class IEnumerableExtensions
     /// <param name="length">The grouping size.</param>
     /// <typeparam name="T">The type of data in <paramref name="list"/>.</typeparam>
     /// <returns>Permutations of <paramref name="list"/>.</returns>
+    public static IEnumerable<IEnumerable<T>> GetPermutations2<T>(this IEnumerable<T> list, int length)
+    {
+        var enumerated = list.ToArray();
+        
+        if (length == 1)
+            return enumerated.Select(t => new[] { t });
+
+        return enumerated
+            .GetPermutations2(length - 1)
+            .SelectMany(t => enumerated, (t1, t2) => t1.Concat([t2]).ToArray())
+            .ToArray();
+    }
+    
+    /// <summary>
+    /// Gets unique permutations of size <paramref name="length"/> from <paramref name="list"/>.
+    /// </summary>
+    /// <param name="list">The list to permute.</param>
+    /// <param name="length">The grouping size.</param>
+    /// <typeparam name="T">The type of data in <paramref name="list"/>.</typeparam>
+    /// <returns>Permutations of <paramref name="list"/>.</returns>
     public static IEnumerable<IEnumerable<T>> GetPermutations<T>(this IEnumerable<T> list, int length)
     {
         var enumerated = list.ToArray();
