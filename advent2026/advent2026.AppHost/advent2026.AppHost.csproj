@@ -1,0 +1,21 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.6.4">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AspireUseCliBundle>true</AspireUseCliBundle>
+        <UserSecretsId>f953daa0-86c9-42f1-8491-89048139d66d</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\advent2026.ApiService\advent2026.ApiService.csproj"/>
+        <ProjectReference Include="..\advent2026.Web\advent2026.Web.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.Hosting.Redis" Version="13.6.4"/>
+    </ItemGroup>
+
+</Project>
