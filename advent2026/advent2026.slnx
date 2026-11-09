@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="../Libexec.Advent/Libexec.Advent.csproj" />
   <Project Path="advent2026.ApiService/advent2026.ApiService.csproj" />
   <Project Path="advent2026.AppHost/advent2026.AppHost.csproj" />
   <Project Path="advent2026.ServiceDefaults/advent2026.ServiceDefaults.csproj" />
